@@ -1,0 +1,80 @@
+{
+  "name": "vue-d3-network-graph",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service  serve ./playground/main.ts",
+    "build": "vue-cli-service build --target lib --name vue-d3-network-graph ./src/D3NetworkGraph.vue",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@vueuse/core": "^7.5.3",
+    "d3": "^7.3.0",
+    "vue": "^3.2.26"
+  },
+  "devDependencies": {
+    "@mdi/font": "5.9.55",
+    "@types/d3": "^7.1.0",
+    "@types/webfontloader": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/cli-plugin-babel": "~5.0.0-rc.2",
+    "@vue/cli-plugin-eslint": "~5.0.0-rc.2",
+    "@vue/cli-plugin-router": "~5.0.0-rc.2",
+    "@vue/cli-plugin-typescript": "~5.0.0-rc.2",
+    "@vue/cli-service": "~5.0.0-rc.2",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "core-js": "^3.20.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^2.2.1",
+    "roboto-fontface": "*",
+    "sass": "^1.38.0",
+    "sass-loader": "^10.0.0",
+    "typescript": "~4.1.5",
+    "vue-cli-plugin-vuetify": "~2.4.5",
+    "vue-cli-plugin-webpack-bundle-analyzer": "~4.0.0",
+    "vue-router": "^4.0.0-rc.6",
+    "vuetify": "^3.0.0-alpha.12",
+    "vuetify-loader": "^2.0.0-alpha.0",
+    "webfontloader": "^1.0.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended",
+      "@vue/typescript/recommended",
+      "@vue/prettier",
+      "@vue/prettier/@typescript-eslint"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "ecmaFeatures": {
+        "jsx": false
+      }
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}
