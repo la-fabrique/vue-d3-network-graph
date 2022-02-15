@@ -1,11 +1,11 @@
-# test-d3
+# vue-d3-network-graph
 
 inspired by https://github.com/emiliorizzo/vue-d3-network
 
 ## Project setup
 
 ```
->npm install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
