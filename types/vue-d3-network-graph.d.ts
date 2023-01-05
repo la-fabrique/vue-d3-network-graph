@@ -1,1 +1,1 @@
-export * from './D3NetworkGraph.vue'
+export * from './index'

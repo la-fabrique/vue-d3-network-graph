@@ -10,7 +10,7 @@
       "require": "./dist/vue-d3-network-graph.umd.cjs"
     }
   },
-  "types": "./dist/vue-d3-network-graph.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

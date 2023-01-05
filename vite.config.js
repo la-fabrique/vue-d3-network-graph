@@ -13,9 +13,8 @@ export default defineConfig({
       include: ["src/**"],
       staticImport: true,
       skipDiagnostics: false,
-      logDiagnostics: true,
-      //rollupTypes: true,
-      insertTypesEntry: true,
+      rollupTypes: true,
+      //insertTypesEntry: true,
     }),
     vue(),
     eslintPlugin(),
@@ -32,7 +31,7 @@ export default defineConfig({
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, "src/D3NetworkGraph.vue"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "vue-d3-network-graph",
       // the proper extensions will be added
       fileName: "vue-d3-network-graph",
