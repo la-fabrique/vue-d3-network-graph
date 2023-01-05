@@ -9,7 +9,7 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     dts({
-      outputDir: ["dist", "types"],
+      outputDir: ["dist"],
       include: ["src/**"],
       staticImport: true,
       skipDiagnostics: false,
