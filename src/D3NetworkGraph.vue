@@ -12,57 +12,57 @@
         @touchstart.passive="() => {}"
         @mousemove="move"
       >
-        <g class="links" id="l-links">
+        <g id="l-links" class="links">
           <path
             v-for="link in links"
-            :d="getLinkPath(link)"
             :id="link.id"
             :key="link.id"
-            @click="$emit('link-click', $event, link)"
-            @touchstart.passive="$emit('link-click', $event, link)"
+            :d="getLinkPath(link)"
             v-bind="getLinkAttrs(link)"
             :class="getLinkClass(link.id)"
             :style="getLinkStyle(link)"
+            @click="emit('link-click', $event, link)"
+            @touchstart.passive="emit('link-click', $event, link)"
           ></path>
         </g>
-        <g class="nodes" id="l-nodes">
+        <g id="l-nodes" class="nodes">
           <template v-for="(node, index) in nodes" :key="index">
             <svg
               v-if="node.innerSVG"
               :viewBox="node.innerSVG.viewBox"
               :width="getNodeWidth(node)"
               :height="getNodeHeight(node)"
-              @click="$emit('node-click', $event, node)"
-              @touchend.passive="$emit('node-click', $event, node)"
-              @mousedown.prevent="dragStart($event, index)"
-              @touchstart.prevent="dragStart($event, index)"
               :x="(node.x || 0) - getNodeWidth(node) / 2"
               :y="(node.y || 0) - getNodeHeight(node) / 2"
               :style="getNodeStyle(node)"
               :title="node.name"
               :class="getNodeClass(node, ['node-svg'])"
+              @click="emit('node-click', $event, node)"
+              @touchend.passive="emit('node-click', $event, node)"
+              @mousedown.prevent="dragStart($event, index)"
+              @touchstart.prevent="dragStart($event, index)"
               v-html="node.innerSVG.innerHtml"
             ></svg>
             <circle
               v-else
               :r="getNodeSize(node) / 2"
-              @click="$emit('node-click', $event, node)"
-              @touchend.passive="$emit('node-click', $event, node)"
-              @mousedown.prevent="dragStart($event, index)"
-              @touchstart.prevent="dragStart($event, index)"
               :cx="node.x || 0"
               :cy="node.y || 0"
               :style="getNodeStyle(node)"
               :title="node.name"
               :class="getNodeClass(node)"
+              @click="$emit('node-click', $event, node)"
+              @touchend.passive="$emit('node-click', $event, node)"
+              @mousedown.prevent="dragStart($event, index)"
+              @touchstart.prevent="dragStart($event, index)"
             ></circle>
           </template>
         </g>
-        <g class="labels" id="node-labels" v-if="nodeOptions.hasLabel">
+        <g v-if="nodeOptions.hasLabel" id="node-labels" class="labels">
           <text
-            class="node-label"
             v-for="node in nodes"
             :key="node.id"
+            class="node-label"
             :x="
               (node.x || 0) + getNodeSize(node) / 2 + nodeOptions.fontSize / 2
             "
@@ -78,8 +78,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, PropType, ref, watch } from "vue";
+<script setup lang="ts">
+import {  onMounted, PropType, ref, watch } from "vue";
 import {
   D3Link,
   D3Node,
@@ -92,9 +92,8 @@ import { useNode } from "@/useNode";
 import { useLink } from "@/useLink";
 import { useSimulation } from "@/useSimulation";
 
-export default defineComponent({
-  name: "d3-network",
-  props: {
+
+  const props = defineProps({
     nodes: {
       type: Array as PropType<Array<D3Node>>,
       required: true,
@@ -129,8 +128,10 @@ export default defineComponent({
         };
       },
     },
-  },
-  setup(props) {
+  });
+  
+   const emit = defineEmits(['node-click', 'link-click']);
+
     const svg = ref(null);
     const { animate, simulation } = useSimulation(props.options);
     const { dragStart, dragEnd, move } = useDraggable(simulation);
@@ -154,27 +155,6 @@ export default defineComponent({
     watch([() => props.nodes.length, () => props.links.length], () =>
       animate(props.nodes, props.links)
     );
-
-    return {
-      svg,
-      simulation,
-      labelOffset,
-      animate,
-      dragStart,
-      dragEnd,
-      move,
-      getLinkPath,
-      getLinkStyle,
-      getLinkAttrs,
-      getLinkClass,
-      getNodeSize,
-      getNodeWidth,
-      getNodeHeight,
-      getNodeStyle,
-      getNodeClass,
-    };
-  },
-});
 </script>
 
 <style lang="scss">

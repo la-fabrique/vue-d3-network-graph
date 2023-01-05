@@ -2,10 +2,21 @@
   "name": "vue-d3-network-graph",
   "version": "0.1.0",
   "private": true,
+  "main": "./dist/vue-d3-network-graph.umd.cjs",
+  "module": "./dist/vue-d3-network-graph.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-d3-network-graph.js",
+      "require": "./dist/vue-d3-network-graph.umd.cjs"
+    }
+  },
+  "types": "./dist/vue-d3-network-graph.d.ts",
   "scripts": {
-    "serve": "vue-cli-service  serve ./playground/main.ts",
-    "build": "vue-cli-service build --target lib --name vue-d3-network-graph ./src/D3NetworkGraph.vue",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "@vueuse/core": "^7.7.1",
@@ -14,32 +25,28 @@
   },
   "devDependencies": {
     "@mdi/font": "5.9.55",
-    "@types/d3": "^7.1.0",
-    "@types/webfontloader": "^1.6.34",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "@vue/cli-plugin-babel": "~5.0.1",
-    "@vue/cli-plugin-eslint": "~5.0.1",
-    "@vue/cli-plugin-router": "~5.0.1",
-    "@vue/cli-plugin-typescript": "~5.0.1",
-    "@vue/cli-service": "~5.0.1",
-    "@vue/compiler-sfc": "^3.2.31",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "core-js": "^3.21.1",
-    "eslint": "^7.32.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-vue": "^7.20.0",
-    "lint-staged": "^12.3.5",
-    "prettier": "^2.5.1",
+    "@mdi/js": "^7.1.96",
+    "@types/d3": "^7.4.0",
+    "@types/webfontloader": "^1.6.35",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-vue": "^9.8.0",
+    "lint-staged": "^12.5.0",
+    "prettier": "^2.8.1",
     "roboto-fontface": "0.10.0",
-    "sass": "^1.49.9",
-    "sass-loader": "^10.2.1",
-    "typescript": "~4.1.6",
-    "vue-cli-plugin-vuetify": "~2.4.7",
-    "vue-cli-plugin-webpack-bundle-analyzer": "~4.0.0",
-    "vue-router": "^4.0.13",
-    "vuetify": "^3.0.0-alpha.13",
+    "sass": "^1.57.1",
+    "sass-loader": "^10.4.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vite-plugin-dts": "^1.7.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-vuetify": "^1.0.1",
+    "vue-router": "^4.1.6",
+    "vue-tsc": "^1.0.22",
+    "vuetify": "^3.0.0-beta.15",
     "vuetify-loader": "^2.0.0-alpha.9",
     "webfontloader": "^1.6.28"
   },
@@ -49,19 +56,21 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "@vue/typescript/recommended",
-      "@vue/prettier",
-      "@vue/prettier/@typescript-eslint"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:vue/vue3-recommended",
+      "prettier"
     ],
+    "parser": "vue-eslint-parser",
     "parserOptions": {
-      "ecmaVersion": 2020,
-      "ecmaFeatures": {
-        "jsx": false
-      }
+      "parser": "@typescript-eslint/parser",
+      "sourceType": "module"
     },
-    "rules": {}
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "vue/no-v-html": "off"
+    }
   },
   "browserslist": [
     "> 1%",
