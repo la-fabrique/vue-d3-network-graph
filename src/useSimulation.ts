@@ -38,7 +38,10 @@ export function useSimulation(options: D3Options): {
     sim.force(
       "link",
       forceLink<D3Node, D3Link>(links).id((d: D3Node) => {
-        return d.id!;
+        if (!d.id) {
+          throw new Error("Node id is undefined");
+        }
+        return d.id;
       })
     );
     return sim;

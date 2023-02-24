@@ -30,10 +30,12 @@ export function useLink(options: D3LinkOptions): {
       : {};
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAttrs = (link: D3Link) => {
     return { "stroke-width": options.width };
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getClass = (linkId: string | undefined): string[] => {
     const cssClass = ["link"];
     return cssClass;

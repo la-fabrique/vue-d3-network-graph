@@ -18,8 +18,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import D3NetworkGraph from "@/D3NetworkGraph.vue";
-import { D3Link, D3Options, D3Node } from "@/types";
+import {
+  D3NetworkGraph,
+  type D3Link,
+  type D3Options,
+  type D3Node,
+} from "@/index";
 // System via url a remplacer
 
 const database = {
