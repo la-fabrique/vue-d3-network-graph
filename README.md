@@ -2,7 +2,15 @@
 
 inspired by https://github.com/emiliorizzo/vue-d3-network
 
-## Project setup
+## Installation
+
+> Not published yet
+
+TO DO : see ./playground/App.vue
+
+## Contributing
+
+### Project setup
 
 ```
 npm install
