@@ -2,12 +2,16 @@
   "name": "vue-d3-network-graph",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/vue-d3-network-graph.umd.cjs",
-  "module": "./dist/vue-d3-network-graph.js",
+  "main": "./dist/vue-d3-network-graph.umd.js",
+  "module": "./dist/vue-d3-network-graph.mjs",
   "exports": {
     ".": {
-      "import": "./dist/vue-d3-network-graph.js",
-      "require": "./dist/vue-d3-network-graph.umd.cjs"
+      "import": "./dist/vue-d3-network-graph.mjs",
+      "require": "./dist/vue-d3-network-graph.umd.js"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "types": "./dist/index.d.ts",
