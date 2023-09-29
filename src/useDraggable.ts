@@ -1,9 +1,10 @@
 import { D3Node } from "@/types";
 import { Simulation } from "d3-force";
-import { reactive, Ref, ref } from "vue";
+import { MaybeRef, reactive, Ref, ref, toValue } from "vue";
 
 export function useDraggable(
-  simulation: Ref<Simulation<D3Node, undefined> | undefined>
+  simulation: Ref<Simulation<D3Node, undefined>>,
+  draggables?: MaybeRef<boolean>
 ): {
   dragStart: (event: Event, index: number) => void;
   dragEnd: () => void;
@@ -28,10 +29,13 @@ export function useDraggable(
     return { x: x || 0, y: y || 0 };
   };
 
-  const dragStart = (event: Event, index: number) => {
-    dragging.value = index;
-    setMouseOffset(event, simulation.value?.nodes()[index]);
-  };
+  const dragStart = (event: Event, index: number) =>
+    toValue(draggables)
+      ? (() => {
+          dragging.value = index;
+          setMouseOffset(event, simulation.value.nodes()[index]);
+        })()
+      : undefined;
 
   const setMouseOffset = (event?: Event, node?: D3Node) => {
     let x = 0;
@@ -46,28 +50,27 @@ export function useDraggable(
   };
 
   const dragEnd = () => {
-    if (simulation.value && dragging.value !== undefined) {
+    if (dragging.value !== undefined) {
       const node = simulation.value.nodes()[dragging.value];
       node.fx = null;
       node.fy = null;
+      dragStop();
     }
-
-    dragStop();
   };
 
   const dragStop = () => {
     dragging.value = undefined;
-    simulation.value?.alpha(0.1);
-    simulation.value?.restart();
+    simulation.value.alpha(0.1);
+    simulation.value.restart();
     setMouseOffset();
   };
 
   const move = (event: Event) => {
     const pos = clientPos(event);
-    if (simulation.value && dragging.value != undefined) {
+    if (dragging.value != undefined) {
       if (simulation.value.nodes()[dragging.value]) {
-        simulation.value?.restart();
-        simulation.value?.alpha(0.5);
+        simulation.value.restart();
+        simulation.value.alpha(0.5);
         simulation.value.nodes()[dragging.value].fx = pos.x - mouseOfst.x;
         simulation.value.nodes()[dragging.value].fy = pos.y - mouseOfst.y;
       }

@@ -45,6 +45,8 @@ export default defineConfig({
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
+          d3: "d3",
+          "@vueuse/core": "VueUseCore",
           vue: "Vue",
         },
       },

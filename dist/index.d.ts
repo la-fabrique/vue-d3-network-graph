@@ -4,14 +4,15 @@ import { ComponentOptionsMixin } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
 import { PropType } from 'vue';
-import { SimulationLinkDatum } from 'd3';
-import { SimulationNodeDatum } from 'd3';
+import { Ref } from 'vue';
+import { SimulationLinkDatum } from 'd3-force';
+import { SimulationNodeDatum } from 'd3-force';
 import { VNodeProps } from 'vue';
 
-export declare interface D3InnerSVG {
+export declare type D3InnerSVG = {
     viewBox: string;
     innerHtml: string;
-}
+};
 
 export declare interface D3Link extends SimulationLinkDatum<D3Node> {
     id?: string;
@@ -20,9 +21,26 @@ export declare interface D3Link extends SimulationLinkDatum<D3Node> {
     _svgAttrs?: Record<string, unknown>;
 }
 
-export declare interface D3LinkOptions {
+export declare type D3LinkOptions = {
     width: number;
-}
+    colors?: D3LinkOptionsColors;
+};
+
+export declare type D3LinkOptionsColors = {
+    stroke?: string;
+    fill?: string;
+    selected?: {
+        stroke?: string;
+        fill?: string;
+    };
+    hover?: {
+        stroke?: string;
+        fill?: string;
+    };
+    label?: {
+        fill?: string;
+    };
+};
 
 export declare const D3NetworkGraph: DefineComponent<{
     nodes: {
@@ -35,26 +53,7 @@ export declare const D3NetworkGraph: DefineComponent<{
     };
     options: {
         type: PropType<D3Options>;
-        default: () => {
-            size: {
-                width: number;
-                height: number;
-            };
-        };
-    };
-    nodeOptions: {
-        type: PropType<D3NodeOptions>;
-        default: () => {
-            hasLabel: boolean;
-            size: number;
-            fontSize: number;
-        };
-    };
-    linkOptions: {
-        type: PropType<D3LinkOptions>;
-        default: () => {
-            width: number;
-        };
+        default: undefined;
     };
 }, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
     "node-click": (...args: any[]) => void;
@@ -70,34 +69,13 @@ export declare const D3NetworkGraph: DefineComponent<{
     };
     options: {
         type: PropType<D3Options>;
-        default: () => {
-            size: {
-                width: number;
-                height: number;
-            };
-        };
-    };
-    nodeOptions: {
-        type: PropType<D3NodeOptions>;
-        default: () => {
-            hasLabel: boolean;
-            size: number;
-            fontSize: number;
-        };
-    };
-    linkOptions: {
-        type: PropType<D3LinkOptions>;
-        default: () => {
-            width: number;
-        };
+        default: undefined;
     };
 }>> & {
     "onNode-click"?: ((...args: any[]) => any) | undefined;
     "onLink-click"?: ((...args: any[]) => any) | undefined;
 }, {
     options: D3Options;
-    nodeOptions: D3NodeOptions;
-    linkOptions: D3LinkOptions;
 }, {}>;
 
 export declare interface D3Node extends SimulationNodeDatum {
@@ -112,17 +90,49 @@ export declare interface D3Node extends SimulationNodeDatum {
     group?: number;
 }
 
-export declare interface D3NodeOptions {
-    hasLabel: boolean;
-    size: number;
-    fontSize: number;
-}
-
-export declare interface D3Options {
-    size: {
-        width: number;
-        height: number;
+export declare type D3NodeOptions = {
+    size?: number;
+    font?: {
+        size?: number;
     };
-}
+    colors?: D3NodeOptionsColors;
+};
+
+export declare type D3NodeOptionsColors = {
+    stroke?: string;
+    fill?: string;
+    selected?: {
+        stroke?: string;
+        fill?: string;
+    };
+    hover?: {
+        stroke?: string;
+        fill?: string;
+    };
+    pinned?: {
+        stroke?: string;
+        fill?: string;
+    };
+    label?: {
+        fill?: string;
+    };
+};
+
+export declare type D3Options = {
+    links?: D3LinkOptions;
+    nodes?: D3NodeOptions;
+    simulation?: D3SimulationOptions;
+    draggables?: boolean;
+};
+
+export declare type D3SimulationOptions = {
+    force: {
+        x: number;
+        y: number;
+    };
+    charge: number;
+};
+
+export declare type MaybeRef<T> = Ref<T> | T;
 
 export { }

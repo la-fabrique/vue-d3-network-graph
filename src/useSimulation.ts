@@ -7,64 +7,71 @@ import {
   forceY,
   Simulation,
 } from "d3-force";
-import { Ref, ref } from "vue";
+import { MaybeRef, Ref, ref, toValue, watch } from "vue";
 
-const DEFAULT_FORCE_X = 0.5;
-const DEFAULT_FORCE_Y = 0.5;
-const DEFAULT_FORCE_MANY_BODY_STRENGTH = -1000;
+export const DEFAULT_FORCE_X = 0.5;
+export const DEFAULT_FORCE_Y = 0.5;
+export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -1000;
+const FORCE_X_NAME = "X";
+const FORCE_Y_NAME = "Y";
+const FORCE_CHARGE_NAME = "charge";
+const FORCE_LINK_NAME = "link";
 
-export function useSimulation(options?: D3SimulationOptions): {
-  simulation: Ref<Simulation<D3Node, undefined> | undefined>;
-  animate: (
-    rect: { width: number; height: number },
-    nodes: D3Node[],
-    links: D3Link[]
-  ) => void;
+export function useSimulation(
+  nodes: MaybeRef<D3Node[]>,
+  links: MaybeRef<D3Link[]>,
+  rect: MaybeRef<{ width: number; height: number }>,
+  options?: MaybeRef<D3SimulationOptions | undefined>
+): {
+  simulation: Ref<Simulation<D3Node, undefined>>;
+  animate: () => void;
 } {
-  const fX = options?.force.x || DEFAULT_FORCE_X;
-  const fY = options?.force.y || DEFAULT_FORCE_Y;
-  const forceManyBodyStrength =
-    options?.charge || DEFAULT_FORCE_MANY_BODY_STRENGTH;
+  const fX = () => toValue(options)?.force.x || DEFAULT_FORCE_X;
+  const fY = () => toValue(options)?.force.y || DEFAULT_FORCE_Y;
+  const forceManyBodyStrength = () =>
+    toValue(options)?.charge || DEFAULT_FORCE_MANY_BODY_STRENGTH;
+  const getNodes = () => [...toValue(nodes)] || [];
+  const getLinks = () => [...toValue(links)] || [];
+  const getRect = () => toValue(rect) || { width: 0, height: 0 };
 
-  const simulation = ref<Simulation<D3Node, undefined> | undefined>(undefined);
-
-  const animate = (
-    rect: { width: number; height: number },
-    nodes: D3Node[],
-    links: D3Link[]
-  ) => {
-    console.debug("animate", rect);
-
-    if (simulation.value) {
-      simulation.value.stop();
-    }
-    simulation.value = simulate(rect, nodes, links);
+  const animate = () => {
+    simulation.value.stop();
+    simulation.value = simulate();
     simulation.value.restart();
   };
 
-  const simulate = (
-    rect: { width: number; height: number },
-    nodes: D3Node[],
-    links: D3Link[]
-  ) => {
+  const simulate = () => {
     const sim = forceSimulation<D3Node, D3Link>()
       .stop()
       .alpha(0.5)
-      .nodes(nodes);
-    sim.force("X", forceX(rect.width / 2).strength(fX));
-    sim.force("Y", forceY(rect.height / 2).strength(fY));
-    sim.force("charge", forceManyBody().strength(forceManyBodyStrength));
+      .nodes(getNodes());
+    sim.force(FORCE_X_NAME, forceX(getRect().width / 2).strength(fX()));
+    sim.force(FORCE_Y_NAME, forceY(getRect().height / 2).strength(fY()));
     sim.force(
-      "link",
-      forceLink(links).id((d: D3Node) => {
+      FORCE_CHARGE_NAME,
+      forceManyBody().strength(forceManyBodyStrength())
+    );
+    sim.force(
+      FORCE_LINK_NAME,
+      forceLink(getLinks()).id((d: D3Node) => {
         if (!d.id) {
           throw new Error("Node id is undefined");
         }
         return d.id;
       })
     );
+
     return sim;
   };
+
+  const simulation = ref<Simulation<D3Node, undefined>>(simulate());
+
+  watch(
+    [() => toValue(nodes).length, () => toValue(links).length, rect],
+    () => {
+      animate();
+    }
+  );
 
   return {
     simulation,

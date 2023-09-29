@@ -1,14 +1,15 @@
-import { D3Link, D3LinkOptions } from "@/types";
+import { D3Link, D3LinkOptions, MaybeRef } from "@/types";
+import { toValue } from "vue";
 
 const DEFAULT_WIDTH = 2;
 
-export function useLink(options?: D3LinkOptions): {
+export function useLink(options?: MaybeRef<D3LinkOptions>): {
   getPath: (link: D3Link) => string | undefined;
   getAttrs: (link: D3Link) => Record<string, unknown>;
   getClass: (linkId: string | undefined) => string[];
   getStyle: (link: D3Link) => { stroke: string } | { stroke?: undefined };
 } {
-  const width = options?.width || DEFAULT_WIDTH;
+  const width = () => toValue(options)?.width || DEFAULT_WIDTH;
 
   const getPath = (link: D3Link) => {
     if (
@@ -36,7 +37,7 @@ export function useLink(options?: D3LinkOptions): {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAttrs = (link: D3Link) => {
-    return { "stroke-width": width };
+    return { "stroke-width": width() };
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

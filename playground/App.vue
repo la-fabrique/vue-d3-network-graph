@@ -8,7 +8,6 @@
           </v-col>
           <v-col cols="6">
             <v-btn @click="addNode">Ajouter noeud</v-btn>
-            <v-btn @click="toggleHasNodesLabel">Toggle node label</v-btn>
             <v-btn @click="toggleNodeSize">Toggle node size</v-btn>
           </v-col>
         </v-row>
@@ -19,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { D3NetworkGraph, type D3Link, type D3Node } from "@/index";
+import { D3NetworkGraph, type D3Link, type D3Node, D3Options } from "@/index";
 
 const database = {
   viewBox: "0 0 32 32",
@@ -77,21 +76,13 @@ export default defineComponent({
         { source: 13, target: 6 },
         { source: 14, target: 6 },
       ] as D3Link[],
-      nodeOptions: {
-        hasLabel: true,
-        size: 20,
-        fontSize: 10,
-      },
-    };
-  },
-  computed: {
-    options() {
-      return undefined;
-      /*  return {
-        nodes: { hasLabel: true, size: 20 },
+      options: {
+        nodes: { size: 20, fill: "#ff9800" },
         links: { width: 5 },
-      } as D3Options; */
-    },
+        simulation: { charge: -1500, force: { x: 0.2, y: 0.2 } },
+        draggables: false,
+      } as D3Options,
+    };
   },
   methods: {
     addNode() {
@@ -106,16 +97,13 @@ export default defineComponent({
         target: 2,
       });
     },
-    toggleHasNodesLabel() {
-      this.nodeOptions.hasLabel = !this.nodeOptions.hasLabel;
-    },
     toggleNodeSize() {
-      switch (this.nodeOptions.size) {
+      switch (this.options.nodes!.size) {
         case 20:
-          this.nodeOptions.size = 10;
+          this.options.nodes!.size = 10;
           break;
         default:
-          this.nodeOptions.size = 20;
+          this.options.nodes!.size = 20;
           break;
       }
     },

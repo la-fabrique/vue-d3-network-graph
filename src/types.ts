@@ -1,4 +1,5 @@
-import { SimulationLinkDatum, SimulationNodeDatum } from "d3";
+import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
+import { Ref } from "vue";
 
 export interface D3Node extends SimulationNodeDatum {
   id?: number; // node id. If not provided uses array index
@@ -19,14 +20,53 @@ export interface D3Link extends SimulationLinkDatum<D3Node> {
   _svgAttrs?: Record<string, unknown>; // Object, svg line attributes
 }
 
+export type MaybeRef<T> = Ref<T> | T;
+
+export type D3NodeOptionsColors = {
+  stroke?: string;
+  fill?: string;
+  selected?: {
+    stroke?: string;
+    fill?: string;
+  };
+  hover?: {
+    stroke?: string;
+    fill?: string;
+  };
+  pinned?: {
+    stroke?: string;
+    fill?: string;
+  };
+  label?: {
+    fill?: string;
+  };
+};
+
 export type D3NodeOptions = {
-  hasLabel: boolean;
-  size: number;
-  fontSize: number;
+  size?: number;
+  font?: { size?: number };
+  colors?: D3NodeOptionsColors;
+};
+
+export type D3LinkOptionsColors = {
+  stroke?: string;
+  fill?: string;
+  selected?: {
+    stroke?: string;
+    fill?: string;
+  };
+  hover?: {
+    stroke?: string;
+    fill?: string;
+  };
+  label?: {
+    fill?: string;
+  };
 };
 
 export type D3LinkOptions = {
   width: number;
+  colors?: D3LinkOptionsColors;
 };
 
 export type D3SimulationOptions = {
@@ -35,9 +75,10 @@ export type D3SimulationOptions = {
 };
 
 export type D3Options = {
-  links: D3LinkOptions;
-  nodes: D3NodeOptions;
-  simulation: D3SimulationOptions;
+  links?: D3LinkOptions;
+  nodes?: D3NodeOptions;
+  simulation?: D3SimulationOptions;
+  draggables?: boolean;
 };
 
 export type D3InnerSVG = {
