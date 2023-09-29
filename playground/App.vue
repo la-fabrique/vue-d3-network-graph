@@ -2,15 +2,16 @@
   <v-app>
     <v-main>
       <v-container>
-        <D3NetworkGraph
-          :nodes="nodes"
-          :links="links"
-          :options="options"
-          :node-options="nodeOptions"
-        />
-        <v-btn @click="addNode">Ajouter noeud</v-btn>
-        <v-btn @click="toggleHasNodesLabel">Toggle node label</v-btn>
-        <v-btn @click="toggleNodeSize">Toggle node size</v-btn>
+        <v-row>
+          <v-col cols="6">
+            <D3NetworkGraph :nodes="nodes" :links="links" :options="options" />
+          </v-col>
+          <v-col cols="6">
+            <v-btn @click="addNode">Ajouter noeud</v-btn>
+            <v-btn @click="toggleHasNodesLabel">Toggle node label</v-btn>
+            <v-btn @click="toggleNodeSize">Toggle node size</v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
@@ -18,13 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  D3NetworkGraph,
-  type D3Link,
-  type D3Options,
-  type D3Node,
-} from "@/index";
-// System via url a remplacer
+import { D3NetworkGraph, type D3Link, type D3Node } from "@/index";
 
 const database = {
   viewBox: "0 0 32 32",
@@ -44,8 +39,8 @@ const bloc = {
 };
 
 export default defineComponent({
-  components: { D3NetworkGraph },
   name: "App",
+  components: { D3NetworkGraph },
 
   data() {
     return {
@@ -91,11 +86,11 @@ export default defineComponent({
   },
   computed: {
     options() {
-      return {
-        size: { width: 600, height: 600 },
-        nodeLabels: true,
-        linkWidth: 5,
-      } as D3Options;
+      return undefined;
+      /*  return {
+        nodes: { hasLabel: true, size: 20 },
+        links: { width: 5 },
+      } as D3Options; */
     },
   },
   methods: {

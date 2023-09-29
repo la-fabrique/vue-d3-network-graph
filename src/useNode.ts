@@ -1,27 +1,39 @@
 import { D3Node, D3NodeOptions } from "@/types";
 import { computed, Ref } from "vue";
 
-export function useNode(options: D3NodeOptions): {
+const DEFAULT_SIZE = 20;
+const DEFAULT_FONT_SIZE = 10;
+
+export function useNode(options?: D3NodeOptions): {
   getSize: (node: D3Node) => number;
   getWidth: (node: D3Node) => number;
   getHeight: (node: D3Node) => number;
   getStyle: (node: D3Node) => string;
   getClass: (node: D3Node, classes?: string[]) => string[];
-  labelOffset: Ref<{
-    x: number;
-    y: number;
+  label: Ref<{
+    font: {
+      size: number;
+    };
+    offset: {
+      x: number;
+      y: number;
+    };
+    exists: boolean;
   }>;
 } {
+  const size = options?.size || DEFAULT_SIZE;
+  const fontSize = options?.fontSize || DEFAULT_FONT_SIZE;
+
   const getSize = (node: D3Node) => {
-    return node.size || options.size;
+    return node.size || size;
   };
 
   const getWidth = (node: D3Node) => {
-    return node.width || node.size || options.size;
+    return node.width || size;
   };
 
   const getHeight = (node: D3Node) => {
-    return node.height || node.size || options.size;
+    return node.height || node.size || size;
   };
 
   const getStyle = (node: D3Node) => {
@@ -36,12 +48,16 @@ export function useNode(options: D3NodeOptions): {
     return cssClass;
   };
 
-  const labelOffset = computed(() => {
+  const label = computed(() => {
     return {
-      x: options.size / 2 + options.fontSize / 2,
-      y: options.fontSize / 2,
+      font: { size: fontSize },
+      offset: {
+        x: size / 2 + fontSize / 2,
+        y: fontSize / 2,
+      },
+      exists: options?.hasLabel || true,
     };
   });
 
-  return { labelOffset, getSize, getWidth, getHeight, getStyle, getClass };
+  return { label, getSize, getWidth, getHeight, getStyle, getClass };
 }

@@ -19,21 +19,28 @@ export interface D3Link extends SimulationLinkDatum<D3Node> {
   _svgAttrs?: Record<string, unknown>; // Object, svg line attributes
 }
 
-export interface D3NodeOptions {
+export type D3NodeOptions = {
   hasLabel: boolean;
   size: number;
   fontSize: number;
-}
+};
 
-export interface D3LinkOptions {
+export type D3LinkOptions = {
   width: number;
-}
+};
 
-export interface D3Options {
-  size: { width: number; height: number };
-}
+export type D3SimulationOptions = {
+  force: { x: number; y: number };
+  charge: number;
+};
 
-export interface D3InnerSVG {
+export type D3Options = {
+  links: D3LinkOptions;
+  nodes: D3NodeOptions;
+  simulation: D3SimulationOptions;
+};
+
+export type D3InnerSVG = {
   viewBox: string;
   innerHtml: string;
-}
+};
