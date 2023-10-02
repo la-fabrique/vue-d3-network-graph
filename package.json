@@ -4,6 +4,10 @@
   "description": "Vue component to graph networks using d3-force",
   "author": "Deka",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/la-fabrique/vue-d3-network-graph"
@@ -26,11 +30,14 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "doc": "typedoc --plugin typedoc-plugin-markdown --out docs --exclude \"playground/**/*\" src/index.ts",
+    "move-doc": "mv docs/README.md . && rm -rf docs"
   },
   "dependencies": {
     "@vueuse/core": "^10.4.1",
     "d3-force": "^3.0.0",
+    "typedoc-plugin-markdown": "^3.16.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -49,6 +56,7 @@
     "roboto-fontface": "0.10.0",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2",
+    "typedoc": "^0.25.1",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vite-plugin-dts": "^3.6.0",

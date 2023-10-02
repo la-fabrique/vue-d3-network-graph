@@ -68,11 +68,11 @@
           @input="updateOptions"
         />
       </li>
-      <li v-if="innerOptions.simulation?.charge">
+      <li v-if="innerOptions.simulation?.force.charge">
         <label>Many-body strenght force:</label>
-        <span>{{ innerOptions.simulation?.charge }}</span>
+        <span>{{ innerOptions.simulation?.force.charge }}</span>
         <input
-          v-model.number="innerOptions.simulation.charge"
+          v-model.number="innerOptions.simulation.force.charge"
           type="range"
           min="-1000"
           max="0"
@@ -135,12 +135,6 @@
           @input="updateOptions"
         />
       </li>
-      <!-- <li>
-        <button class="btn" title="reset options" @click="reset">
-          <span class="icon-reset"></span>
-          <small>&nbsp;Reset</small>
-        </button>
-      </li> -->
     </ul>
   </div>
 </template>

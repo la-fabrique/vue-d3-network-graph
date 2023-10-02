@@ -51,9 +51,10 @@ export const useOptions = (options: Readonly<Ref<D3Options | undefined>>) => {
     force: {
       x: options.value?.simulation?.force.x || DEFAULT_FORCE_X,
       y: options.value?.simulation?.force.y || DEFAULT_FORCE_Y,
+      charge:
+        options.value?.simulation?.force.charge ||
+        DEFAULT_FORCE_MANY_BODY_STRENGTH,
     },
-    charge:
-      options.value?.simulation?.charge || DEFAULT_FORCE_MANY_BODY_STRENGTH,
   }));
 
   const nodes = computed(() => ({

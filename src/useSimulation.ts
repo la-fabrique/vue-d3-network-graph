@@ -18,16 +18,29 @@ const ALPHA_MIN = 0.01;
 const ALPHA_DECAY = 0.1;
 const TICK_NUMBER = Math.log(ALPHA_MIN) / Math.log(1 - ALPHA_DECAY);
 
+/**
+ * Composition function used by the D3NetworkGraph component to create a d3 simulation
+ * @remarks
+ * This function can be used to create a d3 simulation for a network graph without components
+ */
 export function useSimulation(
+  /** The nodes of the graph */
   nodes: Readonly<Ref<D3Node[]>>,
+  /** The links of the graph */
   links: Readonly<Ref<D3Link[]>>,
+  /** The size of the graph */
   rect: Readonly<Ref<{ width: number; height: number }>>,
+  /** The options of the simulation */
   options: ComputedRef<D3SimulationOptions>
 ): {
+  /** The d3 simulation */
   simulation: Ref<Simulation<D3Node, D3Link>>;
-  animate: () => void;
+  /**
+   * Refresh the simulation
+   */
+  refresh: () => void;
 } {
-  const animate = async () => {
+  const refresh = async () => {
     simulation.value.stop();
     simulation.value = simulate();
     if (options.value.static) {
@@ -53,7 +66,7 @@ export function useSimulation(
     );
     sim.force(
       FORCE_CHARGE_NAME,
-      forceManyBody().strength(options.value.charge)
+      forceManyBody().strength(options.value.force.charge)
     );
     sim.force(
       FORCE_LINK_NAME,
@@ -72,18 +85,18 @@ export function useSimulation(
 
   watchDebounced(
     [() => toValue(nodes).length, () => toValue(links).length, rect],
-    async () => animate(),
+    async () => refresh(),
     { debounce: 100, maxWait: 1000 }
   );
 
   watchDebounced(
     () => options.value,
-    async () => animate(),
+    async () => refresh(),
     { deep: true, debounce: 100, maxWait: 1000 }
   );
 
   return {
     simulation,
-    animate,
+    refresh,
   };
 }

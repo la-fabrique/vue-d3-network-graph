@@ -45,8 +45,8 @@ export const getDefaultOptions = () => ({
     width: 1,
   },
   simulation: {
-    charge: -350,
     force: {
+      charge: -350,
       x: 0.5,
       y: 0.5,
     },

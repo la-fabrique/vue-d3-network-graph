@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import { PropType, ref, toRef } from "vue";
-import type { D3Link, D3Node, D3Options } from "@/types";
+import type { D3Link, D3NeworkGraphEmits, D3Node, D3Options } from "@/types";
 import { useDraggable } from "@/useDraggable";
 import { useNode } from "@/useNode";
 import { useLink } from "@/useLink";
@@ -98,7 +98,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["node-click", "link-click"]);
+const emit = defineEmits<D3NeworkGraphEmits>();
 
 const {
   theme,
@@ -110,6 +110,7 @@ const {
 // svg container resize observer
 const svg = ref(null);
 const rect = ref({ width: 100, height: 100 });
+
 useResizeObserver(svg, (entries) => {
   const entry = entries[0];
   rect.value = {
@@ -197,4 +198,3 @@ const {
   }
 }
 </style>
-@/useOptions
