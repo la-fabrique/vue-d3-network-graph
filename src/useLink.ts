@@ -1,5 +1,9 @@
-import { D3DefinedLinkOptions, D3Link } from "@/types";
+import { D3Link } from "@/types";
 import { Ref } from "vue";
+
+type D3DefinedLinkOptions = {
+  width: number;
+};
 
 export function useLink(options: Readonly<Ref<D3DefinedLinkOptions>>): {
   getPath: (link: D3Link) => string | undefined;
