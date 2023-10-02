@@ -8,7 +8,7 @@ on:
     branches:
       - main
 jobs:
-  check-bats-version:
+  vue-d3-network-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
