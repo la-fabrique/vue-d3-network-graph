@@ -1,5 +1,5 @@
-import { ref as V, reactive as Gt, toValue as J, computed as R, defineComponent as Ut, useCssVars as Vt, unref as p, toRef as K, openBlock as P, createElementBlock as L, createElementVNode as Q, Fragment as X, renderList as Z, mergeProps as Wt, normalizeStyle as bt, normalizeClass as zt, withModifiers as G, toDisplayString as qt } from "vue";
-import { watchDebounced as Ct, useResizeObserver as $t } from "@vueuse/core";
+import { ref as V, reactive as Gt, toValue as J, computed as R, defineComponent as Ut, useCssVars as Vt, unref as p, toRef as K, openBlock as P, createElementBlock as L, createElementVNode as Q, Fragment as X, renderList as Z, mergeProps as Wt, normalizeStyle as zt, normalizeClass as Ct, withModifiers as G, toDisplayString as qt } from "vue";
+import { watchDebounced as Tt, useResizeObserver as $t } from "@vueuse/core";
 function Kt(t, n) {
   const e = V(void 0), r = Gt({
     x: 0,
@@ -133,20 +133,20 @@ function ne() {
 function re(t) {
   return arguments.length ? this.cover(+t[0][0], +t[0][1]).cover(+t[1][0], +t[1][1]) : isNaN(this._x0) ? void 0 : [[this._x0, this._y0], [this._x1, this._y1]];
 }
-function C(t, n, e, r, o) {
+function T(t, n, e, r, o) {
   this.node = t, this.x0 = n, this.y0 = e, this.x1 = r, this.y1 = o;
 }
 function ie(t, n, e) {
   var r, o = this._x0, i = this._y0, l, s, u, g, f = this._x1, y = this._y1, x = [], c = this._root, m, h;
-  for (c && x.push(new C(c, o, i, f, y)), e == null ? e = 1 / 0 : (o = t - e, i = n - e, f = t + e, y = n + e, e *= e); m = x.pop(); )
+  for (c && x.push(new T(c, o, i, f, y)), e == null ? e = 1 / 0 : (o = t - e, i = n - e, f = t + e, y = n + e, e *= e); m = x.pop(); )
     if (!(!(c = m.node) || (l = m.x0) > f || (s = m.y0) > y || (u = m.x1) < o || (g = m.y1) < i))
       if (c.length) {
         var a = (l + u) / 2, v = (s + g) / 2;
         x.push(
-          new C(c[3], a, v, u, g),
-          new C(c[2], l, v, a, g),
-          new C(c[1], a, s, u, v),
-          new C(c[0], l, s, a, v)
+          new T(c[3], a, v, u, g),
+          new T(c[2], l, v, a, g),
+          new T(c[1], a, s, u, v),
+          new T(c[0], l, s, a, v)
         ), (h = (n >= v) << 1 | t >= a) && (m = x[x.length - 1], x[x.length - 1] = x[x.length - 1 - h], x[x.length - 1 - h] = m);
       } else {
         var d = t - +this._x.call(null, c.data), N = n - +this._y.call(null, c.data), w = d * d + N * N;
@@ -195,20 +195,20 @@ function ae() {
 }
 function ue(t) {
   var n = [], e, r = this._root, o, i, l, s, u;
-  for (r && n.push(new C(r, this._x0, this._y0, this._x1, this._y1)); e = n.pop(); )
+  for (r && n.push(new T(r, this._x0, this._y0, this._x1, this._y1)); e = n.pop(); )
     if (!t(r = e.node, i = e.x0, l = e.y0, s = e.x1, u = e.y1) && r.length) {
       var g = (i + s) / 2, f = (l + u) / 2;
-      (o = r[3]) && n.push(new C(o, g, f, s, u)), (o = r[2]) && n.push(new C(o, i, f, g, u)), (o = r[1]) && n.push(new C(o, g, l, s, f)), (o = r[0]) && n.push(new C(o, i, l, g, f));
+      (o = r[3]) && n.push(new T(o, g, f, s, u)), (o = r[2]) && n.push(new T(o, i, f, g, u)), (o = r[1]) && n.push(new T(o, g, l, s, f)), (o = r[0]) && n.push(new T(o, i, l, g, f));
     }
   return this;
 }
 function fe(t) {
   var n = [], e = [], r;
-  for (this._root && n.push(new C(this._root, this._x0, this._y0, this._x1, this._y1)); r = n.pop(); ) {
+  for (this._root && n.push(new T(this._root, this._x0, this._y0, this._x1, this._y1)); r = n.pop(); ) {
     var o = r.node;
     if (o.length) {
       var i, l = r.x0, s = r.y0, u = r.x1, g = r.y1, f = (l + u) / 2, y = (s + g) / 2;
-      (i = o[0]) && n.push(new C(i, l, s, f, y)), (i = o[1]) && n.push(new C(i, f, s, u, y)), (i = o[2]) && n.push(new C(i, l, y, f, g)), (i = o[3]) && n.push(new C(i, f, y, u, g));
+      (i = o[0]) && n.push(new T(i, l, s, f, y)), (i = o[1]) && n.push(new T(i, f, s, u, y)), (i = o[2]) && n.push(new T(i, l, y, f, g)), (i = o[3]) && n.push(new T(i, f, y, u, g));
     }
     e.push(r);
   }
@@ -235,37 +235,37 @@ function It(t, n, e) {
 function nt(t, n, e, r, o, i) {
   this._x = t, this._y = n, this._x0 = e, this._y0 = r, this._x1 = o, this._y1 = i, this._root = void 0;
 }
-function Tt(t) {
+function bt(t) {
   for (var n = { data: t.data }, e = n; t = t.next; )
     e = e.next = { data: t.data };
   return n;
 }
-var T = It.prototype = nt.prototype;
-T.copy = function() {
+var b = It.prototype = nt.prototype;
+b.copy = function() {
   var t = new nt(this._x, this._y, this._x0, this._y0, this._x1, this._y1), n = this._root, e, r;
   if (!n)
     return t;
   if (!n.length)
-    return t._root = Tt(n), t;
+    return t._root = bt(n), t;
   for (e = [{ source: n, target: t._root = new Array(4) }]; n = e.pop(); )
     for (var o = 0; o < 4; ++o)
-      (r = n.source[o]) && (r.length ? e.push({ source: r, target: n.target[o] = new Array(4) }) : n.target[o] = Tt(r));
+      (r = n.source[o]) && (r.length ? e.push({ source: r, target: n.target[o] = new Array(4) }) : n.target[o] = bt(r));
   return t;
 };
-T.add = Jt;
-T.addAll = te;
-T.cover = ee;
-T.data = ne;
-T.extent = re;
-T.find = ie;
-T.remove = se;
-T.removeAll = oe;
-T.root = le;
-T.size = ae;
-T.visit = ue;
-T.visitAfter = fe;
-T.x = he;
-T.y = ge;
+b.add = Jt;
+b.addAll = te;
+b.cover = ee;
+b.data = ne;
+b.extent = re;
+b.find = ie;
+b.remove = se;
+b.removeAll = oe;
+b.root = le;
+b.size = ae;
+b.visit = ue;
+b.visitAfter = fe;
+b.x = he;
+b.y = ge;
 function D(t) {
   return function() {
     return t;
@@ -291,8 +291,8 @@ function de(t) {
   }
   function x(a) {
     for (var v = 0, d = t.length; v < f; ++v)
-      for (var N = 0, w, k, M, z, E, A, _; N < d; ++N)
-        w = t[N], k = w.source, M = w.target, z = M.x + M.vx - k.x - k.vx || I(g), E = M.y + M.vy - k.y - k.vy || I(g), A = Math.sqrt(z * z + E * E), A = (A - i[N]) / A * a * r[N], z *= A, E *= A, M.vx -= z * (_ = u[N]), M.vy -= E * _, k.vx += z * (_ = 1 - _), k.vy += E * _;
+      for (var N = 0, w, k, M, C, E, A, _; N < d; ++N)
+        w = t[N], k = w.source, M = w.target, C = M.x + M.vx - k.x - k.vx || I(g), E = M.y + M.vy - k.y - k.vy || I(g), A = Math.sqrt(C * C + E * E), A = (A - i[N]) / A * a * r[N], C *= A, E *= A, M.vx -= C * (_ = u[N]), M.vy -= E * _, k.vx += C * (_ = 1 - _), k.vy += E * _;
   }
   function c() {
     if (l) {
@@ -466,13 +466,13 @@ function Ee() {
   let t = 1;
   return () => (t = (Ae * t + Me) % Lt) / Lt;
 }
-function be(t) {
+function ze(t) {
   return t.x;
 }
-function ze(t) {
+function Ce(t) {
   return t.y;
 }
-var Ce = 10, Te = Math.PI * (3 - Math.sqrt(5));
+var Te = 10, be = Math.PI * (3 - Math.sqrt(5));
 function De(t) {
   var n, e = 1, r = 1e-3, o = 1 - Math.pow(r, 1 / 300), i = 0, l = 0.6, s = /* @__PURE__ */ new Map(), u = Yt(y), g = Ot("tick", "end"), f = Ee();
   t == null && (t = []);
@@ -492,7 +492,7 @@ function De(t) {
   function c() {
     for (var h = 0, a = t.length, v; h < a; ++h) {
       if (v = t[h], v.index = h, v.fx != null && (v.x = v.fx), v.fy != null && (v.y = v.fy), isNaN(v.x) || isNaN(v.y)) {
-        var d = Ce * Math.sqrt(0.5 + h), N = h * Te;
+        var d = Te * Math.sqrt(0.5 + h), N = h * be;
         v.x = d * Math.cos(N), v.y = d * Math.sin(N);
       }
       (isNaN(v.vx) || isNaN(v.vy)) && (v.vx = v.vy = 0);
@@ -534,9 +534,9 @@ function De(t) {
       return arguments.length > 1 ? (a == null ? s.delete(h) : s.set(h, m(a)), n) : s.get(h);
     },
     find: function(h, a, v) {
-      var d = 0, N = t.length, w, k, M, z, E;
+      var d = 0, N = t.length, w, k, M, C, E;
       for (v == null ? v = 1 / 0 : v *= v, d = 0; d < N; ++d)
-        z = t[d], w = h - z.x, k = a - z.y, M = w * w + k * k, M < v && (E = z, v = M);
+        C = t[d], w = h - C.x, k = a - C.y, M = w * w + k * k, M < v && (E = C, v = M);
       return E;
     },
     on: function(h, a) {
@@ -547,7 +547,7 @@ function De(t) {
 function Se() {
   var t, n, e, r, o = D(-30), i, l = 1, s = 1 / 0, u = 0.81;
   function g(c) {
-    var m, h = t.length, a = It(t, be, ze).visitAfter(y);
+    var m, h = t.length, a = It(t, ze, Ce).visitAfter(y);
     for (r = c, m = 0; m < h; ++m)
       n = t[m], a.visit(x);
   }
@@ -655,7 +655,7 @@ function He(t, n, e, r) {
       Le(e.value.height / 2).strength(r.value.force.y)
     ), s.force(
       Oe,
-      Se().strength(r.value.charge)
+      Se().strength(r.value.force.charge)
     ), s.force(
       Be,
       de(n.value).id((u) => {
@@ -665,22 +665,22 @@ function He(t, n, e, r) {
       })
     ), s;
   }, l = V(i());
-  return Ct(
+  return Tt(
     [() => J(t).length, () => J(n).length, e],
     async () => o(),
     { debounce: 100, maxWait: 1e3 }
-  ), Ct(
+  ), Tt(
     () => r.value,
     async () => o(),
     { deep: !0, debounce: 100, maxWait: 1e3 }
   ), {
     simulation: l,
-    animate: o
+    refresh: o
   };
 }
 const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
   const n = R(() => {
-    var i, l, s, u, g, f, y, x, c, m, h, a, v, d, N, w, k, M, z, E, A, _, S, b, rt, it, st, ot, lt, at, ut, ft, ct, ht, vt, gt, yt, dt, xt, wt, _t, pt, mt, Nt, kt, At, Mt, Et;
+    var i, l, s, u, g, f, y, x, c, m, h, a, v, d, N, w, k, M, C, E, A, _, S, z, rt, it, st, ot, lt, at, ut, ft, ct, ht, vt, gt, yt, dt, xt, wt, _t, pt, mt, Nt, kt, At, Mt, Et;
     return {
       node: {
         stroke: ((s = (l = (i = t.value) == null ? void 0 : i.nodes) == null ? void 0 : l.colors) == null ? void 0 : s.stroke) || "#E2EB98",
@@ -695,10 +695,10 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
         },
         pinned: {
           stroke: "#9DC4B5",
-          fill: (_ = (A = (E = (z = t.value) == null ? void 0 : z.nodes) == null ? void 0 : E.colors) == null ? void 0 : A.pinned) == null ? void 0 : _.fill
+          fill: (_ = (A = (E = (C = t.value) == null ? void 0 : C.nodes) == null ? void 0 : E.colors) == null ? void 0 : A.pinned) == null ? void 0 : _.fill
         },
         label: {
-          fill: ((it = (rt = (b = (S = t.value) == null ? void 0 : S.nodes) == null ? void 0 : b.colors) == null ? void 0 : rt.label) == null ? void 0 : it.fill) || "#93A392"
+          fill: ((it = (rt = (z = (S = t.value) == null ? void 0 : S.nodes) == null ? void 0 : z.colors) == null ? void 0 : rt.label) == null ? void 0 : it.fill) || "#93A392"
         }
       },
       link: {
@@ -723,9 +723,9 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
       static: ((l = (i = t.value) == null ? void 0 : i.simulation) == null ? void 0 : l.static) || !1,
       force: {
         x: ((u = (s = t.value) == null ? void 0 : s.simulation) == null ? void 0 : u.force.x) || Ye,
-        y: ((f = (g = t.value) == null ? void 0 : g.simulation) == null ? void 0 : f.force.y) || je
-      },
-      charge: ((x = (y = t.value) == null ? void 0 : y.simulation) == null ? void 0 : x.charge) || Xe
+        y: ((f = (g = t.value) == null ? void 0 : g.simulation) == null ? void 0 : f.force.y) || je,
+        charge: ((x = (y = t.value) == null ? void 0 : y.simulation) == null ? void 0 : x.force.charge) || Xe
+      }
     };
   }), r = R(() => {
     var i, l, s, u, g;
@@ -774,25 +774,25 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
   },
   emits: ["node-click", "link-click"],
   setup(t, { emit: n }) {
-    var z;
+    var C;
     const e = t;
     Vt((E) => ({
-      "2eeeb8c9": p(r).node.stroke,
-      "782aa854": p(r).node.fill,
-      "01dadd45": p(r).node.selected.stroke || p(r).node.stroke,
-      "9abc1bb6": p(r).node.selected.fill || p(r).node.fill,
-      "645c7142": p(r).node.pinned.stroke || p(r).node.stroke,
-      "7341e6bc": p(r).node.pinned.fill || p(r).node.fill,
-      "0543e464": p(r).node.hover.stroke || p(r).node.stroke,
-      "3eb160c4": p(r).node.hover.fill || p(r).node.fill,
-      f53fe05e: p(r).link.stroke,
-      "08d3bd48": p(r).link.fill,
-      "2c863772": p(r).link.selected.stroke,
-      "33b3bd3d": p(r).link.selected.fill,
-      "549fee0a": p(r).node.hover.stroke,
-      "67065d06": p(r).node.hover.fill,
-      "74f80d56": p(r).link.label.fill,
-      "16cd0b64": p(r).node.label.fill
+      "5c900d73": p(r).node.stroke,
+      "348d1f7e": p(r).node.fill,
+      b7f3a722: p(r).node.selected.stroke || p(r).node.stroke,
+      "5b513362": p(r).node.selected.fill || p(r).node.fill,
+      "6c8582ec": p(r).node.pinned.stroke || p(r).node.stroke,
+      "0257834c": p(r).node.pinned.fill || p(r).node.fill,
+      "4786150c": p(r).node.hover.stroke || p(r).node.stroke,
+      "27da6cda": p(r).node.hover.fill || p(r).node.fill,
+      "99fd370a": p(r).link.stroke,
+      "900ecef4": p(r).link.fill,
+      "15e88208": p(r).link.selected.stroke,
+      "7d33b553": p(r).link.selected.fill,
+      "32e5b625": p(r).node.hover.stroke,
+      f58d66a0: p(r).node.hover.fill,
+      d9aa0600: p(r).link.label.fill,
+      "12cc69f8": p(r).node.label.fill
     }));
     const {
       theme: r,
@@ -814,7 +814,7 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
       o
     ), { dragStart: f, dragEnd: y, move: x } = Kt(
       g,
-      (z = e.options) == null ? void 0 : z.draggables
+      (C = e.options) == null ? void 0 : C.draggables
     ), {
       label: c,
       getSize: m,
@@ -866,26 +866,26 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
             height: p(v)(_),
             x: (_.x || 0) - p(h)(_) / 2,
             y: (_.y || 0) - p(v)(_) / 2,
-            style: bt(p(d)(_)),
+            style: zt(p(d)(_)),
             title: _.name,
-            class: zt(p(a)(_, ["node-svg"])),
-            onClick: (b) => n("node-click", b, _),
-            onTouchendPassive: (b) => n("node-click", b, _),
-            onMousedown: G((b) => p(f)(b, S), ["prevent"]),
-            onTouchstartPassive: G((b) => p(f)(b, S), ["prevent"]),
+            class: Ct(p(a)(_, ["node-svg"])),
+            onClick: (z) => n("node-click", z, _),
+            onTouchendPassive: (z) => n("node-click", z, _),
+            onMousedown: G((z) => p(f)(z, S), ["prevent"]),
+            onTouchstartPassive: G((z) => p(f)(z, S), ["prevent"]),
             innerHTML: _.innerSVG.innerHtml
           }, null, 46, Ze)) : (P(), L("circle", {
             key: 1,
             r: p(m)(_) / 2,
             cx: _.x || 0,
             cy: _.y || 0,
-            style: bt(p(d)(_)),
+            style: zt(p(d)(_)),
             title: _.name,
-            class: zt(p(a)(_)),
-            onClick: (b) => E.$emit("node-click", b, _),
-            onTouchendPassive: (b) => E.$emit("node-click", b, _),
-            onMousedown: G((b) => p(f)(b, S), ["prevent"]),
-            onTouchstartPassive: G((b) => p(f)(b, S), ["prevent"])
+            class: Ct(p(a)(_)),
+            onClick: (z) => E.$emit("node-click", z, _),
+            onTouchendPassive: (z) => E.$emit("node-click", z, _),
+            onMousedown: G((z) => p(f)(z, S), ["prevent"]),
+            onTouchstartPassive: G((z) => p(f)(z, S), ["prevent"])
           }, null, 46, Je))
         ], 64))), 128))
       ]),
@@ -903,5 +903,6 @@ const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
   }
 });
 export {
-  sn as D3NetworkGraph
+  sn as D3NetworkGraph,
+  He as useSimulation
 };

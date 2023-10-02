@@ -63,11 +63,11 @@ const refresh = () => {
   links.value = getRandomLinks(nodes.value, settings.value.maxLinks);
 };
 
-function nodeClick(event: MouseEvent, node: D3Node): void {
+function nodeClick(event: MouseEvent | TouchEvent, node: D3Node): void {
   console.log("nodeClick", node);
 }
 
-function linkClick(event: MouseEvent, link: D3Link): void {
+function linkClick(event: MouseEvent | TouchEvent, link: D3Link): void {
   console.log("linkClick", link);
 }
 

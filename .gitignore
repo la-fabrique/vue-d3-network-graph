@@ -1,7 +1,14 @@
 .DS_Store
 node_modules
 
+## docs files
+interfaces
+docs
+.nojekyll
+modules.md
 
+local npm packacge
+vue-d3-network-graph-*.tgz
 
 # local env files
 .env.local
