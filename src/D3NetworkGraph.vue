@@ -5,16 +5,10 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     preserveAspectRatio="xMinYMin"
     :viewBox="`0 0 ${rect.width} ${rect.height}`"
-    style="
-      display: block;
-      fill: none;
-      stroke: none;
-      width: 100%;
-      overflow: hidden;
-    "
+    class="svg-container"
     @mouseup="dragEnd"
     @touchend.passive="dragEnd"
-    @touchstart.passive="() => {}"
+    @touchstart.passive="async () => {}"
     @mousemove="move"
   >
     <g id="l-links" class="links">
@@ -45,7 +39,7 @@
           @click="emit('node-click', $event, node)"
           @touchend.passive="emit('node-click', $event, node)"
           @mousedown.prevent="dragStart($event, index)"
-          @touchstart.prevent="dragStart($event, index)"
+          @touchstart.prevent.passive="dragStart($event, index)"
           v-html="node.innerSVG.innerHtml"
         ></svg>
         <circle
@@ -59,7 +53,7 @@
           @click="$emit('node-click', $event, node)"
           @touchend.passive="$emit('node-click', $event, node)"
           @mousedown.prevent="dragStart($event, index)"
-          @touchstart.prevent="dragStart($event, index)"
+          @touchstart.prevent.passive="dragStart($event, index)"
         ></circle>
       </template>
     </g>
@@ -80,14 +74,14 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, reactive, ref } from "vue";
+import { PropType, ref, toRef } from "vue";
 import type { D3Link, D3Node, D3Options } from "@/types";
 import { useDraggable } from "@/useDraggable";
 import { useNode } from "@/useNode";
 import { useLink } from "@/useLink";
 import { useSimulation } from "@/useSimulation";
 import { useResizeObserver } from "@vueuse/core";
-import { useCss } from "@/useCss";
+import { useOptions } from "@/useOptions";
 
 const props = defineProps({
   nodes: {
@@ -106,23 +100,30 @@ const props = defineProps({
 
 const emit = defineEmits(["node-click", "link-click"]);
 
-const { css } = useCss(props.options?.nodes, props.options?.links);
+const {
+  theme,
+  simulation: optionsSimulation,
+  nodes: optionsNodes,
+  links: optionsLinks,
+} = useOptions(toRef(() => props.options));
 
 // svg container resize observer
 const svg = ref(null);
-const rect = reactive({ width: 100, height: 100 });
+const rect = ref({ width: 100, height: 100 });
 useResizeObserver(svg, (entries) => {
   const entry = entries[0];
-  rect.width = entry.contentRect.width;
-  rect.height = entry.contentRect.height;
+  rect.value = {
+    width: entry.contentRect.width,
+    height: entry.contentRect.height,
+  };
 });
 
 // reactive d3 simulation
 const { simulation } = useSimulation(
-  props.nodes,
-  props.links,
+  toRef(() => props.nodes),
+  toRef(() => props.links),
   rect,
-  props.options?.simulation
+  optionsSimulation
 );
 
 // draggable nodes
@@ -138,52 +139,62 @@ const {
   getClass: getNodeClass,
   getHeight: getNodeHeight,
   getStyle: getNodeStyle,
-} = useNode(props.options?.nodes);
+} = useNode(optionsNodes);
 const {
   getPath: getLinkPath,
   getAttrs: getLinkAttrs,
   getClass: getLinkClass,
   getStyle: getLinkStyle,
-} = useLink(props.options?.links);
+} = useLink(optionsLinks);
 </script>
 
 <style lang="scss">
+.svg-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  & > g {
+    pointer-events: all;
+  }
+}
 .node {
-  stroke: v-bind("css.node.stroke");
-  fill: v-bind("css.node.fill");
+  stroke: v-bind("theme.node.stroke");
+  fill: v-bind("theme.node.fill");
   &.selected {
-    stroke: v-bind("css.node.selected.stroke || css.node.stroke");
-    fill: v-bind("css.node.selected.fill || css.node.fill");
+    stroke: v-bind("theme.node.selected.stroke || theme.node.stroke");
+    fill: v-bind("theme.node.selected.fill || theme.node.fill");
   }
   &.pinned {
-    stroke: v-bind("css.node.pinned.stroke || css.node.stroke");
-    fill: v-bind("css.node.pinned.fill || css.node.fill");
+    stroke: v-bind("theme.node.pinned.stroke || theme.node.stroke");
+    fill: v-bind("theme.node.pinned.fill || theme.node.fill");
   }
   &:hover {
-    stroke: v-bind("css.node.hover.stroke || css.node.stroke");
-    fill: v-bind("css.node.hover.fill || css.node.fill");
+    stroke: v-bind("theme.node.hover.stroke || theme.node.stroke");
+    fill: v-bind("theme.node.hover.fill || theme.node.fill");
   }
 }
 .link {
-  stroke: v-bind("css.link.stroke");
-  fill: v-bind("css.link.fill");
+  stroke: v-bind("theme.link.stroke");
+  fill: v-bind("theme.link.fill");
   &.selected {
-    stroke: v-bind("css.link.selected.stroke");
-    fill: v-bind("css.link.selected.fill");
+    stroke: v-bind("theme.link.selected.stroke");
+    fill: v-bind("theme.link.selected.fill");
   }
   &:hover {
-    stroke: v-bind("css.node.hover.stroke");
-    fill: v-bind("css.node.hover.fill");
+    stroke: v-bind("theme.node.hover.stroke");
+    fill: v-bind("theme.node.hover.fill");
   }
   & > text {
-    fill: v-bind("css.link.label.fill");
+    fill: v-bind("theme.link.label.fill");
     transform: translate(0, -0.5em);
     text-anchor: middle;
   }
 }
 .labels {
   & > text {
-    fill: v-bind("css.node.label.fill");
+    fill: v-bind("theme.node.label.fill");
   }
 }
 </style>
+@/useOptions

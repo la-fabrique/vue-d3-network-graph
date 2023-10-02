@@ -9,6 +9,17 @@ import { SimulationLinkDatum } from 'd3-force';
 import { SimulationNodeDatum } from 'd3-force';
 import { VNodeProps } from 'vue';
 
+export declare type D3DefinedLinkOptions = {
+    width: number;
+};
+
+export declare type D3DefinedNodeOptions = {
+    size: number;
+    font: {
+        size: number;
+    };
+};
+
 export declare type D3InnerSVG = {
     viewBox: string;
     innerHtml: string;
@@ -126,6 +137,7 @@ export declare type D3Options = {
 };
 
 export declare type D3SimulationOptions = {
+    static?: boolean;
     force: {
         x: number;
         y: number;

@@ -4,17 +4,17 @@ import eslintPlugin from "vite-plugin-eslint";
 import vuetify from "vite-plugin-vuetify";
 import { resolve } from "path";
 import dts from "vite-plugin-dts";
+import pkg from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     dts({
       outputDir: ["dist"],
-      include: ["src/**"],
+      include: ["src/**", "env.d.ts"],
       staticImport: true,
       skipDiagnostics: false,
       rollupTypes: true,
-      //insertTypesEntry: true,
     }),
     vue(),
     eslintPlugin(),
@@ -22,7 +22,12 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
-  define: { "process.env": {} },
+  define: {
+    "import.meta.env.VITE_APP_NAME": JSON.stringify(pkg.name),
+    "import.meta.env.VITE_APP_DESCRIPTION": JSON.stringify(pkg.description),
+    "import.meta.env.VITE_APP_VERSION": JSON.stringify(pkg.version),
+    "import.meta.env.VITE_APP_REPO": JSON.stringify(pkg.repository.url),
+  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

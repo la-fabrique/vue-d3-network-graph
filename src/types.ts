@@ -48,6 +48,11 @@ export type D3NodeOptions = {
   colors?: D3NodeOptionsColors;
 };
 
+export type D3DefinedNodeOptions = {
+  size: number;
+  font: { size: number };
+};
+
 export type D3LinkOptionsColors = {
   stroke?: string;
   fill?: string;
@@ -69,7 +74,12 @@ export type D3LinkOptions = {
   colors?: D3LinkOptionsColors;
 };
 
+export type D3DefinedLinkOptions = {
+  width: number;
+};
+
 export type D3SimulationOptions = {
+  static?: boolean;
   force: { x: number; y: number };
   charge: number;
 };

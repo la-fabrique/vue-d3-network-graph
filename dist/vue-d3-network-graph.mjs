@@ -1,745 +1,762 @@
-import { ref as et, reactive as ut, toValue as D, computed as xt, watch as _t, defineComponent as dt, useCssVars as mt, unref as d, openBlock as B, createElementBlock as I, createElementVNode as Z, Fragment as U, renderList as K, mergeProps as Nt, normalizeStyle as rt, normalizeClass as it, withModifiers as V, toDisplayString as At } from "vue";
-import { useResizeObserver as Mt } from "@vueuse/core";
-function Et(t, e) {
-  const n = et(void 0), r = ut({
+import { ref as V, reactive as Gt, toValue as J, computed as R, defineComponent as Ut, useCssVars as Vt, unref as p, toRef as K, openBlock as P, createElementBlock as L, createElementVNode as Q, Fragment as X, renderList as Z, mergeProps as Wt, normalizeStyle as bt, normalizeClass as zt, withModifiers as G, toDisplayString as qt } from "vue";
+import { watchDebounced as Ct, useResizeObserver as $t } from "@vueuse/core";
+function Kt(t, n) {
+  const e = V(void 0), r = Gt({
     x: 0,
     y: 0
-  }), i = (c) => {
-    let y, p = 0;
-    return c instanceof MouseEvent ? (y = c.clientX, p = c.clientY) : c instanceof TouchEvent && (y = c.touches[0].clientX, p = c.touches[0].clientY), { x: y || 0, y: p || 0 };
-  }, s = (c, y) => D(e) ? (() => {
-    n.value = y, l(c, t.value.nodes()[y]);
-  })() : void 0, l = (c, y) => {
-    let p = 0, a = 0;
-    if (c && y && (y != null && y.x) && (y != null && y.y)) {
-      const _ = i(c);
-      p = _.x ? _.x - y.x : y.x, a = _.y ? _.y - y.y : y.y;
+  }), o = (f) => {
+    let y, x = 0;
+    return f instanceof MouseEvent ? (y = f.clientX, x = f.clientY) : f instanceof TouchEvent && (y = f.touches[0].clientX, x = f.touches[0].clientY), { x: y || 0, y: x || 0 };
+  }, i = (f, y) => J(n) ? (() => {
+    e.value = y, l(f, t.value.nodes()[y]);
+  })() : void 0, l = (f, y) => {
+    let x = 0, c = 0;
+    if (f && y && (y != null && y.x) && (y != null && y.y)) {
+      const m = o(f);
+      x = m.x ? m.x - y.x : y.x, c = m.y ? m.y - y.y : y.y;
     }
-    r.x = p, r.y = a;
-  }, o = () => {
-    if (n.value !== void 0) {
-      const c = t.value.nodes()[n.value];
-      c.fx = null, c.fy = null, g();
+    r.x = x, r.y = c;
+  }, s = () => {
+    if (e.value !== void 0) {
+      const f = t.value.nodes()[e.value];
+      f.fx = null, f.fy = null, u();
     }
-  }, g = () => {
-    n.value = void 0, t.value.alpha(0.1), t.value.restart(), l();
+  }, u = () => {
+    e.value = void 0, t.value.alpha(0.1), t.value.restart(), l();
   };
   return {
-    dragStart: s,
-    dragEnd: o,
-    move: (c) => {
-      const y = i(c);
-      n.value != null && t.value.nodes()[n.value] && (t.value.restart(), t.value.alpha(0.5), t.value.nodes()[n.value].fx = y.x - r.x, t.value.nodes()[n.value].fy = y.y - r.y);
+    dragStart: i,
+    dragEnd: s,
+    move: (f) => {
+      const y = o(f);
+      e.value != null && t.value.nodes()[e.value] && (t.value.restart(), t.value.alpha(0.5), t.value.nodes()[e.value].fx = y.x - r.x, t.value.nodes()[e.value].fy = y.y - r.y);
     }
   };
 }
-const Ct = 20, Tt = 10;
-function bt(t) {
-  const e = () => {
-    var u;
-    return ((u = D(t)) == null ? void 0 : u.size) || Ct;
-  }, n = () => {
-    var u, c;
-    return ((c = (u = D(t)) == null ? void 0 : u.font) == null ? void 0 : c.size) || Tt;
-  }, r = (u) => u.size || e(), i = (u) => u.width || e(), s = (u) => u.height || u.size || e(), l = (u) => u.color ? "fill: " + u.color : "", o = (u, c = []) => {
-    const y = u.cssClass ? u.cssClass : [];
-    return y.push("node"), c.forEach((p) => y.push(p)), (u.fx || u.fy) && y.push("pinned"), y;
+function Qt(t) {
+  const n = (s) => s.size || t.value.size, e = (s) => s.width || t.value.size, r = (s) => s.height || s.size || t.value.size, o = (s) => s.color ? "fill: " + s.color : "", i = (s, u = []) => {
+    const g = s.cssClass ? s.cssClass : [];
+    return g.push("node"), u.forEach((f) => g.push(f)), (s.fx || s.fy) && g.push("pinned"), g;
   };
-  return { label: xt(() => ({
-    font: { size: n() },
+  return { label: R(() => ({
+    font: { size: t.value.font.size },
     offset: {
-      x: e() / 2 + n() / 2,
-      y: n() / 2
+      x: t.value.size / 2 + t.value.font.size / 2,
+      y: t.value.font.size / 2
     }
-  })), getSize: r, getWidth: i, getHeight: s, getStyle: l, getClass: o };
+  })), getSize: n, getWidth: e, getHeight: r, getStyle: o, getClass: i };
 }
-const zt = 2;
-function St(t) {
-  const e = () => {
-    var l;
-    return ((l = D(t)) == null ? void 0 : l.width) || zt;
-  };
+function Zt(t) {
   return {
-    getPath: (l) => {
-      var o, g, u, c;
-      if (typeof l.source != "number" && typeof l.source != "string" && typeof l.target != "number" && typeof l.target != "string") {
-        const y = {
-          M: [((o = l == null ? void 0 : l.source) == null ? void 0 : o.x) || 0, ((g = l == null ? void 0 : l.source) == null ? void 0 : g.y) || 0],
-          X: [((u = l == null ? void 0 : l.target) == null ? void 0 : u.x) || 0, ((c = l == null ? void 0 : l.target) == null ? void 0 : c.y) || 0]
+    getPath: (i) => {
+      var l, s, u, g;
+      if (typeof i.source != "number" && typeof i.source != "string" && typeof i.target != "number" && typeof i.target != "string") {
+        const f = {
+          M: [((l = i == null ? void 0 : i.source) == null ? void 0 : l.x) || 0, ((s = i == null ? void 0 : i.source) == null ? void 0 : s.y) || 0],
+          X: [((u = i == null ? void 0 : i.target) == null ? void 0 : u.x) || 0, ((g = i == null ? void 0 : i.target) == null ? void 0 : g.y) || 0]
         };
-        return "M " + y.M.join(" ") + " L" + y.X.join(" ");
+        return "M " + f.M.join(" ") + " L" + f.X.join(" ");
       }
     },
-    getAttrs: (l) => ({ "stroke-width": e() }),
-    getClass: (l) => ["link"],
-    getStyle: (l) => l.color ? {
-      stroke: l.color
+    getAttrs: (i) => ({ "stroke-width": t.value.width }),
+    getClass: (i) => ["link"],
+    getStyle: (i) => i.color ? {
+      stroke: i.color
     } : {}
   };
 }
-function Dt(t) {
-  const e = +this._x.call(null, t), n = +this._y.call(null, t);
-  return ct(this.cover(e, n), e, n, t);
+function Jt(t) {
+  const n = +this._x.call(null, t), e = +this._y.call(null, t);
+  return Ft(this.cover(n, e), n, e, t);
 }
-function ct(t, e, n, r) {
-  if (isNaN(e) || isNaN(n))
+function Ft(t, n, e, r) {
+  if (isNaN(n) || isNaN(e))
     return t;
-  var i, s = t._root, l = { data: r }, o = t._x0, g = t._y0, u = t._x1, c = t._y1, y, p, a, _, h, f, v, w;
-  if (!s)
+  var o, i = t._root, l = { data: r }, s = t._x0, u = t._y0, g = t._x1, f = t._y1, y, x, c, m, h, a, v, d;
+  if (!i)
     return t._root = l, t;
-  for (; s.length; )
-    if ((h = e >= (y = (o + u) / 2)) ? o = y : u = y, (f = n >= (p = (g + c) / 2)) ? g = p : c = p, i = s, !(s = s[v = f << 1 | h]))
-      return i[v] = l, t;
-  if (a = +t._x.call(null, s.data), _ = +t._y.call(null, s.data), e === a && n === _)
-    return l.next = s, i ? i[v] = l : t._root = l, t;
+  for (; i.length; )
+    if ((h = n >= (y = (s + g) / 2)) ? s = y : g = y, (a = e >= (x = (u + f) / 2)) ? u = x : f = x, o = i, !(i = i[v = a << 1 | h]))
+      return o[v] = l, t;
+  if (c = +t._x.call(null, i.data), m = +t._y.call(null, i.data), n === c && e === m)
+    return l.next = i, o ? o[v] = l : t._root = l, t;
   do
-    i = i ? i[v] = new Array(4) : t._root = new Array(4), (h = e >= (y = (o + u) / 2)) ? o = y : u = y, (f = n >= (p = (g + c) / 2)) ? g = p : c = p;
-  while ((v = f << 1 | h) === (w = (_ >= p) << 1 | a >= y));
-  return i[w] = s, i[v] = l, t;
+    o = o ? o[v] = new Array(4) : t._root = new Array(4), (h = n >= (y = (s + g) / 2)) ? s = y : g = y, (a = e >= (x = (u + f) / 2)) ? u = x : f = x;
+  while ((v = a << 1 | h) === (d = (m >= x) << 1 | c >= y));
+  return o[d] = i, o[v] = l, t;
 }
-function kt(t) {
-  var e, n, r = t.length, i, s, l = new Array(r), o = new Array(r), g = 1 / 0, u = 1 / 0, c = -1 / 0, y = -1 / 0;
-  for (n = 0; n < r; ++n)
-    isNaN(i = +this._x.call(null, e = t[n])) || isNaN(s = +this._y.call(null, e)) || (l[n] = i, o[n] = s, i < g && (g = i), i > c && (c = i), s < u && (u = s), s > y && (y = s));
-  if (g > c || u > y)
+function te(t) {
+  var n, e, r = t.length, o, i, l = new Array(r), s = new Array(r), u = 1 / 0, g = 1 / 0, f = -1 / 0, y = -1 / 0;
+  for (e = 0; e < r; ++e)
+    isNaN(o = +this._x.call(null, n = t[e])) || isNaN(i = +this._y.call(null, n)) || (l[e] = o, s[e] = i, o < u && (u = o), o > f && (f = o), i < g && (g = i), i > y && (y = i));
+  if (u > f || g > y)
     return this;
-  for (this.cover(g, u).cover(c, y), n = 0; n < r; ++n)
-    ct(this, l[n], o[n], t[n]);
+  for (this.cover(u, g).cover(f, y), e = 0; e < r; ++e)
+    Ft(this, l[e], s[e], t[e]);
   return this;
 }
-function Ft(t, e) {
-  if (isNaN(t = +t) || isNaN(e = +e))
+function ee(t, n) {
+  if (isNaN(t = +t) || isNaN(n = +n))
     return this;
-  var n = this._x0, r = this._y0, i = this._x1, s = this._y1;
-  if (isNaN(n))
-    i = (n = Math.floor(t)) + 1, s = (r = Math.floor(e)) + 1;
+  var e = this._x0, r = this._y0, o = this._x1, i = this._y1;
+  if (isNaN(e))
+    o = (e = Math.floor(t)) + 1, i = (r = Math.floor(n)) + 1;
   else {
-    for (var l = i - n || 1, o = this._root, g, u; n > t || t >= i || r > e || e >= s; )
-      switch (u = (e < r) << 1 | t < n, g = new Array(4), g[u] = o, o = g, l *= 2, u) {
+    for (var l = o - e || 1, s = this._root, u, g; e > t || t >= o || r > n || n >= i; )
+      switch (g = (n < r) << 1 | t < e, u = new Array(4), u[g] = s, s = u, l *= 2, g) {
         case 0:
-          i = n + l, s = r + l;
+          o = e + l, i = r + l;
           break;
         case 1:
-          n = i - l, s = r + l;
+          e = o - l, i = r + l;
           break;
         case 2:
-          i = n + l, r = s - l;
+          o = e + l, r = i - l;
           break;
         case 3:
-          n = i - l, r = s - l;
+          e = o - l, r = i - l;
           break;
       }
-    this._root && this._root.length && (this._root = o);
+    this._root && this._root.length && (this._root = s);
   }
-  return this._x0 = n, this._y0 = r, this._x1 = i, this._y1 = s, this;
+  return this._x0 = e, this._y0 = r, this._x1 = o, this._y1 = i, this;
 }
-function Lt() {
+function ne() {
   var t = [];
-  return this.visit(function(e) {
-    if (!e.length)
+  return this.visit(function(n) {
+    if (!n.length)
       do
-        t.push(e.data);
-      while (e = e.next);
+        t.push(n.data);
+      while (n = n.next);
   }), t;
 }
-function Pt(t) {
+function re(t) {
   return arguments.length ? this.cover(+t[0][0], +t[0][1]).cover(+t[1][0], +t[1][1]) : isNaN(this._x0) ? void 0 : [[this._x0, this._y0], [this._x1, this._y1]];
 }
-function b(t, e, n, r, i) {
-  this.node = t, this.x0 = e, this.y0 = n, this.x1 = r, this.y1 = i;
+function C(t, n, e, r, o) {
+  this.node = t, this.x0 = n, this.y0 = e, this.x1 = r, this.y1 = o;
 }
-function Bt(t, e, n) {
-  var r, i = this._x0, s = this._y0, l, o, g, u, c = this._x1, y = this._y1, p = [], a = this._root, _, h;
-  for (a && p.push(new b(a, i, s, c, y)), n == null ? n = 1 / 0 : (i = t - n, s = e - n, c = t + n, y = e + n, n *= n); _ = p.pop(); )
-    if (!(!(a = _.node) || (l = _.x0) > c || (o = _.y0) > y || (g = _.x1) < i || (u = _.y1) < s))
-      if (a.length) {
-        var f = (l + g) / 2, v = (o + u) / 2;
-        p.push(
-          new b(a[3], f, v, g, u),
-          new b(a[2], l, v, f, u),
-          new b(a[1], f, o, g, v),
-          new b(a[0], l, o, f, v)
-        ), (h = (e >= v) << 1 | t >= f) && (_ = p[p.length - 1], p[p.length - 1] = p[p.length - 1 - h], p[p.length - 1 - h] = _);
+function ie(t, n, e) {
+  var r, o = this._x0, i = this._y0, l, s, u, g, f = this._x1, y = this._y1, x = [], c = this._root, m, h;
+  for (c && x.push(new C(c, o, i, f, y)), e == null ? e = 1 / 0 : (o = t - e, i = n - e, f = t + e, y = n + e, e *= e); m = x.pop(); )
+    if (!(!(c = m.node) || (l = m.x0) > f || (s = m.y0) > y || (u = m.x1) < o || (g = m.y1) < i))
+      if (c.length) {
+        var a = (l + u) / 2, v = (s + g) / 2;
+        x.push(
+          new C(c[3], a, v, u, g),
+          new C(c[2], l, v, a, g),
+          new C(c[1], a, s, u, v),
+          new C(c[0], l, s, a, v)
+        ), (h = (n >= v) << 1 | t >= a) && (m = x[x.length - 1], x[x.length - 1] = x[x.length - 1 - h], x[x.length - 1 - h] = m);
       } else {
-        var w = t - +this._x.call(null, a.data), N = e - +this._y.call(null, a.data), x = w * w + N * N;
-        if (x < n) {
-          var A = Math.sqrt(n = x);
-          i = t - A, s = e - A, c = t + A, y = e + A, r = a.data;
+        var d = t - +this._x.call(null, c.data), N = n - +this._y.call(null, c.data), w = d * d + N * N;
+        if (w < e) {
+          var k = Math.sqrt(e = w);
+          o = t - k, i = n - k, f = t + k, y = n + k, r = c.data;
         }
       }
   return r;
 }
-function It(t) {
-  if (isNaN(c = +this._x.call(null, t)) || isNaN(y = +this._y.call(null, t)))
+function se(t) {
+  if (isNaN(f = +this._x.call(null, t)) || isNaN(y = +this._y.call(null, t)))
     return this;
-  var e, n = this._root, r, i, s, l = this._x0, o = this._y0, g = this._x1, u = this._y1, c, y, p, a, _, h, f, v;
-  if (!n)
+  var n, e = this._root, r, o, i, l = this._x0, s = this._y0, u = this._x1, g = this._y1, f, y, x, c, m, h, a, v;
+  if (!e)
     return this;
-  if (n.length)
+  if (e.length)
     for (; ; ) {
-      if ((_ = c >= (p = (l + g) / 2)) ? l = p : g = p, (h = y >= (a = (o + u) / 2)) ? o = a : u = a, e = n, !(n = n[f = h << 1 | _]))
+      if ((m = f >= (x = (l + u) / 2)) ? l = x : u = x, (h = y >= (c = (s + g) / 2)) ? s = c : g = c, n = e, !(e = e[a = h << 1 | m]))
         return this;
-      if (!n.length)
+      if (!e.length)
         break;
-      (e[f + 1 & 3] || e[f + 2 & 3] || e[f + 3 & 3]) && (r = e, v = f);
+      (n[a + 1 & 3] || n[a + 2 & 3] || n[a + 3 & 3]) && (r = n, v = a);
     }
-  for (; n.data !== t; )
-    if (i = n, !(n = n.next))
+  for (; e.data !== t; )
+    if (o = e, !(e = e.next))
       return this;
-  return (s = n.next) && delete n.next, i ? (s ? i.next = s : delete i.next, this) : e ? (s ? e[f] = s : delete e[f], (n = e[0] || e[1] || e[2] || e[3]) && n === (e[3] || e[2] || e[1] || e[0]) && !n.length && (r ? r[v] = n : this._root = n), this) : (this._root = s, this);
+  return (i = e.next) && delete e.next, o ? (i ? o.next = i : delete o.next, this) : n ? (i ? n[a] = i : delete n[a], (e = n[0] || n[1] || n[2] || n[3]) && e === (n[3] || n[2] || n[1] || n[0]) && !e.length && (r ? r[v] = e : this._root = e), this) : (this._root = i, this);
 }
-function Ot(t) {
-  for (var e = 0, n = t.length; e < n; ++e)
-    this.remove(t[e]);
+function oe(t) {
+  for (var n = 0, e = t.length; n < e; ++n)
+    this.remove(t[n]);
   return this;
 }
-function Rt() {
+function le() {
   return this._root;
 }
-function Yt() {
+function ae() {
   var t = 0;
-  return this.visit(function(e) {
-    if (!e.length)
+  return this.visit(function(n) {
+    if (!n.length)
       do
         ++t;
-      while (e = e.next);
+      while (n = n.next);
   }), t;
 }
-function jt(t) {
-  var e = [], n, r = this._root, i, s, l, o, g;
-  for (r && e.push(new b(r, this._x0, this._y0, this._x1, this._y1)); n = e.pop(); )
-    if (!t(r = n.node, s = n.x0, l = n.y0, o = n.x1, g = n.y1) && r.length) {
-      var u = (s + o) / 2, c = (l + g) / 2;
-      (i = r[3]) && e.push(new b(i, u, c, o, g)), (i = r[2]) && e.push(new b(i, s, c, u, g)), (i = r[1]) && e.push(new b(i, u, l, o, c)), (i = r[0]) && e.push(new b(i, s, l, u, c));
+function ue(t) {
+  var n = [], e, r = this._root, o, i, l, s, u;
+  for (r && n.push(new C(r, this._x0, this._y0, this._x1, this._y1)); e = n.pop(); )
+    if (!t(r = e.node, i = e.x0, l = e.y0, s = e.x1, u = e.y1) && r.length) {
+      var g = (i + s) / 2, f = (l + u) / 2;
+      (o = r[3]) && n.push(new C(o, g, f, s, u)), (o = r[2]) && n.push(new C(o, i, f, g, u)), (o = r[1]) && n.push(new C(o, g, l, s, f)), (o = r[0]) && n.push(new C(o, i, l, g, f));
     }
   return this;
 }
-function Ht(t) {
-  var e = [], n = [], r;
-  for (this._root && e.push(new b(this._root, this._x0, this._y0, this._x1, this._y1)); r = e.pop(); ) {
-    var i = r.node;
-    if (i.length) {
-      var s, l = r.x0, o = r.y0, g = r.x1, u = r.y1, c = (l + g) / 2, y = (o + u) / 2;
-      (s = i[0]) && e.push(new b(s, l, o, c, y)), (s = i[1]) && e.push(new b(s, c, o, g, y)), (s = i[2]) && e.push(new b(s, l, y, c, u)), (s = i[3]) && e.push(new b(s, c, y, g, u));
+function fe(t) {
+  var n = [], e = [], r;
+  for (this._root && n.push(new C(this._root, this._x0, this._y0, this._x1, this._y1)); r = n.pop(); ) {
+    var o = r.node;
+    if (o.length) {
+      var i, l = r.x0, s = r.y0, u = r.x1, g = r.y1, f = (l + u) / 2, y = (s + g) / 2;
+      (i = o[0]) && n.push(new C(i, l, s, f, y)), (i = o[1]) && n.push(new C(i, f, s, u, y)), (i = o[2]) && n.push(new C(i, l, y, f, g)), (i = o[3]) && n.push(new C(i, f, y, u, g));
     }
-    n.push(r);
+    e.push(r);
   }
-  for (; r = n.pop(); )
+  for (; r = e.pop(); )
     t(r.node, r.x0, r.y0, r.x1, r.y1);
   return this;
 }
-function Xt(t) {
+function ce(t) {
   return t[0];
 }
-function Gt(t) {
+function he(t) {
   return arguments.length ? (this._x = t, this) : this._x;
 }
-function Ut(t) {
+function ve(t) {
   return t[1];
 }
-function Vt(t) {
+function ge(t) {
   return arguments.length ? (this._y = t, this) : this._y;
 }
-function ht(t, e, n) {
-  var r = new nt(e ?? Xt, n ?? Ut, NaN, NaN, NaN, NaN);
+function It(t, n, e) {
+  var r = new nt(n ?? ce, e ?? ve, NaN, NaN, NaN, NaN);
   return t == null ? r : r.addAll(t);
 }
-function nt(t, e, n, r, i, s) {
-  this._x = t, this._y = e, this._x0 = n, this._y0 = r, this._x1 = i, this._y1 = s, this._root = void 0;
+function nt(t, n, e, r, o, i) {
+  this._x = t, this._y = n, this._x0 = e, this._y0 = r, this._x1 = o, this._y1 = i, this._root = void 0;
 }
-function ot(t) {
-  for (var e = { data: t.data }, n = e; t = t.next; )
-    n = n.next = { data: t.data };
-  return e;
+function Tt(t) {
+  for (var n = { data: t.data }, e = n; t = t.next; )
+    e = e.next = { data: t.data };
+  return n;
 }
-var z = ht.prototype = nt.prototype;
-z.copy = function() {
-  var t = new nt(this._x, this._y, this._x0, this._y0, this._x1, this._y1), e = this._root, n, r;
-  if (!e)
+var T = It.prototype = nt.prototype;
+T.copy = function() {
+  var t = new nt(this._x, this._y, this._x0, this._y0, this._x1, this._y1), n = this._root, e, r;
+  if (!n)
     return t;
-  if (!e.length)
-    return t._root = ot(e), t;
-  for (n = [{ source: e, target: t._root = new Array(4) }]; e = n.pop(); )
-    for (var i = 0; i < 4; ++i)
-      (r = e.source[i]) && (r.length ? n.push({ source: r, target: e.target[i] = new Array(4) }) : e.target[i] = ot(r));
+  if (!n.length)
+    return t._root = Tt(n), t;
+  for (e = [{ source: n, target: t._root = new Array(4) }]; n = e.pop(); )
+    for (var o = 0; o < 4; ++o)
+      (r = n.source[o]) && (r.length ? e.push({ source: r, target: n.target[o] = new Array(4) }) : n.target[o] = Tt(r));
   return t;
 };
-z.add = Dt;
-z.addAll = kt;
-z.cover = Ft;
-z.data = Lt;
-z.extent = Pt;
-z.find = Bt;
-z.remove = It;
-z.removeAll = Ot;
-z.root = Rt;
-z.size = Yt;
-z.visit = jt;
-z.visitAfter = Ht;
-z.x = Gt;
-z.y = Vt;
-function S(t) {
+T.add = Jt;
+T.addAll = te;
+T.cover = ee;
+T.data = ne;
+T.extent = re;
+T.find = ie;
+T.remove = se;
+T.removeAll = oe;
+T.root = le;
+T.size = ae;
+T.visit = ue;
+T.visitAfter = fe;
+T.x = he;
+T.y = ge;
+function D(t) {
   return function() {
     return t;
   };
 }
-function R(t) {
+function I(t) {
   return (t() - 0.5) * 1e-6;
 }
-function qt(t) {
+function ye(t) {
   return t.index;
 }
-function st(t, e) {
-  var n = t.get(e);
-  if (!n)
-    throw new Error("node not found: " + e);
-  return n;
+function Dt(t, n) {
+  var e = t.get(n);
+  if (!e)
+    throw new Error("node not found: " + n);
+  return e;
 }
-function Wt(t) {
-  var e = qt, n = y, r, i = S(30), s, l, o, g, u, c = 1;
+function de(t) {
+  var n = ye, e = y, r, o = D(30), i, l, s, u, g, f = 1;
   t == null && (t = []);
-  function y(f) {
-    return 1 / Math.min(o[f.source.index], o[f.target.index]);
+  function y(a) {
+    return 1 / Math.min(s[a.source.index], s[a.target.index]);
   }
-  function p(f) {
-    for (var v = 0, w = t.length; v < c; ++v)
-      for (var N = 0, x, A, M, E, C, F, k; N < w; ++N)
-        x = t[N], A = x.source, M = x.target, E = M.x + M.vx - A.x - A.vx || R(u), C = M.y + M.vy - A.y - A.vy || R(u), F = Math.sqrt(E * E + C * C), F = (F - s[N]) / F * f * r[N], E *= F, C *= F, M.vx -= E * (k = g[N]), M.vy -= C * k, A.vx += E * (k = 1 - k), A.vy += C * k;
+  function x(a) {
+    for (var v = 0, d = t.length; v < f; ++v)
+      for (var N = 0, w, k, M, z, E, A, _; N < d; ++N)
+        w = t[N], k = w.source, M = w.target, z = M.x + M.vx - k.x - k.vx || I(g), E = M.y + M.vy - k.y - k.vy || I(g), A = Math.sqrt(z * z + E * E), A = (A - i[N]) / A * a * r[N], z *= A, E *= A, M.vx -= z * (_ = u[N]), M.vy -= E * _, k.vx += z * (_ = 1 - _), k.vy += E * _;
   }
-  function a() {
+  function c() {
     if (l) {
-      var f, v = l.length, w = t.length, N = new Map(l.map((A, M) => [e(A, M, l), A])), x;
-      for (f = 0, o = new Array(v); f < w; ++f)
-        x = t[f], x.index = f, typeof x.source != "object" && (x.source = st(N, x.source)), typeof x.target != "object" && (x.target = st(N, x.target)), o[x.source.index] = (o[x.source.index] || 0) + 1, o[x.target.index] = (o[x.target.index] || 0) + 1;
-      for (f = 0, g = new Array(w); f < w; ++f)
-        x = t[f], g[f] = o[x.source.index] / (o[x.source.index] + o[x.target.index]);
-      r = new Array(w), _(), s = new Array(w), h();
+      var a, v = l.length, d = t.length, N = new Map(l.map((k, M) => [n(k, M, l), k])), w;
+      for (a = 0, s = new Array(v); a < d; ++a)
+        w = t[a], w.index = a, typeof w.source != "object" && (w.source = Dt(N, w.source)), typeof w.target != "object" && (w.target = Dt(N, w.target)), s[w.source.index] = (s[w.source.index] || 0) + 1, s[w.target.index] = (s[w.target.index] || 0) + 1;
+      for (a = 0, u = new Array(d); a < d; ++a)
+        w = t[a], u[a] = s[w.source.index] / (s[w.source.index] + s[w.target.index]);
+      r = new Array(d), m(), i = new Array(d), h();
     }
   }
-  function _() {
+  function m() {
     if (l)
-      for (var f = 0, v = t.length; f < v; ++f)
-        r[f] = +n(t[f], f, t);
+      for (var a = 0, v = t.length; a < v; ++a)
+        r[a] = +e(t[a], a, t);
   }
   function h() {
     if (l)
-      for (var f = 0, v = t.length; f < v; ++f)
-        s[f] = +i(t[f], f, t);
+      for (var a = 0, v = t.length; a < v; ++a)
+        i[a] = +o(t[a], a, t);
   }
-  return p.initialize = function(f, v) {
-    l = f, u = v, a();
-  }, p.links = function(f) {
-    return arguments.length ? (t = f, a(), p) : t;
-  }, p.id = function(f) {
-    return arguments.length ? (e = f, p) : e;
-  }, p.iterations = function(f) {
-    return arguments.length ? (c = +f, p) : c;
-  }, p.strength = function(f) {
-    return arguments.length ? (n = typeof f == "function" ? f : S(+f), _(), p) : n;
-  }, p.distance = function(f) {
-    return arguments.length ? (i = typeof f == "function" ? f : S(+f), h(), p) : i;
-  }, p;
+  return x.initialize = function(a, v) {
+    l = a, g = v, c();
+  }, x.links = function(a) {
+    return arguments.length ? (t = a, c(), x) : t;
+  }, x.id = function(a) {
+    return arguments.length ? (n = a, x) : n;
+  }, x.iterations = function(a) {
+    return arguments.length ? (f = +a, x) : f;
+  }, x.strength = function(a) {
+    return arguments.length ? (e = typeof a == "function" ? a : D(+a), m(), x) : e;
+  }, x.distance = function(a) {
+    return arguments.length ? (o = typeof a == "function" ? a : D(+a), h(), x) : o;
+  }, x;
 }
-var $t = { value: () => {
+var xe = { value: () => {
 } };
-function gt() {
-  for (var t = 0, e = arguments.length, n = {}, r; t < e; ++t) {
-    if (!(r = arguments[t] + "") || r in n || /[\s.]/.test(r))
+function Ot() {
+  for (var t = 0, n = arguments.length, e = {}, r; t < n; ++t) {
+    if (!(r = arguments[t] + "") || r in e || /[\s.]/.test(r))
       throw new Error("illegal type: " + r);
-    n[r] = [];
+    e[r] = [];
   }
-  return new q(n);
+  return new U(e);
 }
-function q(t) {
+function U(t) {
   this._ = t;
 }
-function Qt(t, e) {
-  return t.trim().split(/^|\s+/).map(function(n) {
-    var r = "", i = n.indexOf(".");
-    if (i >= 0 && (r = n.slice(i + 1), n = n.slice(0, i)), n && !e.hasOwnProperty(n))
-      throw new Error("unknown type: " + n);
-    return { type: n, name: r };
+function we(t, n) {
+  return t.trim().split(/^|\s+/).map(function(e) {
+    var r = "", o = e.indexOf(".");
+    if (o >= 0 && (r = e.slice(o + 1), e = e.slice(0, o)), e && !n.hasOwnProperty(e))
+      throw new Error("unknown type: " + e);
+    return { type: e, name: r };
   });
 }
-q.prototype = gt.prototype = {
-  constructor: q,
-  on: function(t, e) {
-    var n = this._, r = Qt(t + "", n), i, s = -1, l = r.length;
+U.prototype = Ot.prototype = {
+  constructor: U,
+  on: function(t, n) {
+    var e = this._, r = we(t + "", e), o, i = -1, l = r.length;
     if (arguments.length < 2) {
-      for (; ++s < l; )
-        if ((i = (t = r[s]).type) && (i = Zt(n[i], t.name)))
-          return i;
+      for (; ++i < l; )
+        if ((o = (t = r[i]).type) && (o = _e(e[o], t.name)))
+          return o;
       return;
     }
-    if (e != null && typeof e != "function")
-      throw new Error("invalid callback: " + e);
-    for (; ++s < l; )
-      if (i = (t = r[s]).type)
-        n[i] = lt(n[i], t.name, e);
-      else if (e == null)
-        for (i in n)
-          n[i] = lt(n[i], t.name, null);
+    if (n != null && typeof n != "function")
+      throw new Error("invalid callback: " + n);
+    for (; ++i < l; )
+      if (o = (t = r[i]).type)
+        e[o] = St(e[o], t.name, n);
+      else if (n == null)
+        for (o in e)
+          e[o] = St(e[o], t.name, null);
     return this;
   },
   copy: function() {
-    var t = {}, e = this._;
-    for (var n in e)
-      t[n] = e[n].slice();
-    return new q(t);
+    var t = {}, n = this._;
+    for (var e in n)
+      t[e] = n[e].slice();
+    return new U(t);
   },
-  call: function(t, e) {
-    if ((i = arguments.length - 2) > 0)
-      for (var n = new Array(i), r = 0, i, s; r < i; ++r)
-        n[r] = arguments[r + 2];
+  call: function(t, n) {
+    if ((o = arguments.length - 2) > 0)
+      for (var e = new Array(o), r = 0, o, i; r < o; ++r)
+        e[r] = arguments[r + 2];
     if (!this._.hasOwnProperty(t))
       throw new Error("unknown type: " + t);
-    for (s = this._[t], r = 0, i = s.length; r < i; ++r)
-      s[r].value.apply(e, n);
+    for (i = this._[t], r = 0, o = i.length; r < o; ++r)
+      i[r].value.apply(n, e);
   },
-  apply: function(t, e, n) {
+  apply: function(t, n, e) {
     if (!this._.hasOwnProperty(t))
       throw new Error("unknown type: " + t);
-    for (var r = this._[t], i = 0, s = r.length; i < s; ++i)
-      r[i].value.apply(e, n);
+    for (var r = this._[t], o = 0, i = r.length; o < i; ++o)
+      r[o].value.apply(n, e);
   }
 };
-function Zt(t, e) {
-  for (var n = 0, r = t.length, i; n < r; ++n)
-    if ((i = t[n]).name === e)
-      return i.value;
+function _e(t, n) {
+  for (var e = 0, r = t.length, o; e < r; ++e)
+    if ((o = t[e]).name === n)
+      return o.value;
 }
-function lt(t, e, n) {
-  for (var r = 0, i = t.length; r < i; ++r)
-    if (t[r].name === e) {
-      t[r] = $t, t = t.slice(0, r).concat(t.slice(r + 1));
+function St(t, n, e) {
+  for (var r = 0, o = t.length; r < o; ++r)
+    if (t[r].name === n) {
+      t[r] = xe, t = t.slice(0, r).concat(t.slice(r + 1));
       break;
     }
-  return n != null && t.push({ name: e, value: n }), t;
+  return e != null && t.push({ name: n, value: e }), t;
 }
-var Y = 0, H = 0, j = 0, vt = 1e3, W, X, $ = 0, O = 0, Q = 0, G = typeof performance == "object" && performance.now ? performance : Date, yt = typeof window == "object" && window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : function(t) {
+var O = 0, H = 0, B = 0, Bt = 1e3, W, Y, q = 0, F = 0, $ = 0, j = typeof performance == "object" && performance.now ? performance : Date, Rt = typeof window == "object" && window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : function(t) {
   setTimeout(t, 17);
 };
-function pt() {
-  return O || (yt(Kt), O = G.now() + Q);
+function Ht() {
+  return F || (Rt(pe), F = j.now() + $);
 }
-function Kt() {
-  O = 0;
+function pe() {
+  F = 0;
 }
-function J() {
+function tt() {
   this._call = this._time = this._next = null;
 }
-J.prototype = wt.prototype = {
-  constructor: J,
-  restart: function(t, e, n) {
+tt.prototype = Yt.prototype = {
+  constructor: tt,
+  restart: function(t, n, e) {
     if (typeof t != "function")
       throw new TypeError("callback is not a function");
-    n = (n == null ? pt() : +n) + (e == null ? 0 : +e), !this._next && X !== this && (X ? X._next = this : W = this, X = this), this._call = t, this._time = n, tt();
+    e = (e == null ? Ht() : +e) + (n == null ? 0 : +n), !this._next && Y !== this && (Y ? Y._next = this : W = this, Y = this), this._call = t, this._time = e, et();
   },
   stop: function() {
-    this._call && (this._call = null, this._time = 1 / 0, tt());
+    this._call && (this._call = null, this._time = 1 / 0, et());
   }
 };
-function wt(t, e, n) {
-  var r = new J();
-  return r.restart(t, e, n), r;
+function Yt(t, n, e) {
+  var r = new tt();
+  return r.restart(t, n, e), r;
 }
-function Jt() {
-  pt(), ++Y;
-  for (var t = W, e; t; )
-    (e = O - t._time) >= 0 && t._call.call(void 0, e), t = t._next;
-  --Y;
+function me() {
+  Ht(), ++O;
+  for (var t = W, n; t; )
+    (n = F - t._time) >= 0 && t._call.call(void 0, n), t = t._next;
+  --O;
 }
-function at() {
-  O = ($ = G.now()) + Q, Y = H = 0;
+function Pt() {
+  F = (q = j.now()) + $, O = H = 0;
   try {
-    Jt();
+    me();
   } finally {
-    Y = 0, ee(), O = 0;
+    O = 0, ke(), F = 0;
   }
 }
-function te() {
-  var t = G.now(), e = t - $;
-  e > vt && (Q -= e, $ = t);
+function Ne() {
+  var t = j.now(), n = t - q;
+  n > Bt && ($ -= n, q = t);
 }
-function ee() {
-  for (var t, e = W, n, r = 1 / 0; e; )
-    e._call ? (r > e._time && (r = e._time), t = e, e = e._next) : (n = e._next, e._next = null, e = t ? t._next = n : W = n);
-  X = t, tt(r);
+function ke() {
+  for (var t, n = W, e, r = 1 / 0; n; )
+    n._call ? (r > n._time && (r = n._time), t = n, n = n._next) : (e = n._next, n._next = null, n = t ? t._next = e : W = e);
+  Y = t, et(r);
 }
-function tt(t) {
-  if (!Y) {
+function et(t) {
+  if (!O) {
     H && (H = clearTimeout(H));
-    var e = t - O;
-    e > 24 ? (t < 1 / 0 && (H = setTimeout(at, t - G.now() - Q)), j && (j = clearInterval(j))) : (j || ($ = G.now(), j = setInterval(te, vt)), Y = 1, yt(at));
+    var n = t - F;
+    n > 24 ? (t < 1 / 0 && (H = setTimeout(Pt, t - j.now() - $)), B && (B = clearInterval(B))) : (B || (q = j.now(), B = setInterval(Ne, Bt)), O = 1, Rt(Pt));
   }
 }
-const ne = 1664525, re = 1013904223, ft = 4294967296;
-function ie() {
+const Ae = 1664525, Me = 1013904223, Lt = 4294967296;
+function Ee() {
   let t = 1;
-  return () => (t = (ne * t + re) % ft) / ft;
+  return () => (t = (Ae * t + Me) % Lt) / Lt;
 }
-function oe(t) {
+function be(t) {
   return t.x;
 }
-function se(t) {
+function ze(t) {
   return t.y;
 }
-var le = 10, ae = Math.PI * (3 - Math.sqrt(5));
-function fe(t) {
-  var e, n = 1, r = 1e-3, i = 1 - Math.pow(r, 1 / 300), s = 0, l = 0.6, o = /* @__PURE__ */ new Map(), g = wt(y), u = gt("tick", "end"), c = ie();
+var Ce = 10, Te = Math.PI * (3 - Math.sqrt(5));
+function De(t) {
+  var n, e = 1, r = 1e-3, o = 1 - Math.pow(r, 1 / 300), i = 0, l = 0.6, s = /* @__PURE__ */ new Map(), u = Yt(y), g = Ot("tick", "end"), f = Ee();
   t == null && (t = []);
   function y() {
-    p(), u.call("tick", e), n < r && (g.stop(), u.call("end", e));
+    x(), g.call("tick", n), e < r && (u.stop(), g.call("end", n));
   }
-  function p(h) {
-    var f, v = t.length, w;
+  function x(h) {
+    var a, v = t.length, d;
     h === void 0 && (h = 1);
     for (var N = 0; N < h; ++N)
-      for (n += (s - n) * i, o.forEach(function(x) {
-        x(n);
-      }), f = 0; f < v; ++f)
-        w = t[f], w.fx == null ? w.x += w.vx *= l : (w.x = w.fx, w.vx = 0), w.fy == null ? w.y += w.vy *= l : (w.y = w.fy, w.vy = 0);
-    return e;
+      for (e += (i - e) * o, s.forEach(function(w) {
+        w(e);
+      }), a = 0; a < v; ++a)
+        d = t[a], d.fx == null ? d.x += d.vx *= l : (d.x = d.fx, d.vx = 0), d.fy == null ? d.y += d.vy *= l : (d.y = d.fy, d.vy = 0);
+    return n;
   }
-  function a() {
-    for (var h = 0, f = t.length, v; h < f; ++h) {
+  function c() {
+    for (var h = 0, a = t.length, v; h < a; ++h) {
       if (v = t[h], v.index = h, v.fx != null && (v.x = v.fx), v.fy != null && (v.y = v.fy), isNaN(v.x) || isNaN(v.y)) {
-        var w = le * Math.sqrt(0.5 + h), N = h * ae;
-        v.x = w * Math.cos(N), v.y = w * Math.sin(N);
+        var d = Ce * Math.sqrt(0.5 + h), N = h * Te;
+        v.x = d * Math.cos(N), v.y = d * Math.sin(N);
       }
       (isNaN(v.vx) || isNaN(v.vy)) && (v.vx = v.vy = 0);
     }
   }
-  function _(h) {
-    return h.initialize && h.initialize(t, c), h;
+  function m(h) {
+    return h.initialize && h.initialize(t, f), h;
   }
-  return a(), e = {
-    tick: p,
+  return c(), n = {
+    tick: x,
     restart: function() {
-      return g.restart(y), e;
+      return u.restart(y), n;
     },
     stop: function() {
-      return g.stop(), e;
+      return u.stop(), n;
     },
     nodes: function(h) {
-      return arguments.length ? (t = h, a(), o.forEach(_), e) : t;
+      return arguments.length ? (t = h, c(), s.forEach(m), n) : t;
     },
     alpha: function(h) {
-      return arguments.length ? (n = +h, e) : n;
+      return arguments.length ? (e = +h, n) : e;
     },
     alphaMin: function(h) {
-      return arguments.length ? (r = +h, e) : r;
+      return arguments.length ? (r = +h, n) : r;
     },
     alphaDecay: function(h) {
-      return arguments.length ? (i = +h, e) : +i;
+      return arguments.length ? (o = +h, n) : +o;
     },
     alphaTarget: function(h) {
-      return arguments.length ? (s = +h, e) : s;
+      return arguments.length ? (i = +h, n) : i;
     },
     velocityDecay: function(h) {
-      return arguments.length ? (l = 1 - h, e) : 1 - l;
+      return arguments.length ? (l = 1 - h, n) : 1 - l;
     },
     randomSource: function(h) {
-      return arguments.length ? (c = h, o.forEach(_), e) : c;
+      return arguments.length ? (f = h, s.forEach(m), n) : f;
     },
-    force: function(h, f) {
-      return arguments.length > 1 ? (f == null ? o.delete(h) : o.set(h, _(f)), e) : o.get(h);
+    force: function(h, a) {
+      return arguments.length > 1 ? (a == null ? s.delete(h) : s.set(h, m(a)), n) : s.get(h);
     },
-    find: function(h, f, v) {
-      var w = 0, N = t.length, x, A, M, E, C;
-      for (v == null ? v = 1 / 0 : v *= v, w = 0; w < N; ++w)
-        E = t[w], x = h - E.x, A = f - E.y, M = x * x + A * A, M < v && (C = E, v = M);
-      return C;
+    find: function(h, a, v) {
+      var d = 0, N = t.length, w, k, M, z, E;
+      for (v == null ? v = 1 / 0 : v *= v, d = 0; d < N; ++d)
+        z = t[d], w = h - z.x, k = a - z.y, M = w * w + k * k, M < v && (E = z, v = M);
+      return E;
     },
-    on: function(h, f) {
-      return arguments.length > 1 ? (u.on(h, f), e) : u.on(h);
+    on: function(h, a) {
+      return arguments.length > 1 ? (g.on(h, a), n) : g.on(h);
     }
   };
 }
-function ue() {
-  var t, e, n, r, i = S(-30), s, l = 1, o = 1 / 0, g = 0.81;
-  function u(a) {
-    var _, h = t.length, f = ht(t, oe, se).visitAfter(y);
-    for (r = a, _ = 0; _ < h; ++_)
-      e = t[_], f.visit(p);
+function Se() {
+  var t, n, e, r, o = D(-30), i, l = 1, s = 1 / 0, u = 0.81;
+  function g(c) {
+    var m, h = t.length, a = It(t, be, ze).visitAfter(y);
+    for (r = c, m = 0; m < h; ++m)
+      n = t[m], a.visit(x);
   }
-  function c() {
+  function f() {
     if (t) {
-      var a, _ = t.length, h;
-      for (s = new Array(_), a = 0; a < _; ++a)
-        h = t[a], s[h.index] = +i(h, a, t);
+      var c, m = t.length, h;
+      for (i = new Array(m), c = 0; c < m; ++c)
+        h = t[c], i[h.index] = +o(h, c, t);
     }
   }
-  function y(a) {
-    var _ = 0, h, f, v = 0, w, N, x;
-    if (a.length) {
-      for (w = N = x = 0; x < 4; ++x)
-        (h = a[x]) && (f = Math.abs(h.value)) && (_ += h.value, v += f, w += f * h.x, N += f * h.y);
-      a.x = w / v, a.y = N / v;
+  function y(c) {
+    var m = 0, h, a, v = 0, d, N, w;
+    if (c.length) {
+      for (d = N = w = 0; w < 4; ++w)
+        (h = c[w]) && (a = Math.abs(h.value)) && (m += h.value, v += a, d += a * h.x, N += a * h.y);
+      c.x = d / v, c.y = N / v;
     } else {
-      h = a, h.x = h.data.x, h.y = h.data.y;
+      h = c, h.x = h.data.x, h.y = h.data.y;
       do
-        _ += s[h.data.index];
+        m += i[h.data.index];
       while (h = h.next);
     }
-    a.value = _;
+    c.value = m;
   }
-  function p(a, _, h, f) {
-    if (!a.value)
+  function x(c, m, h, a) {
+    if (!c.value)
       return !0;
-    var v = a.x - e.x, w = a.y - e.y, N = f - _, x = v * v + w * w;
-    if (N * N / g < x)
-      return x < o && (v === 0 && (v = R(n), x += v * v), w === 0 && (w = R(n), x += w * w), x < l && (x = Math.sqrt(l * x)), e.vx += v * a.value * r / x, e.vy += w * a.value * r / x), !0;
-    if (a.length || x >= o)
+    var v = c.x - n.x, d = c.y - n.y, N = a - m, w = v * v + d * d;
+    if (N * N / u < w)
+      return w < s && (v === 0 && (v = I(e), w += v * v), d === 0 && (d = I(e), w += d * d), w < l && (w = Math.sqrt(l * w)), n.vx += v * c.value * r / w, n.vy += d * c.value * r / w), !0;
+    if (c.length || w >= s)
       return;
-    (a.data !== e || a.next) && (v === 0 && (v = R(n), x += v * v), w === 0 && (w = R(n), x += w * w), x < l && (x = Math.sqrt(l * x)));
+    (c.data !== n || c.next) && (v === 0 && (v = I(e), w += v * v), d === 0 && (d = I(e), w += d * d), w < l && (w = Math.sqrt(l * w)));
     do
-      a.data !== e && (N = s[a.data.index] * r / x, e.vx += v * N, e.vy += w * N);
-    while (a = a.next);
+      c.data !== n && (N = i[c.data.index] * r / w, n.vx += v * N, n.vy += d * N);
+    while (c = c.next);
   }
-  return u.initialize = function(a, _) {
-    t = a, n = _, c();
-  }, u.strength = function(a) {
-    return arguments.length ? (i = typeof a == "function" ? a : S(+a), c(), u) : i;
-  }, u.distanceMin = function(a) {
-    return arguments.length ? (l = a * a, u) : Math.sqrt(l);
-  }, u.distanceMax = function(a) {
-    return arguments.length ? (o = a * a, u) : Math.sqrt(o);
-  }, u.theta = function(a) {
-    return arguments.length ? (g = a * a, u) : Math.sqrt(g);
-  }, u;
+  return g.initialize = function(c, m) {
+    t = c, e = m, f();
+  }, g.strength = function(c) {
+    return arguments.length ? (o = typeof c == "function" ? c : D(+c), f(), g) : o;
+  }, g.distanceMin = function(c) {
+    return arguments.length ? (l = c * c, g) : Math.sqrt(l);
+  }, g.distanceMax = function(c) {
+    return arguments.length ? (s = c * c, g) : Math.sqrt(s);
+  }, g.theta = function(c) {
+    return arguments.length ? (u = c * c, g) : Math.sqrt(u);
+  }, g;
 }
-function ce(t) {
-  var e = S(0.1), n, r, i;
-  typeof t != "function" && (t = S(t == null ? 0 : +t));
-  function s(o) {
-    for (var g = 0, u = n.length, c; g < u; ++g)
-      c = n[g], c.vx += (i[g] - c.x) * r[g] * o;
+function Pe(t) {
+  var n = D(0.1), e, r, o;
+  typeof t != "function" && (t = D(t == null ? 0 : +t));
+  function i(s) {
+    for (var u = 0, g = e.length, f; u < g; ++u)
+      f = e[u], f.vx += (o[u] - f.x) * r[u] * s;
   }
   function l() {
-    if (n) {
-      var o, g = n.length;
-      for (r = new Array(g), i = new Array(g), o = 0; o < g; ++o)
-        r[o] = isNaN(i[o] = +t(n[o], o, n)) ? 0 : +e(n[o], o, n);
+    if (e) {
+      var s, u = e.length;
+      for (r = new Array(u), o = new Array(u), s = 0; s < u; ++s)
+        r[s] = isNaN(o[s] = +t(e[s], s, e)) ? 0 : +n(e[s], s, e);
     }
   }
-  return s.initialize = function(o) {
-    n = o, l();
-  }, s.strength = function(o) {
-    return arguments.length ? (e = typeof o == "function" ? o : S(+o), l(), s) : e;
-  }, s.x = function(o) {
-    return arguments.length ? (t = typeof o == "function" ? o : S(+o), l(), s) : t;
-  }, s;
+  return i.initialize = function(s) {
+    e = s, l();
+  }, i.strength = function(s) {
+    return arguments.length ? (n = typeof s == "function" ? s : D(+s), l(), i) : n;
+  }, i.x = function(s) {
+    return arguments.length ? (t = typeof s == "function" ? s : D(+s), l(), i) : t;
+  }, i;
 }
-function he(t) {
-  var e = S(0.1), n, r, i;
-  typeof t != "function" && (t = S(t == null ? 0 : +t));
-  function s(o) {
-    for (var g = 0, u = n.length, c; g < u; ++g)
-      c = n[g], c.vy += (i[g] - c.y) * r[g] * o;
+function Le(t) {
+  var n = D(0.1), e, r, o;
+  typeof t != "function" && (t = D(t == null ? 0 : +t));
+  function i(s) {
+    for (var u = 0, g = e.length, f; u < g; ++u)
+      f = e[u], f.vy += (o[u] - f.y) * r[u] * s;
   }
   function l() {
-    if (n) {
-      var o, g = n.length;
-      for (r = new Array(g), i = new Array(g), o = 0; o < g; ++o)
-        r[o] = isNaN(i[o] = +t(n[o], o, n)) ? 0 : +e(n[o], o, n);
+    if (e) {
+      var s, u = e.length;
+      for (r = new Array(u), o = new Array(u), s = 0; s < u; ++s)
+        r[s] = isNaN(o[s] = +t(e[s], s, e)) ? 0 : +n(e[s], s, e);
     }
   }
-  return s.initialize = function(o) {
-    n = o, l();
-  }, s.strength = function(o) {
-    return arguments.length ? (e = typeof o == "function" ? o : S(+o), l(), s) : e;
-  }, s.y = function(o) {
-    return arguments.length ? (t = typeof o == "function" ? o : S(+o), l(), s) : t;
-  }, s;
+  return i.initialize = function(s) {
+    e = s, l();
+  }, i.strength = function(s) {
+    return arguments.length ? (n = typeof s == "function" ? s : D(+s), l(), i) : n;
+  }, i.y = function(s) {
+    return arguments.length ? (t = typeof s == "function" ? s : D(+s), l(), i) : t;
+  }, i;
 }
-const ge = 0.5, ve = 0.5, ye = -1e3, pe = "X", we = "Y", xe = "charge", _e = "link";
-function de(t, e, n, r) {
-  const i = () => {
-    var a;
-    return ((a = D(r)) == null ? void 0 : a.force.x) || ge;
-  }, s = () => {
-    var a;
-    return ((a = D(r)) == null ? void 0 : a.force.y) || ve;
-  }, l = () => {
-    var a;
-    return ((a = D(r)) == null ? void 0 : a.charge) || ye;
-  }, o = () => [...D(t)], g = () => [...D(e)], u = () => D(n) || { width: 0, height: 0 }, c = () => {
-    p.value.stop(), p.value = y(), p.value.restart();
-  }, y = () => {
-    const a = fe().stop().alpha(0.5).nodes(o());
-    return a.force(pe, ce(u().width / 2).strength(i())), a.force(we, he(u().height / 2).strength(s())), a.force(
-      xe,
-      ue().strength(l())
-    ), a.force(
-      _e,
-      Wt(g()).id((_) => {
-        if (!_.id)
+const Fe = "X", Ie = "Y", Oe = "charge", Be = "link", jt = 0.01, Xt = 0.1, Re = Math.log(jt) / Math.log(1 - Xt);
+function He(t, n, e, r) {
+  const o = async () => {
+    l.value.stop(), l.value = i(), r.value.static ? l.value.tick(Re) : l.value.restart();
+  }, i = () => {
+    const s = De().stop().alphaMin(jt).alphaDecay(Xt).nodes(t.value);
+    return s.force(
+      Fe,
+      Pe(e.value.width / 2).strength(r.value.force.x)
+    ), s.force(
+      Ie,
+      Le(e.value.height / 2).strength(r.value.force.y)
+    ), s.force(
+      Oe,
+      Se().strength(r.value.charge)
+    ), s.force(
+      Be,
+      de(n.value).id((u) => {
+        if (!("id" in u))
           throw new Error("Node id is undefined");
-        return _.id;
+        return u.id;
       })
-    ), a;
-  }, p = et(y());
-  return _t(
-    [() => D(t).length, () => D(e).length, n],
-    () => {
-      c();
-    }
+    ), s;
+  }, l = V(i());
+  return Ct(
+    [() => J(t).length, () => J(n).length, e],
+    async () => o(),
+    { debounce: 100, maxWait: 1e3 }
+  ), Ct(
+    () => r.value,
+    async () => o(),
+    { deep: !0, debounce: 100, maxWait: 1e3 }
   ), {
-    simulation: p,
-    animate: c
+    simulation: l,
+    animate: o
   };
 }
-const me = (t, e) => {
-  var r, i, s, l, o, g, u, c, y, p, a, _, h, f, v, w, N, x, A, M, E, C;
-  return {
-    css: {
+const Ye = 0.5, je = 0.5, Xe = -350, Ge = 40, Ue = 10, Ve = 2, We = (t) => {
+  const n = R(() => {
+    var i, l, s, u, g, f, y, x, c, m, h, a, v, d, N, w, k, M, z, E, A, _, S, b, rt, it, st, ot, lt, at, ut, ft, ct, ht, vt, gt, yt, dt, xt, wt, _t, pt, mt, Nt, kt, At, Mt, Et;
+    return {
       node: {
-        stroke: ((r = t == null ? void 0 : t.colors) == null ? void 0 : r.stroke) || "#E2EB98",
-        fill: ((i = t == null ? void 0 : t.colors) == null ? void 0 : i.fill) || "#93A392",
+        stroke: ((s = (l = (i = t.value) == null ? void 0 : i.nodes) == null ? void 0 : l.colors) == null ? void 0 : s.stroke) || "#E2EB98",
+        fill: ((f = (g = (u = t.value) == null ? void 0 : u.nodes) == null ? void 0 : g.colors) == null ? void 0 : f.fill) || "#93A392",
         selected: {
-          stroke: ((l = (s = t == null ? void 0 : t.colors) == null ? void 0 : s.selected) == null ? void 0 : l.stroke) || "#9DC4B5",
-          fill: (g = (o = t == null ? void 0 : t.colors) == null ? void 0 : o.selected) == null ? void 0 : g.fill
+          stroke: ((m = (c = (x = (y = t.value) == null ? void 0 : y.nodes) == null ? void 0 : x.colors) == null ? void 0 : c.selected) == null ? void 0 : m.stroke) || "#9DC4B5",
+          fill: (d = (v = (a = (h = t.value) == null ? void 0 : h.nodes) == null ? void 0 : a.colors) == null ? void 0 : v.selected) == null ? void 0 : d.fill
         },
         hover: {
           stroke: "#9DC4B5",
-          fill: (c = (u = t == null ? void 0 : t.colors) == null ? void 0 : u.hover) == null ? void 0 : c.fill
+          fill: (M = (k = (w = (N = t.value) == null ? void 0 : N.nodes) == null ? void 0 : w.colors) == null ? void 0 : k.hover) == null ? void 0 : M.fill
         },
         pinned: {
           stroke: "#9DC4B5",
-          fill: (p = (y = t == null ? void 0 : t.colors) == null ? void 0 : y.pinned) == null ? void 0 : p.fill
+          fill: (_ = (A = (E = (z = t.value) == null ? void 0 : z.nodes) == null ? void 0 : E.colors) == null ? void 0 : A.pinned) == null ? void 0 : _.fill
         },
         label: {
-          fill: ((_ = (a = t == null ? void 0 : t.colors) == null ? void 0 : a.label) == null ? void 0 : _.fill) || "#93A392"
+          fill: ((it = (rt = (b = (S = t.value) == null ? void 0 : S.nodes) == null ? void 0 : b.colors) == null ? void 0 : rt.label) == null ? void 0 : it.fill) || "#93A392"
         }
       },
       link: {
-        stroke: ((h = e == null ? void 0 : e.colors) == null ? void 0 : h.stroke) || "#BAD9A2",
-        fill: (f = e == null ? void 0 : e.colors) == null ? void 0 : f.fill,
+        stroke: ((lt = (ot = (st = t.value) == null ? void 0 : st.links) == null ? void 0 : ot.colors) == null ? void 0 : lt.stroke) || "#BAD9A2",
+        fill: (ft = (ut = (at = t.value) == null ? void 0 : at.links) == null ? void 0 : ut.colors) == null ? void 0 : ft.fill,
         selected: {
-          stroke: ((w = (v = e == null ? void 0 : e.colors) == null ? void 0 : v.selected) == null ? void 0 : w.stroke) || "#9DC4B5",
-          fill: (x = (N = e == null ? void 0 : e.colors) == null ? void 0 : N.selected) == null ? void 0 : x.fill
+          stroke: ((gt = (vt = (ht = (ct = t.value) == null ? void 0 : ct.links) == null ? void 0 : ht.colors) == null ? void 0 : vt.selected) == null ? void 0 : gt.stroke) || "#9DC4B5",
+          fill: (wt = (xt = (dt = (yt = t.value) == null ? void 0 : yt.links) == null ? void 0 : dt.colors) == null ? void 0 : xt.selected) == null ? void 0 : wt.fill
         },
         hover: {
           stroke: "#9DC4B5",
-          fill: (M = (A = e == null ? void 0 : e.colors) == null ? void 0 : A.hover) == null ? void 0 : M.fill
+          fill: (Nt = (mt = (pt = (_t = t.value) == null ? void 0 : _t.links) == null ? void 0 : pt.colors) == null ? void 0 : mt.hover) == null ? void 0 : Nt.fill
         },
         label: {
-          fill: ((C = (E = e == null ? void 0 : e.colors) == null ? void 0 : E.label) == null ? void 0 : C.fill) || "#93A392"
+          fill: ((Et = (Mt = (At = (kt = t.value) == null ? void 0 : kt.links) == null ? void 0 : At.colors) == null ? void 0 : Mt.label) == null ? void 0 : Et.fill) || "#93A392"
         }
       }
-    }
+    };
+  }), e = R(() => {
+    var i, l, s, u, g, f, y, x;
+    return {
+      static: ((l = (i = t.value) == null ? void 0 : i.simulation) == null ? void 0 : l.static) || !1,
+      force: {
+        x: ((u = (s = t.value) == null ? void 0 : s.simulation) == null ? void 0 : u.force.x) || Ye,
+        y: ((f = (g = t.value) == null ? void 0 : g.simulation) == null ? void 0 : f.force.y) || je
+      },
+      charge: ((x = (y = t.value) == null ? void 0 : y.simulation) == null ? void 0 : x.charge) || Xe
+    };
+  }), r = R(() => {
+    var i, l, s, u, g;
+    return {
+      size: ((l = (i = t.value) == null ? void 0 : i.nodes) == null ? void 0 : l.size) || Ge,
+      font: {
+        size: ((g = (u = (s = t.value) == null ? void 0 : s.nodes) == null ? void 0 : u.font) == null ? void 0 : g.size) || Ue
+      }
+    };
+  }), o = R(() => {
+    var i, l;
+    return {
+      width: ((l = (i = t.value) == null ? void 0 : i.links) == null ? void 0 : l.width) || Ve
+    };
+  });
+  return {
+    simulation: e,
+    theme: n,
+    nodes: r,
+    links: o
   };
-}, Ne = ["viewBox"], Ae = {
+}, qe = ["viewBox"], $e = {
   id: "l-links",
   class: "links"
-}, Me = ["id", "d", "onClick", "onTouchstartPassive"], Ee = {
+}, Ke = ["id", "d", "onClick", "onTouchstartPassive"], Qe = {
   id: "l-nodes",
   class: "nodes"
-}, Ce = ["viewBox", "width", "height", "x", "y", "title", "onClick", "onTouchendPassive", "onMousedown", "onTouchstart", "innerHTML"], Te = ["r", "cx", "cy", "title", "onClick", "onTouchendPassive", "onMousedown", "onTouchstart"], be = {
+}, Ze = ["viewBox", "width", "height", "x", "y", "title", "onClick", "onTouchendPassive", "onMousedown", "onTouchstartPassive", "innerHTML"], Je = ["r", "cx", "cy", "title", "onClick", "onTouchendPassive", "onMousedown", "onTouchstartPassive"], tn = {
   id: "node-labels",
   class: "labels"
-}, ze = ["x", "y", "font-size", "stroke-width"], ke = /* @__PURE__ */ dt({
+}, en = ["x", "y", "font-size", "stroke-width"], sn = /* @__PURE__ */ Ut({
   __name: "D3NetworkGraph",
   props: {
     nodes: {
@@ -756,127 +773,135 @@ const me = (t, e) => {
     }
   },
   emits: ["node-click", "link-click"],
-  setup(t, { emit: e }) {
-    var x, A, M, E, C, F;
-    const n = t;
-    mt((k) => ({
-      "5dd494eb": d(r).node.stroke,
-      "7c85b614": d(r).node.fill,
-      dc7d1dbe: d(r).node.selected.stroke || d(r).node.stroke,
-      "7dd7427e": d(r).node.selected.fill || d(r).node.fill,
-      "3bde7e44": d(r).node.pinned.stroke || d(r).node.stroke,
-      "4f59d604": d(r).node.pinned.fill || d(r).node.fill,
-      e753a608: d(r).node.hover.stroke || d(r).node.stroke,
-      "58ff401c": d(r).node.hover.fill || d(r).node.fill,
-      "9774281a": d(r).link.stroke,
-      "45289dfe": d(r).link.fill,
-      "7e38e190": d(r).link.selected.stroke,
-      "90b3524a": d(r).link.selected.fill,
-      "6654c39d": d(r).node.hover.stroke,
-      "8d054fb0": d(r).node.hover.fill,
-      "7121ef10": d(r).link.label.fill,
-      47107570: d(r).node.label.fill
+  setup(t, { emit: n }) {
+    var z;
+    const e = t;
+    Vt((E) => ({
+      "2eeeb8c9": p(r).node.stroke,
+      "782aa854": p(r).node.fill,
+      "01dadd45": p(r).node.selected.stroke || p(r).node.stroke,
+      "9abc1bb6": p(r).node.selected.fill || p(r).node.fill,
+      "645c7142": p(r).node.pinned.stroke || p(r).node.stroke,
+      "7341e6bc": p(r).node.pinned.fill || p(r).node.fill,
+      "0543e464": p(r).node.hover.stroke || p(r).node.stroke,
+      "3eb160c4": p(r).node.hover.fill || p(r).node.fill,
+      f53fe05e: p(r).link.stroke,
+      "08d3bd48": p(r).link.fill,
+      "2c863772": p(r).link.selected.stroke,
+      "33b3bd3d": p(r).link.selected.fill,
+      "549fee0a": p(r).node.hover.stroke,
+      "67065d06": p(r).node.hover.fill,
+      "74f80d56": p(r).link.label.fill,
+      "16cd0b64": p(r).node.label.fill
     }));
-    const { css: r } = me((x = n.options) == null ? void 0 : x.nodes, (A = n.options) == null ? void 0 : A.links), i = et(null), s = ut({ width: 100, height: 100 });
-    Mt(i, (k) => {
-      const L = k[0];
-      s.width = L.contentRect.width, s.height = L.contentRect.height;
+    const {
+      theme: r,
+      simulation: o,
+      nodes: i,
+      links: l
+    } = We(K(() => e.options)), s = V(null), u = V({ width: 100, height: 100 });
+    $t(s, (E) => {
+      const A = E[0];
+      u.value = {
+        width: A.contentRect.width,
+        height: A.contentRect.height
+      };
     });
-    const { simulation: l } = de(
-      n.nodes,
-      n.links,
-      s,
-      (M = n.options) == null ? void 0 : M.simulation
-    ), { dragStart: o, dragEnd: g, move: u } = Et(
-      l,
-      (E = n.options) == null ? void 0 : E.draggables
+    const { simulation: g } = He(
+      K(() => e.nodes),
+      K(() => e.links),
+      u,
+      o
+    ), { dragStart: f, dragEnd: y, move: x } = Kt(
+      g,
+      (z = e.options) == null ? void 0 : z.draggables
     ), {
       label: c,
-      getSize: y,
-      getWidth: p,
+      getSize: m,
+      getWidth: h,
       getClass: a,
-      getHeight: _,
-      getStyle: h
-    } = bt((C = n.options) == null ? void 0 : C.nodes), {
-      getPath: f,
-      getAttrs: v,
-      getClass: w,
-      getStyle: N
-    } = St((F = n.options) == null ? void 0 : F.links);
-    return (k, L) => (B(), I("svg", {
+      getHeight: v,
+      getStyle: d
+    } = Qt(i), {
+      getPath: N,
+      getAttrs: w,
+      getClass: k,
+      getStyle: M
+    } = Zt(l);
+    return (E, A) => (P(), L("svg", {
       ref_key: "svg",
-      ref: i,
+      ref: s,
       xmlns: "http://www.w3.org/2000/svg",
       "xmlns:xlink": "http://www.w3.org/1999/xlink",
       preserveAspectRatio: "xMinYMin",
-      viewBox: `0 0 ${s.width} ${s.height}`,
-      style: { display: "block", fill: "none", stroke: "none", width: "100%", overflow: "hidden" },
-      onMouseup: L[0] || (L[0] = //@ts-ignore
-      (...m) => d(g) && d(g)(...m)),
-      onTouchendPassive: L[1] || (L[1] = //@ts-ignore
-      (...m) => d(g) && d(g)(...m)),
-      onTouchstartPassive: () => {
-      },
-      onMousemove: L[2] || (L[2] = //@ts-ignore
-      (...m) => d(u) && d(u)(...m))
+      viewBox: `0 0 ${u.value.width} ${u.value.height}`,
+      class: "svg-container",
+      onMouseup: A[0] || (A[0] = //@ts-ignore
+      (..._) => p(y) && p(y)(..._)),
+      onTouchendPassive: A[1] || (A[1] = //@ts-ignore
+      (..._) => p(y) && p(y)(..._)),
+      onTouchstartPassive: A[2] || (A[2] = async () => {
+      }),
+      onMousemove: A[3] || (A[3] = //@ts-ignore
+      (..._) => p(x) && p(x)(..._))
     }, [
-      Z("g", Ae, [
-        (B(!0), I(U, null, K(t.links, (m) => (B(), I("path", Nt({
-          id: m.id,
-          key: m.id,
-          d: d(f)(m)
-        }, d(v)(m), {
-          class: d(w)(m.id),
-          style: d(N)(m),
-          onClick: (P) => e("link-click", P, m),
-          onTouchstartPassive: (P) => e("link-click", P, m)
-        }), null, 16, Me))), 128))
+      Q("g", $e, [
+        (P(!0), L(X, null, Z(t.links, (_) => (P(), L("path", Wt({
+          id: _.id,
+          key: _.id,
+          d: p(N)(_)
+        }, p(w)(_), {
+          class: p(k)(_.id),
+          style: p(M)(_),
+          onClick: (S) => n("link-click", S, _),
+          onTouchstartPassive: (S) => n("link-click", S, _)
+        }), null, 16, Ke))), 128))
       ]),
-      Z("g", Ee, [
-        (B(!0), I(U, null, K(t.nodes, (m, P) => (B(), I(U, { key: P }, [
-          m.innerSVG ? (B(), I("svg", {
+      Q("g", Qe, [
+        (P(!0), L(X, null, Z(t.nodes, (_, S) => (P(), L(X, { key: S }, [
+          _.innerSVG ? (P(), L("svg", {
             key: 0,
-            viewBox: m.innerSVG.viewBox,
-            width: d(p)(m),
-            height: d(_)(m),
-            x: (m.x || 0) - d(p)(m) / 2,
-            y: (m.y || 0) - d(_)(m) / 2,
-            style: rt(d(h)(m)),
-            title: m.name,
-            class: it(d(a)(m, ["node-svg"])),
-            onClick: (T) => e("node-click", T, m),
-            onTouchendPassive: (T) => e("node-click", T, m),
-            onMousedown: V((T) => d(o)(T, P), ["prevent"]),
-            onTouchstart: V((T) => d(o)(T, P), ["prevent"]),
-            innerHTML: m.innerSVG.innerHtml
-          }, null, 46, Ce)) : (B(), I("circle", {
+            viewBox: _.innerSVG.viewBox,
+            width: p(h)(_),
+            height: p(v)(_),
+            x: (_.x || 0) - p(h)(_) / 2,
+            y: (_.y || 0) - p(v)(_) / 2,
+            style: bt(p(d)(_)),
+            title: _.name,
+            class: zt(p(a)(_, ["node-svg"])),
+            onClick: (b) => n("node-click", b, _),
+            onTouchendPassive: (b) => n("node-click", b, _),
+            onMousedown: G((b) => p(f)(b, S), ["prevent"]),
+            onTouchstartPassive: G((b) => p(f)(b, S), ["prevent"]),
+            innerHTML: _.innerSVG.innerHtml
+          }, null, 46, Ze)) : (P(), L("circle", {
             key: 1,
-            r: d(y)(m) / 2,
-            cx: m.x || 0,
-            cy: m.y || 0,
-            style: rt(d(h)(m)),
-            title: m.name,
-            class: it(d(a)(m)),
-            onClick: (T) => k.$emit("node-click", T, m),
-            onTouchendPassive: (T) => k.$emit("node-click", T, m),
-            onMousedown: V((T) => d(o)(T, P), ["prevent"]),
-            onTouchstart: V((T) => d(o)(T, P), ["prevent"])
-          }, null, 46, Te))
+            r: p(m)(_) / 2,
+            cx: _.x || 0,
+            cy: _.y || 0,
+            style: bt(p(d)(_)),
+            title: _.name,
+            class: zt(p(a)(_)),
+            onClick: (b) => E.$emit("node-click", b, _),
+            onTouchendPassive: (b) => E.$emit("node-click", b, _),
+            onMousedown: G((b) => p(f)(b, S), ["prevent"]),
+            onTouchstartPassive: G((b) => p(f)(b, S), ["prevent"])
+          }, null, 46, Je))
         ], 64))), 128))
       ]),
-      Z("g", be, [
-        (B(!0), I(U, null, K(t.nodes, (m) => (B(), I("text", {
-          key: m.id,
+      Q("g", tn, [
+        (P(!0), L(X, null, Z(t.nodes, (_) => (P(), L("text", {
+          key: _.id,
           class: "node-label",
-          x: (m.x || 0) + d(y)(m) / 2 + d(c).font.size / 2,
-          y: (m.y || 0) + d(c).offset.y,
-          "font-size": d(c).font.size,
-          "stroke-width": d(c).font.size / 8
-        }, At(m.name), 9, ze))), 128))
+          x: (_.x || 0) + p(m)(_) / 2 + p(c).font.size / 2,
+          y: (_.y || 0) + p(c).offset.y,
+          "font-size": p(c).font.size,
+          "stroke-width": p(c).font.size / 8
+        }, qt(_.name), 9, en))), 128))
       ])
-    ], 40, Ne));
+    ], 40, qe));
   }
 });
 export {
-  ke as D3NetworkGraph
+  sn as D3NetworkGraph
 };

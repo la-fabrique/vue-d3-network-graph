@@ -1,10 +1,7 @@
-import { D3Node, D3NodeOptions } from "@/types";
-import { computed, MaybeRef, Ref, toValue } from "vue";
+import { D3Node, D3DefinedNodeOptions } from "@/types";
+import { computed, Ref } from "vue";
 
-const DEFAULT_SIZE = 20;
-const DEFAULT_FONT_SIZE = 10;
-
-export function useNode(options?: MaybeRef<D3NodeOptions>): {
+export function useNode(options: Readonly<Ref<D3DefinedNodeOptions>>): {
   getSize: (node: D3Node) => number;
   getWidth: (node: D3Node) => number;
   getHeight: (node: D3Node) => number;
@@ -20,19 +17,16 @@ export function useNode(options?: MaybeRef<D3NodeOptions>): {
     };
   }>;
 } {
-  const size = () => toValue(options)?.size || DEFAULT_SIZE;
-  const fontSize = () => toValue(options)?.font?.size || DEFAULT_FONT_SIZE;
-
   const getSize = (node: D3Node) => {
-    return node.size || size();
+    return node.size || options.value.size;
   };
 
   const getWidth = (node: D3Node) => {
-    return node.width || size();
+    return node.width || options.value.size;
   };
 
   const getHeight = (node: D3Node) => {
-    return node.height || node.size || size();
+    return node.height || node.size || options.value.size;
   };
 
   const getStyle = (node: D3Node) => {
@@ -49,10 +43,10 @@ export function useNode(options?: MaybeRef<D3NodeOptions>): {
 
   const label = computed(() => {
     return {
-      font: { size: fontSize() },
+      font: { size: options.value.font.size },
       offset: {
-        x: size() / 2 + fontSize() / 2,
-        y: fontSize() / 2,
+        x: options.value.size / 2 + options.value.font.size / 2,
+        y: options.value.font.size / 2,
       },
     };
   });

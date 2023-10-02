@@ -1,4 +1,5 @@
 import { D3Link, D3Node, D3SimulationOptions } from "@/types";
+import { watchDebounced } from "@vueuse/core";
 import {
   forceLink,
   forceManyBody,
@@ -7,70 +8,78 @@ import {
   forceY,
   Simulation,
 } from "d3-force";
-import { MaybeRef, Ref, ref, toValue, watch } from "vue";
+import { ComputedRef, Ref, ref, toValue } from "vue";
 
-export const DEFAULT_FORCE_X = 0.5;
-export const DEFAULT_FORCE_Y = 0.5;
-export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -1000;
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
 const FORCE_CHARGE_NAME = "charge";
 const FORCE_LINK_NAME = "link";
+const ALPHA_MIN = 0.01;
+const ALPHA_DECAY = 0.1;
+const TICK_NUMBER = Math.log(ALPHA_MIN) / Math.log(1 - ALPHA_DECAY);
 
 export function useSimulation(
-  nodes: MaybeRef<D3Node[]>,
-  links: MaybeRef<D3Link[]>,
-  rect: MaybeRef<{ width: number; height: number }>,
-  options?: MaybeRef<D3SimulationOptions | undefined>
+  nodes: Readonly<Ref<D3Node[]>>,
+  links: Readonly<Ref<D3Link[]>>,
+  rect: Readonly<Ref<{ width: number; height: number }>>,
+  options: ComputedRef<D3SimulationOptions>
 ): {
-  simulation: Ref<Simulation<D3Node, undefined>>;
+  simulation: Ref<Simulation<D3Node, D3Link>>;
   animate: () => void;
 } {
-  const fX = () => toValue(options)?.force.x || DEFAULT_FORCE_X;
-  const fY = () => toValue(options)?.force.y || DEFAULT_FORCE_Y;
-  const forceManyBodyStrength = () =>
-    toValue(options)?.charge || DEFAULT_FORCE_MANY_BODY_STRENGTH;
-  const getNodes = () => [...toValue(nodes)] || [];
-  const getLinks = () => [...toValue(links)] || [];
-  const getRect = () => toValue(rect) || { width: 0, height: 0 };
-
-  const animate = () => {
+  const animate = async () => {
     simulation.value.stop();
     simulation.value = simulate();
-    simulation.value.restart();
+    if (options.value.static) {
+      simulation.value.tick(TICK_NUMBER);
+    } else {
+      simulation.value.restart();
+    }
   };
 
   const simulate = () => {
     const sim = forceSimulation<D3Node, D3Link>()
       .stop()
-      .alpha(0.5)
-      .nodes(getNodes());
-    sim.force(FORCE_X_NAME, forceX(getRect().width / 2).strength(fX()));
-    sim.force(FORCE_Y_NAME, forceY(getRect().height / 2).strength(fY()));
+      .alphaMin(ALPHA_MIN)
+      .alphaDecay(ALPHA_DECAY)
+      .nodes(nodes.value);
+    sim.force(
+      FORCE_X_NAME,
+      forceX(rect.value.width / 2).strength(options.value.force.x)
+    );
+    sim.force(
+      FORCE_Y_NAME,
+      forceY(rect.value.height / 2).strength(options.value.force.y)
+    );
     sim.force(
       FORCE_CHARGE_NAME,
-      forceManyBody().strength(forceManyBodyStrength())
+      forceManyBody().strength(options.value.charge)
     );
     sim.force(
       FORCE_LINK_NAME,
-      forceLink(getLinks()).id((d: D3Node) => {
-        if (!d.id) {
+      forceLink(links.value).id((d: D3Node) => {
+        if (!("id" in d)) {
           throw new Error("Node id is undefined");
         }
-        return d.id;
+        return d.id!;
       })
     );
 
     return sim;
   };
 
-  const simulation = ref<Simulation<D3Node, undefined>>(simulate());
+  const simulation = ref<Simulation<D3Node, D3Link>>(simulate());
 
-  watch(
+  watchDebounced(
     [() => toValue(nodes).length, () => toValue(links).length, rect],
-    () => {
-      animate();
-    }
+    async () => animate(),
+    { debounce: 100, maxWait: 1000 }
+  );
+
+  watchDebounced(
+    () => options.value,
+    async () => animate(),
+    { deep: true, debounce: 100, maxWait: 1000 }
   );
 
   return {

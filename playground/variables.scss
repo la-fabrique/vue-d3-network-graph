@@ -1,0 +1,11 @@
+$color: #1aad8d;
+$color2: #caa455;
+$sh: 1px 1px 2px rgba(0, 0, 0, 0.5);
+$dark: lighten($color, 27%);
+$bg: saturate(lighten($color, 25%), 30%);
+$border: $color solid 2px;
+$warn: #be385d;
+$txt-sh: 1px 1px 1px rgba(0, 0, 0, 0.5);
+$bg-plus: saturate(lighten($color, 75%), 30%);
+$white: lighten($color, 92%);
+$light: #f5fffc;
