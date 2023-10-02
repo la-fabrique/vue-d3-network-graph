@@ -6,7 +6,10 @@
   "license": "MIT",
   "files": [
     "dist",
-    "src"
+    "src",
+    "interfaces/*",
+    "modules.md",
+    ".nojekyll"
   ],
   "repository": {
     "type": "git",
@@ -32,7 +35,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "doc": "typedoc --plugin typedoc-plugin-markdown --out docs --exclude \"playground/**/*\" src/index.ts",
-    "move-doc": "mv docs/README.md . && rm -rf docs"
+    "move-doc-win": "move .\\docs\\* .\\",
+    "move-doc-linux": "mv ./docs/* ./"
   },
   "dependencies": {
     "@vueuse/core": "^10.4.1",
