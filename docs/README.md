@@ -1,3 +1,5 @@
+vue-d3-network-graph / [Exports](modules.md)
+
 vue-d3-network-graph / [Exports](docs/modules.md)
 
 # vue-d3-network-graph

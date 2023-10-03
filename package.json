@@ -34,9 +34,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "doc": "typedoc --plugin typedoc-plugin-markdown --out docs --exclude \"playground/**/*\" src/index.ts",
-    "move-doc-win": "mkdir interfaces && move .\\docs\\* .\\ && move .\\docs\\interfaces\\* .\\interfaces\\",
-    "move-doc": "mkdir interfaces && mv ./docs/* ./ "
+    "doc": "ts-node ./scripts/doc.ts"
   },
   "dependencies": {
     "@vueuse/core": "^10.4.1",
@@ -59,6 +57,7 @@
     "roboto-fontface": "0.10.0",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2",
+    "ts-node": "^10.9.1",
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.2.2",

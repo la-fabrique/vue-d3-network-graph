@@ -28,6 +28,3 @@ jobs:
 
       - name: Build docs
         run: npm run doc
-
-      - name: Deploy docs
-        run: npm run move-doc
