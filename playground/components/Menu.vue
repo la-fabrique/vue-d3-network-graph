@@ -75,7 +75,7 @@
           v-model.number="innerOptions.simulation.force.charge"
           type="range"
           min="-1000"
-          max="0"
+          max="-1"
           step="1"
           @input="updateOptions"
         />
