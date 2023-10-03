@@ -4,7 +4,7 @@
     <D3NetworkGraph
       ref="net"
       :options="options"
-      :nodes="nodes"
+      :nodes="ns"
       :links="links"
       @node-click="nodeClick"
       @link-click="linkClick"
@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import D3NetworkGraph from "../../src/D3NetworkGraph.vue";
 import Menu from "./Menu.vue";
 import { getDefaultOptions, getRandomLinks, getRandomNodes } from "../util";
@@ -52,6 +52,8 @@ const settings = ref({
 const options = ref(getDefaultOptions());
 
 const name = import.meta.env.VITE_APP_NAME;
+
+const ns = computed(() => nodes.value);
 
 const nodes = ref<D3Node[]>(getRandomNodes(settings.value.maxNodes));
 const links = ref<D3Link[]>(

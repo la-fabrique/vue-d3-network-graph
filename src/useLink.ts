@@ -1,4 +1,4 @@
-import { D3Link } from "@/types";
+import { D3Link } from "./types";
 import { Ref } from "vue";
 
 type D3DefinedLinkOptions = {

@@ -1,4 +1,4 @@
-import { D3Node } from "@/types";
+import { D3Node } from "./types";
 import { Simulation } from "d3-force";
 import { MaybeRef, reactive, Ref, ref, toValue } from "vue";
 

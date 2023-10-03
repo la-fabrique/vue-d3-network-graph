@@ -23,6 +23,9 @@
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
+    },
+    "./D3NetworkGraph.vue": {
+      "default": "./src/D3NetworkGraph.vue"
     }
   },
   "types": "./dist/index.d.ts",

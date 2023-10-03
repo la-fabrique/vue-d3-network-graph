@@ -74,14 +74,14 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, toRef } from "vue";
-import type { D3Link, D3NeworkGraphEmits, D3Node, D3Options } from "@/types";
-import { useDraggable } from "@/useDraggable";
-import { useNode } from "@/useNode";
-import { useLink } from "@/useLink";
-import { useSimulation } from "@/useSimulation";
+import { type PropType, ref, toRef } from "vue";
+import type { D3Link, D3NeworkGraphEmits, D3Node, D3Options } from "./types";
+import { useDraggable } from "./useDraggable";
+import { useNode } from "./useNode";
+import { useLink } from "./useLink";
+import { useSimulation } from "./useSimulation";
 import { useResizeObserver } from "@vueuse/core";
-import { useOptions } from "@/useOptions";
+import { useOptions } from "./useOptions";
 
 const props = defineProps({
   nodes: {
