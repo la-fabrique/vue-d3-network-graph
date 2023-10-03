@@ -9,7 +9,7 @@
           :value="settings.maxNodes"
           type="range"
           min="1"
-          :max="1010"
+          :max="500"
           step="10"
           @input="
             (event) =>

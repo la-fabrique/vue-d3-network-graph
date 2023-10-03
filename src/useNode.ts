@@ -1,4 +1,4 @@
-import { D3Node } from "@/types";
+import { D3Node } from "./types";
 import { computed, Ref } from "vue";
 
 type D3DefinedNodeOptions = {

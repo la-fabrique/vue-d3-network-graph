@@ -1,4 +1,4 @@
-import { D3Link, D3Node, D3SimulationOptions } from "@/types";
+import { D3Link, D3Node, D3SimulationOptions } from "./types";
 import { watchDebounced } from "@vueuse/core";
 import {
   forceLink,
@@ -9,6 +9,7 @@ import {
   Simulation,
 } from "d3-force";
 import { ComputedRef, Ref, ref, toValue } from "vue";
+import { getCurrentInstance } from "vue";
 
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
@@ -40,6 +41,8 @@ export function useSimulation(
    */
   refresh: () => void;
 } {
+  const instance = getCurrentInstance();
+
   const refresh = async () => {
     simulation.value.stop();
     simulation.value = simulate();
@@ -48,6 +51,10 @@ export function useSimulation(
     } else {
       simulation.value.restart();
     }
+
+    // In some case coordinates are not refreshed
+    // This is a workaround to force a refresh but it's not perfect
+    instance?.proxy?.$forceUpdate();
   };
 
   const simulate = () => {
