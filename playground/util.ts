@@ -1,4 +1,4 @@
-import type { D3Link, D3Node } from "@/types";
+import type { D3Link, D3Node, D3Options } from "@/types";
 
 export const getRandomLinks = (nodes: D3Node[], maxLinks: number): D3Link[] => {
   const links = [];
@@ -33,22 +33,32 @@ const newNode = (id: number): D3Node => ({
   group: Math.floor(Math.random() * 10),
 });
 
-export const getDefaultOptions = () => ({
-  draggables: true,
-  nodes: {
-    size: 10,
-    font: {
+export const getDefaultOptions = () =>
+  ({
+    draggables: true,
+    nodes: {
       size: 10,
+      font: {
+        size: 10,
+      },
+      colors: {
+        fill: undefined,
+        label: {
+          fill: undefined,
+        },
+      },
     },
-  },
-  links: {
-    width: 1,
-  },
-  simulation: {
-    force: {
-      charge: -350,
-      x: 0.5,
-      y: 0.5,
+    links: {
+      width: 1,
+      colors: {
+        stroke: undefined,
+      },
     },
-  },
-});
+    simulation: {
+      force: {
+        charge: -350,
+        x: 0.5,
+        y: 0.5,
+      },
+    },
+  }) as D3Options;

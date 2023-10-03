@@ -25,11 +25,9 @@
       ></path>
     </g>
     <g id="l-nodes" class="nodes">
-      <template
-        v-for="(node, index) in graph.nodes.filter((n) => n.innerSVG)"
-        :key="index"
-      >
+      <template v-for="(node, index) in graph.nodes" :key="index">
         <svg
+          v-if="node.innerSVG"
           :viewBox="node.innerSVG!.viewBox"
           :width="getNodeWidth(node)"
           :height="getNodeHeight(node)"
@@ -44,12 +42,8 @@
           @touchstart.prevent.passive="dragStart($event, index)"
           v-html="node.innerSVG!.innerHtml"
         />
-      </template>
-      <template
-        v-for="(node, index) in graph.nodes.filter((n) => !n.innerSVG)"
-        :key="index"
-      >
         <circle
+          v-else
           :r="getNodeSize(node) / 2"
           :cx="node.x || 0"
           :cy="node.y || 0"
@@ -61,20 +55,16 @@
           @mousedown.prevent="dragStart($event, index)"
           @touchstart.prevent.passive="dragStart($event, index)"
         ></circle>
+        <text
+          class="node-label"
+          :x="(node.x || 0) + getNodeSize(node) / 2 + label.font.size / 2"
+          :y="(node.y || 0) + label.offset.y"
+          :font-size="label.font.size"
+          :stroke-width="label.font.size / 8"
+        >
+          {{ node.name }}
+        </text>
       </template>
-    </g>
-    <g id="node-labels" class="labels">
-      <text
-        v-for="node in graph.nodes"
-        :key="node.id"
-        class="node-label"
-        :x="(node.x || 0) + getNodeSize(node) / 2 + label.font.size / 2"
-        :y="(node.y || 0) + label.offset.y"
-        :font-size="label.font.size"
-        :stroke-width="label.font.size / 8"
-      >
-        {{ node.name }}
-      </text>
     </g>
   </svg>
 </template>
@@ -203,9 +193,7 @@ const {
     text-anchor: middle;
   }
 }
-.labels {
-  & > text {
-    fill: v-bind("theme.node.label.fill");
-  }
+.node-label {
+  fill: v-bind("theme.node.label.fill");
 }
 </style>
