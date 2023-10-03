@@ -33,19 +33,22 @@ async function main() {
       .join("\n");
     fs.writeFileSync(`${outputDir}/README.md`, result, "utf8"); */
 
+    // remove readme.md
+    fs.unlinkSync(`${outputDir}/README.md`);
+    console.debug("[DEBUG] README.md removed");
+
     // update all files execpt README.md in outPutDir to replace all 'REAMDE.md' with '../README.md' (with glob)
-    const files = glob.sync(`${outputDir}/**/*.md`, {
-      ignore: `${outputDir}/README.md`,
-    });
-    console.log(files);
+    console.debug(
+      "[DEBUG] update all files to replace all 'REAMDE.md' with '../README.md' (with glob)"
+    );
+    const files = glob.sync(`${outputDir}/**/*.md`);
+
+    console.debug("[DEBUG] files : ", files);
     for (const file of files) {
       const data = fs.readFileSync(file, "utf8");
       const result = data.replaceAll("README.md", "../README.md");
       fs.writeFileSync(file, result, "utf8");
     }
-
-    // move docs/README.md to README.md
-    //fs.renameSync(`${outputDir}/README.md`, `${outputDir}/../README.md`);
   }
 }
 

@@ -44,7 +44,7 @@ Default link options
 
 #### Defined in
 
-[src/types.ts:170](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L170)
+[src/types.ts:170](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L170)
 
 ___
 
@@ -71,7 +71,7 @@ Default link colors
 
 #### Defined in
 
-[src/types.ts:130](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L130)
+[src/types.ts:130](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L130)
 
 ___
 
@@ -115,7 +115,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[src/types.ts:235](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L235)
+[src/types.ts:235](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L235)
 
 ___
 
@@ -136,7 +136,7 @@ Default node options
 
 #### Defined in
 
-[src/types.ts:116](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L116)
+[src/types.ts:116](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L116)
 
 ___
 
@@ -166,7 +166,7 @@ Defaut node colors
 
 #### Defined in
 
-[src/types.ts:66](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L66)
+[src/types.ts:66](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L66)
 
 ___
 
@@ -187,7 +187,7 @@ Graph options
 
 #### Defined in
 
-[src/types.ts:213](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L213)
+[src/types.ts:213](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L213)
 
 ___
 
@@ -209,7 +209,7 @@ Simulation options
 
 #### Defined in
 
-[src/types.ts:184](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L184)
+[src/types.ts:184](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L184)
 
 ## Variables
 
@@ -219,7 +219,7 @@ Simulation options
 
 #### Defined in
 
-[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/shims-vue.d.ts#L4)
+[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/shims-vue.d.ts#L4)
 
 ## Functions
 
@@ -253,4 +253,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[src/useSimulation.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/useSimulation.ts#L26)
+[src/useSimulation.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/useSimulation.ts#L26)

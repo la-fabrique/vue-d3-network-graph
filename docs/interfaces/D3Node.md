@@ -41,7 +41,7 @@ Node color, e.g. red, #aa00bb,
 
 #### Defined in
 
-[src/types.ts:18](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L18)
+[src/types.ts:18](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L18)
 
 ___
 
@@ -53,7 +53,7 @@ Node css class names
 
 #### Defined in
 
-[src/types.ts:22](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L22)
+[src/types.ts:22](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L22)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:42](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L42)
+[src/types.ts:42](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L42)
 
 ___
 
@@ -107,7 +107,7 @@ Node height
 
 #### Defined in
 
-[src/types.ts:34](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L34)
+[src/types.ts:34](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L34)
 
 ___
 
@@ -119,7 +119,7 @@ Node id. If not provided uses array index
 
 #### Defined in
 
-[src/types.ts:10](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L10)
+[src/types.ts:10](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L10)
 
 ___
 
@@ -154,7 +154,7 @@ Node svg image
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L38)
+[src/types.ts:38](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L38)
 
 ___
 
@@ -166,7 +166,7 @@ Node name. If not provided uses: 'node [node_id]'
 
 #### Defined in
 
-[src/types.ts:14](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L14)
+[src/types.ts:14](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L14)
 
 ___
 
@@ -178,7 +178,7 @@ Node size
 
 #### Defined in
 
-[src/types.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L26)
+[src/types.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L26)
 
 ___
 
@@ -222,7 +222,7 @@ Node width
 
 #### Defined in
 
-[src/types.ts:30](https://github.com/la-fabrique/vue-d3-network-graph/blob/52869c7/src/types.ts#L30)
+[src/types.ts:30](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L30)
 
 ___
 

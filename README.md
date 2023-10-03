@@ -4,6 +4,14 @@ vue-d3-network-graph / [Exports](docs/modules.md)
 
 inspired by https://github.com/emiliorizzo/vue-d3-network
 
+## Key features
+
+- Vue 3.3 features
+- 'Static' mode to use d3-force tick instead of simulation.restart (No rendering vue component on each tick)
+- [VueUse/useResizeObserver](https://vueuse.org/core/useResizeObserver/)
+- Tpyescript support
+- Composition function : [useSimulation](docs/modules.md#usesimulation) (renderless use of d3 simulation)
+
 ## Installation
 
 > npm install vue-d3-network-graph
@@ -76,3 +84,14 @@ See [API](docs/modules.md)
 | ------------ | ------------------------------------------------ | --------------------------------------------------- |
 | 'node-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
 | 'link-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
+
+## TODO :
+
+- [ ] Zoom
+- [ ] Selection
+- [ ] Custom forces
+- [ ] Better theming support
+- [ ] (Canvas rendering ?)
+- [ ] (Remove vueuse dependency ?)
+
+> Issues and PR are welcome !
