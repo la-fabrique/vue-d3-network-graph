@@ -88,6 +88,7 @@ See [API](docs/modules.md)
 ## TODO :
 
 - [ ] Zoom
+- [ ] Children nodes
 - [ ] Selection
 - [ ] Custom forces
 - [ ] Better theming support
