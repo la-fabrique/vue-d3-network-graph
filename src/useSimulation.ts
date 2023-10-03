@@ -8,8 +8,7 @@ import {
   forceY,
   Simulation,
 } from "d3-force";
-import { ComputedRef, Ref, ref, toValue } from "vue";
-import { getCurrentInstance } from "vue";
+import { ComputedRef, Ref, reactive, ref, toRaw } from "vue";
 
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
@@ -34,6 +33,8 @@ export function useSimulation(
   /** The options of the simulation */
   options: ComputedRef<D3SimulationOptions>
 ): {
+  /** The graph  */
+  graph: { nodes: D3Node[]; links: D3Link[] };
   /** The d3 simulation */
   simulation: Ref<Simulation<D3Node, D3Link>>;
   /**
@@ -41,20 +42,21 @@ export function useSimulation(
    */
   refresh: () => void;
 } {
-  const instance = getCurrentInstance();
+  const graph = reactive<{ nodes: D3Node[]; links: D3Link[] }>({
+    nodes: [],
+    links: [],
+  });
 
   const refresh = async () => {
     simulation.value.stop();
+    graph.nodes = nodes.value.map((n) => toRaw(n));
+    graph.links = links.value.map((l) => toRaw(l));
     simulation.value = simulate();
     if (options.value.static) {
       simulation.value.tick(TICK_NUMBER);
     } else {
       simulation.value.restart();
     }
-
-    // In some case coordinates are not refreshed
-    // This is a workaround to force a refresh but it's not perfect
-    instance?.proxy?.$forceUpdate();
   };
 
   const simulate = () => {
@@ -62,7 +64,7 @@ export function useSimulation(
       .stop()
       .alphaMin(ALPHA_MIN)
       .alphaDecay(ALPHA_DECAY)
-      .nodes(nodes.value);
+      .nodes(graph.nodes);
     sim.force(
       FORCE_X_NAME,
       forceX(rect.value.width / 2).strength(options.value.force.x)
@@ -77,7 +79,7 @@ export function useSimulation(
     );
     sim.force(
       FORCE_LINK_NAME,
-      forceLink(links.value).id((d: D3Node) => {
+      forceLink(graph.links).id((d: D3Node) => {
         if (!("id" in d)) {
           throw new Error("Node id is undefined");
         }
@@ -91,7 +93,7 @@ export function useSimulation(
   const simulation = ref<Simulation<D3Node, D3Link>>(simulate());
 
   watchDebounced(
-    [() => toValue(nodes).length, () => toValue(links).length, rect],
+    [() => nodes.value.length, () => links.value.length, rect],
     async () => refresh(),
     { debounce: 100, maxWait: 1000 }
   );
@@ -105,5 +107,6 @@ export function useSimulation(
   return {
     simulation,
     refresh,
+    graph,
   };
 }

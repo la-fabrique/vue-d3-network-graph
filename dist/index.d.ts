@@ -301,6 +301,11 @@ rect: Readonly<Ref<{
 }>>, 
 /** The options of the simulation */
 options: ComputedRef<D3SimulationOptions>): {
+    /** The graph  */
+    graph: {
+        nodes: D3Node[];
+        links: D3Link[];
+    };
     /** The d3 simulation */
     simulation: Ref<Simulation<D3Node, D3Link>>;
     /**

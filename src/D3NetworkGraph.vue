@@ -13,7 +13,7 @@
   >
     <g id="l-links" class="links">
       <path
-        v-for="link in links"
+        v-for="link in graph.links"
         :id="link.id"
         :key="link.id"
         :d="getLinkPath(link)"
@@ -25,10 +25,12 @@
       ></path>
     </g>
     <g id="l-nodes" class="nodes">
-      <template v-for="(node, index) in nodes" :key="index">
+      <template
+        v-for="(node, index) in graph.nodes.filter((n) => n.innerSVG)"
+        :key="index"
+      >
         <svg
-          v-if="node.innerSVG"
-          :viewBox="node.innerSVG.viewBox"
+          :viewBox="node.innerSVG!.viewBox"
           :width="getNodeWidth(node)"
           :height="getNodeHeight(node)"
           :x="(node.x || 0) - getNodeWidth(node) / 2"
@@ -40,10 +42,14 @@
           @touchend.passive="emit('node-click', $event, node)"
           @mousedown.prevent="dragStart($event, index)"
           @touchstart.prevent.passive="dragStart($event, index)"
-          v-html="node.innerSVG.innerHtml"
-        ></svg>
+          v-html="node.innerSVG!.innerHtml"
+        />
+      </template>
+      <template
+        v-for="(node, index) in graph.nodes.filter((n) => !n.innerSVG)"
+        :key="index"
+      >
         <circle
-          v-else
           :r="getNodeSize(node) / 2"
           :cx="node.x || 0"
           :cy="node.y || 0"
@@ -113,6 +119,11 @@ const rect = ref({ width: 100, height: 100 });
 
 useResizeObserver(svg, (entries) => {
   const entry = entries[0];
+  if (
+    entry.contentRect.width === rect.value.width &&
+    entry.contentRect.height === rect.value.height
+  )
+    return;
   rect.value = {
     width: entry.contentRect.width,
     height: entry.contentRect.height,
@@ -120,7 +131,7 @@ useResizeObserver(svg, (entries) => {
 });
 
 // reactive d3 simulation
-const { simulation } = useSimulation(
+const { simulation, graph } = useSimulation(
   toRef(() => props.nodes),
   toRef(() => props.links),
   rect,
@@ -130,7 +141,7 @@ const { simulation } = useSimulation(
 // draggable nodes
 const { dragStart, dragEnd, move } = useDraggable(
   simulation,
-  props.options?.draggables
+  toRef(() => props.options?.draggables || false)
 );
 
 const {

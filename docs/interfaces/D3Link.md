@@ -31,7 +31,7 @@ Link color (stroke), e.g. red, #aa00bb,
 
 #### Defined in
 
-[src/types.ts:60](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L60)
+[src/types.ts:60](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L60)
 
 ___
 
@@ -43,7 +43,7 @@ Link id. If not provided uses array index
 
 #### Defined in
 
-[src/types.ts:52](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L52)
+[src/types.ts:52](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L52)
 
 ___
 
@@ -71,7 +71,7 @@ Link name. If not provided uses: 'link [link_id]'
 
 #### Defined in
 
-[src/types.ts:56](https://github.com/la-fabrique/vue-d3-network-graph/blob/5473bcb/src/types.ts#L56)
+[src/types.ts:56](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L56)
 
 ___
 

@@ -1,10 +1,10 @@
-import { D3Node } from "./types";
+import { D3Link, D3Node } from "./types";
 import { Simulation } from "d3-force";
-import { MaybeRef, reactive, Ref, ref, toValue } from "vue";
+import { reactive, Ref, ref } from "vue";
 
 export function useDraggable(
-  simulation: Ref<Simulation<D3Node, undefined>>,
-  draggables?: MaybeRef<boolean>
+  simulation: Ref<Simulation<D3Node, D3Link>>,
+  draggables: Readonly<Ref<boolean>>
 ): {
   dragStart: (event: Event, index: number) => void;
   dragEnd: () => void;
@@ -30,7 +30,7 @@ export function useDraggable(
   };
 
   const dragStart = (event: Event, index: number) =>
-    toValue(draggables)
+    draggables.value
       ? (() => {
           dragging.value = index;
           setMouseOffset(event, simulation.value.nodes()[index]);
