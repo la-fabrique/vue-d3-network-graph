@@ -65,7 +65,7 @@
     </g>
     <g id="node-labels" class="labels">
       <text
-        v-for="node in nodes"
+        v-for="node in graph.nodes"
         :key="node.id"
         class="node-label"
         :x="(node.x || 0) + getNodeSize(node) / 2 + label.font.size / 2"
