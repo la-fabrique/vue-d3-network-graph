@@ -18,12 +18,15 @@ export function useLink(options: Readonly<Ref<D3DefinedLinkOptions>>): {
       typeof link.target !== "number" &&
       typeof link.target !== "string"
     ) {
-      const d = {
+      return `M${link.source.x},${link.source.y}A0,0 0 0,1 ${link.target.x},${link.target.y}`;
+      /*  const d = {
         M: [link?.source?.x || 0, link?.source?.y || 0],
         X: [link?.target?.x || 0, link?.target?.y || 0],
       };
-      return "M " + d.M.join(" ") + " L" + d.X.join(" ");
+      return "M " + d.M.join(" ") + " L" + d.X.join(" "); */
     }
+
+    // `M${d.source.x},${d.source.y}A0,0 0 0,1 ${d.target.x},${d.target.y}`
     return undefined;
   };
 

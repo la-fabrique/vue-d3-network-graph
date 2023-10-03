@@ -68,10 +68,16 @@ export const useOptions = (options: Readonly<Ref<D3Options | undefined>>) => {
     width: options.value?.links?.width || DEFAULT_WIDTH,
   }));
 
+  const layout = computed(() => ({
+    draggables: options.value?.layout?.draggables || false,
+    directed: options.value?.layout?.directed || false,
+  }));
+
   return {
     simulation,
     theme,
     nodes,
     links,
+    layout,
   };
 };

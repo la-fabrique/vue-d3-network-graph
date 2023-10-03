@@ -12,6 +12,20 @@ import { SimulationNodeDatum } from 'd3-force';
 import { VNodeProps } from 'vue';
 
 /**
+ * Layout options
+ */
+export declare type D3LayoutOptions = {
+    /**
+     * Indicates if the nodes should be draggable
+     * */
+    draggables?: boolean;
+    /**
+     * Indicate if the graph is directed. Edge arrow will be displayed
+     */
+    directed?: boolean;
+};
+
+/**
  * Represents a link in the graph
  */
 export declare interface D3Link extends SimulationLinkDatum<D3Node> {
@@ -250,9 +264,9 @@ export declare type D3Options = {
      * */
     simulation?: D3SimulationOptions;
     /**
-     * Indicates if the nodes should be draggable
+     * Layout options
      * */
-    draggables?: boolean;
+    layout?: D3LayoutOptions;
 };
 
 /**

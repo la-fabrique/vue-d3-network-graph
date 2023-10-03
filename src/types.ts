@@ -208,6 +208,20 @@ export type D3SimulationOptions = {
 };
 
 /**
+ * Layout options
+ */
+export type D3LayoutOptions = {
+  /**
+   * Indicates if the nodes should be draggable
+   * */
+  draggables?: boolean;
+  /**
+   * Indicate if the graph is directed. Edge arrow will be displayed
+   */
+  directed?: boolean;
+};
+
+/**
  * Graph options
  */
 export type D3Options = {
@@ -224,9 +238,9 @@ export type D3Options = {
    * */
   simulation?: D3SimulationOptions;
   /**
-   * Indicates if the nodes should be draggable
+   * Layout options
    * */
-  draggables?: boolean;
+  layout?: D3LayoutOptions;
 };
 
 /**

@@ -11,6 +11,19 @@
     @touchstart.passive="async () => {}"
     @mousemove="move"
   >
+    <defs v-if="layout.directed">
+      <marker
+        id="arrow"
+        viewBox="0 -5 10 10"
+        :refX="optionsNodes.size / 2 + 10"
+        refY="0"
+        markerWidth="10"
+        markerHeight="10"
+        orient="auto"
+      >
+        <path :fill="theme.link.stroke" d="M0,-5L10,0L0,5"></path>
+      </marker>
+    </defs>
     <g id="l-links" class="links">
       <path
         v-for="link in graph.links"
@@ -20,6 +33,7 @@
         v-bind="getLinkAttrs(link)"
         :class="getLinkClass(link.id)"
         :style="getLinkStyle(link)"
+        :marker-end="layout.directed ? 'url(#arrow)' : undefined"
         @click="emit('link-click', $event, link)"
         @touchstart.passive="emit('link-click', $event, link)"
       ></path>
@@ -101,6 +115,7 @@ const {
   simulation: optionsSimulation,
   nodes: optionsNodes,
   links: optionsLinks,
+  layout,
 } = useOptions(toRef(() => props.options));
 
 // svg container resize observer
@@ -131,7 +146,7 @@ const { simulation, graph } = useSimulation(
 // draggable nodes
 const { dragStart, dragEnd, move } = useDraggable(
   simulation,
-  toRef(() => props.options?.draggables || false)
+  toRef(() => layout.value.draggables)
 );
 
 const {

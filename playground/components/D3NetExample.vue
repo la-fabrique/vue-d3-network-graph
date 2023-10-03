@@ -45,8 +45,8 @@ import { getDefaultOptions, getRandomLinks, getRandomNodes } from "../util";
 import { D3Link, D3Node } from "../../src/types";
 
 const settings = ref({
-  maxNodes: 100,
-  maxLinks: 3,
+  maxNodes: 10,
+  maxLinks: 2,
 });
 
 const options = ref(getDefaultOptions());

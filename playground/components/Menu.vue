@@ -80,13 +80,21 @@
           @input="updateOptions"
         />
       </li>
-      <li>
+      <li v-if="innerOptions.layout">
         <input
-          v-model="innerOptions.draggables"
+          v-model="innerOptions.layout.draggables"
           type="checkbox"
           @input="updateOptions"
         />
         <label>Draggables:</label>
+      </li>
+      <li v-if="innerOptions.layout">
+        <input
+          v-model="innerOptions.layout.directed"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Directed:</label>
       </li>
       <li v-if="innerOptions.simulation">
         <input

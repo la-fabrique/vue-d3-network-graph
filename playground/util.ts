@@ -35,9 +35,9 @@ const newNode = (id: number): D3Node => ({
 
 export const getDefaultOptions = () =>
   ({
-    draggables: true,
+    layout: { draggables: true, directed: true },
     nodes: {
-      size: 10,
+      size: 25,
       font: {
         size: 10,
       },
@@ -57,8 +57,8 @@ export const getDefaultOptions = () =>
     simulation: {
       force: {
         charge: -350,
-        x: 0.5,
-        y: 0.5,
+        x: 0.1,
+        y: 0.1,
       },
     },
   }) as D3Options;

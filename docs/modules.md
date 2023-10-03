@@ -11,6 +11,7 @@
 
 ### Type Aliases
 
+- [D3LayoutOptions](modules.md#d3layoutoptions)
 - [D3LinkOptions](modules.md#d3linkoptions)
 - [D3LinkOptionsColors](modules.md#d3linkoptionscolors)
 - [D3NeworkGraphEmits](modules.md#d3neworkgraphemits)
@@ -29,6 +30,25 @@
 
 ## Type Aliases
 
+### D3LayoutOptions
+
+Ƭ **D3LayoutOptions**: `Object`
+
+Layout options
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `directed?` | `boolean` | Indicate if the graph is directed. Edge arrow will be displayed |
+| `draggables?` | `boolean` | Indicates if the nodes should be draggable |
+
+#### Defined in
+
+[src/types.ts:213](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L213)
+
+___
+
 ### D3LinkOptions
 
 Ƭ **D3LinkOptions**: `Object`
@@ -44,7 +64,7 @@ Default link options
 
 #### Defined in
 
-[src/types.ts:170](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L170)
+[src/types.ts:170](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L170)
 
 ___
 
@@ -71,7 +91,7 @@ Default link colors
 
 #### Defined in
 
-[src/types.ts:130](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L130)
+[src/types.ts:130](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L130)
 
 ___
 
@@ -115,7 +135,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[src/types.ts:235](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L235)
+[src/types.ts:249](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L249)
 
 ___
 
@@ -136,7 +156,7 @@ Default node options
 
 #### Defined in
 
-[src/types.ts:116](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L116)
+[src/types.ts:116](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L116)
 
 ___
 
@@ -166,7 +186,7 @@ Defaut node colors
 
 #### Defined in
 
-[src/types.ts:66](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L66)
+[src/types.ts:66](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L66)
 
 ___
 
@@ -180,14 +200,14 @@ Graph options
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `draggables?` | `boolean` | Indicates if the nodes should be draggable |
+| `layout?` | [`D3LayoutOptions`](modules.md#d3layoutoptions) | Layout options |
 | `links?` | [`D3LinkOptions`](modules.md#d3linkoptions) | Default link options |
 | `nodes?` | [`D3NodeOptions`](modules.md#d3nodeoptions) | Default node options |
 | `simulation?` | [`D3SimulationOptions`](modules.md#d3simulationoptions) | Simulation options |
 
 #### Defined in
 
-[src/types.ts:213](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L213)
+[src/types.ts:227](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L227)
 
 ___
 
@@ -209,7 +229,7 @@ Simulation options
 
 #### Defined in
 
-[src/types.ts:184](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/types.ts#L184)
+[src/types.ts:184](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L184)
 
 ## Variables
 
@@ -219,7 +239,7 @@ Simulation options
 
 #### Defined in
 
-[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/shims-vue.d.ts#L4)
+[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/shims-vue.d.ts#L4)
 
 ## Functions
 
@@ -256,4 +276,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[src/useSimulation.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/c12d172/src/useSimulation.ts#L26)
+[src/useSimulation.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/useSimulation.ts#L26)
