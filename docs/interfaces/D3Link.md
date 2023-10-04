@@ -20,6 +20,7 @@ Represents a link in the graph
 - [name](D3Link.md#name)
 - [source](D3Link.md#source)
 - [target](D3Link.md#target)
+- [twoWay](D3Link.md#twoway)
 
 ## Properties
 
@@ -31,7 +32,7 @@ Link color (stroke), e.g. red, #aa00bb,
 
 #### Defined in
 
-[src/types.ts:60](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L60)
+[src/types.ts:60](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L60)
 
 ___
 
@@ -43,7 +44,7 @@ Link id. If not provided uses array index
 
 #### Defined in
 
-[src/types.ts:52](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L52)
+[src/types.ts:52](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L52)
 
 ___
 
@@ -71,7 +72,7 @@ Link name. If not provided uses: 'link [link_id]'
 
 #### Defined in
 
-[src/types.ts:56](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L56)
+[src/types.ts:56](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L56)
 
 ___
 
@@ -112,3 +113,15 @@ SimulationLinkDatum.target
 #### Defined in
 
 node_modules/@types/d3-force/index.d.ts:86
+
+___
+
+### twoWay
+
+• `Optional` **twoWay**: `boolean`
+
+Is  two-way link (bidirectional)
+
+#### Defined in
+
+[src/types.ts:65](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L65)

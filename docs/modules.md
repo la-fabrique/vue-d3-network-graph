@@ -45,7 +45,7 @@ Layout options
 
 #### Defined in
 
-[src/types.ts:213](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L213)
+[src/types.ts:223](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L223)
 
 ___
 
@@ -64,7 +64,7 @@ Default link options
 
 #### Defined in
 
-[src/types.ts:170](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L170)
+[src/types.ts:175](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L175)
 
 ___
 
@@ -91,7 +91,7 @@ Default link colors
 
 #### Defined in
 
-[src/types.ts:130](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L130)
+[src/types.ts:135](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L135)
 
 ___
 
@@ -135,7 +135,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[src/types.ts:249](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L249)
+[src/types.ts:259](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L259)
 
 ___
 
@@ -156,7 +156,7 @@ Default node options
 
 #### Defined in
 
-[src/types.ts:116](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L116)
+[src/types.ts:121](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L121)
 
 ___
 
@@ -186,7 +186,7 @@ Defaut node colors
 
 #### Defined in
 
-[src/types.ts:66](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L66)
+[src/types.ts:71](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L71)
 
 ___
 
@@ -207,7 +207,7 @@ Graph options
 
 #### Defined in
 
-[src/types.ts:227](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L227)
+[src/types.ts:237](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L237)
 
 ___
 
@@ -221,15 +221,16 @@ Simulation options
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `force` | { `charge`: `number` ; `x`: `number` ; `y`: `number`  } | d3 force configurations |
-| `force.charge` | `number` | d3 forceManyBody strenght configuration |
-| `force.x` | `number` | d3 forceX strenght configuration |
-| `force.y` | `number` | d3 forceY strenght configuration |
+| `force` | { `charge`: `number` ; `collide`: `number` ; `x`: `number` ; `y`: `number`  } | d3 force configurations |
+| `force.charge` | `number` | d3 forceManyBody strenght |
+| `force.collide` | `number` | d3 forceCollide radius |
+| `force.x` | `number` | d3 forceX strenght |
+| `force.y` | `number` | d3 forceY strenght |
 | `static?` | `boolean` | Indicates if the simulation should not be animated **`Remarks`** Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick' |
 
 #### Defined in
 
-[src/types.ts:184](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/types.ts#L184)
+[src/types.ts:189](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L189)
 
 ## Variables
 
@@ -239,7 +240,7 @@ Simulation options
 
 #### Defined in
 
-[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/shims-vue.d.ts#L4)
+[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/shims-vue.d.ts#L4)
 
 ## Functions
 
@@ -276,4 +277,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[src/useSimulation.ts:26](https://github.com/la-fabrique/vue-d3-network-graph/blob/9b0a429/src/useSimulation.ts#L26)
+[src/useSimulation.ts:28](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/useSimulation.ts#L28)
