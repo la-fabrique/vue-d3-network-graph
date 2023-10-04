@@ -58,6 +58,11 @@ export interface D3Link extends SimulationLinkDatum<D3Node> {
    * Link color (stroke), e.g. red, #aa00bb,
    */
   color?: string;
+
+  /**
+   * Is  two-way link (bidirectional)
+   */
+  twoWay?: boolean;
 }
 
 /**
@@ -193,17 +198,22 @@ export type D3SimulationOptions = {
    */
   force: {
     /**
-     * d3 forceX strenght configuration
+     * d3 forceX strenght
      * */
     x: number;
     /**
-     * d3 forceY strenght configuration
+     * d3 forceY strenght
      */
     y: number;
     /**
-     * d3 forceManyBody strenght configuration
+     * d3 forceManyBody strenght
      */
     charge: number;
+
+    /**
+     * d3 forceCollide radius
+     */
+    collide: number;
   };
 };
 

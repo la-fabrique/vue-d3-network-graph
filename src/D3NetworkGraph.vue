@@ -12,16 +12,11 @@
     @mousemove="move"
   >
     <defs v-if="layout.directed">
-      <marker
-        id="arrow"
-        viewBox="0 -5 10 10"
-        :refX="optionsNodes.size / 2 + 10"
-        refY="0"
-        markerWidth="10"
-        markerHeight="10"
-        orient="auto"
-      >
-        <path :fill="theme.link.stroke" d="M0,-5L10,0L0,5"></path>
+      <marker v-bind="markers.arrowEnd">
+        <path :fill="theme.link.stroke" d="M0 -5 L 10 0 L 0 5"></path>
+      </marker>
+      <marker v-bind="markers.arrowStart">
+        <path :fill="theme.link.stroke" d="M 10 5 L 0 0 L 10 -5"></path>
       </marker>
     </defs>
     <g id="l-links" class="links">
@@ -33,7 +28,8 @@
         v-bind="getLinkAttrs(link)"
         :class="getLinkClass(link.id)"
         :style="getLinkStyle(link)"
-        :marker-end="layout.directed ? 'url(#arrow)' : undefined"
+        :marker-end="getLinkMarkerEnd(link)"
+        :marker-start="getLinkMarkerStart(link)"
         @click="emit('link-click', $event, link)"
         @touchstart.passive="emit('link-click', $event, link)"
       ></path>
@@ -162,7 +158,14 @@ const {
   getAttrs: getLinkAttrs,
   getClass: getLinkClass,
   getStyle: getLinkStyle,
-} = useLink(optionsLinks);
+  getMarkerEnd: getLinkMarkerEnd,
+  getMarkerStart: getLinkMarkerStart,
+  markers,
+} = useLink(
+  optionsLinks,
+  toRef(() => optionsNodes.value.size),
+  toRef(() => layout.value.directed)
+);
 </script>
 
 <style lang="scss">

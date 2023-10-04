@@ -4,6 +4,7 @@ import {
   forceLink,
   forceManyBody,
   forceSimulation,
+  forceCollide,
   forceX,
   forceY,
   Simulation,
@@ -14,6 +15,7 @@ const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
 const FORCE_CHARGE_NAME = "charge";
 const FORCE_LINK_NAME = "link";
+const FORCE_COLLIDE_NAME = "collide";
 const ALPHA_MIN = 0.01;
 const ALPHA_DECAY = 0.1;
 const TICK_NUMBER = Math.log(ALPHA_MIN) / Math.log(1 - ALPHA_DECAY);
@@ -77,6 +79,7 @@ export function useSimulation(
       FORCE_CHARGE_NAME,
       forceManyBody().strength(options.value.force.charge)
     );
+    sim.force(FORCE_COLLIDE_NAME, forceCollide(options.value.force.collide));
     sim.force(
       FORCE_LINK_NAME,
       forceLink(graph.links).id((d: D3Node) => {

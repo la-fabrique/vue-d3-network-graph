@@ -1,12 +1,26 @@
 import type { D3Link, D3Node, D3Options } from "@/types";
 
 export const getRandomLinks = (nodes: D3Node[], maxLinks: number): D3Link[] => {
-  const links = [];
+  const links: D3Link[] = [];
   for (const node of nodes) {
     const total = Math.floor(Math.random() * maxLinks);
     for (let i = 0; i <= total; i++) {
       const target = Math.floor(Math.random() * nodes.length);
       const source = node.id!;
+      if (
+        target === source ||
+        links.some((l) => l.source === source && l.target === target)
+      ) {
+        continue;
+      }
+      const existingLink = links.find(
+        (l) => l.source === target && l.target === source
+      );
+      if (existingLink) {
+        existingLink.twoWay = true;
+        continue;
+      }
+
       links.push(newLink(source, target));
     }
   }
@@ -56,9 +70,10 @@ export const getDefaultOptions = () =>
     },
     simulation: {
       force: {
-        charge: -350,
+        charge: -300,
         x: 0.1,
         y: 0.1,
+        collide: 50,
       },
     },
   }) as D3Options;

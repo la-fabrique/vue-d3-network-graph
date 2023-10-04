@@ -3,10 +3,11 @@ import { D3Options } from "./types";
 
 export const DEFAULT_FORCE_X = 0.5;
 export const DEFAULT_FORCE_Y = 0.5;
-export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -350;
+export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -300;
 const DEFAULT_NODE_SIZE = 40;
 const DEFAULT_NODE_FONT_SIZE = 10;
 const DEFAULT_WIDTH = 2;
+const DEFAULT_FORCE_COLLIDE_STRENGTH = 45;
 
 export const useOptions = (options: Readonly<Ref<D3Options | undefined>>) => {
   const theme = computed(() => ({
@@ -54,6 +55,9 @@ export const useOptions = (options: Readonly<Ref<D3Options | undefined>>) => {
       charge:
         options.value?.simulation?.force.charge ||
         DEFAULT_FORCE_MANY_BODY_STRENGTH,
+      collide:
+        options.value?.simulation?.force.collide ||
+        DEFAULT_FORCE_COLLIDE_STRENGTH,
     },
   }));
 

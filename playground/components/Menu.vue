@@ -80,6 +80,18 @@
           @input="updateOptions"
         />
       </li>
+      <li v-if="innerOptions.simulation?.force.collide">
+        <label>Collide radius force:</label>
+        <span>{{ innerOptions.simulation?.force.collide }}</span>
+        <input
+          v-model.number="innerOptions.simulation.force.collide"
+          type="range"
+          min="1"
+          max="100"
+          step="1"
+          @input="updateOptions"
+        />
+      </li>
       <li v-if="innerOptions.layout">
         <input
           v-model="innerOptions.layout.draggables"
