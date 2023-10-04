@@ -73,18 +73,18 @@ See [API](docs/modules.md)
 
 **props**
 
-| Name     | Type                                    | Default   | Description                                                                                                                                      |
-| -------- | --------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| nodes    | Array<[D3Node](docs/modules.md#d3node)> | []        | Array of nodes                                                                                                                                   |
-| links    | Array<[D3Link](docs/modules.md#d3link)> | []        | Array of links                                                                                                                                   |
-| options? | [D3Options](docs/modules.md#d3options)  | undefined | [`Links`](docs/modules.md#d3linkoptions), [nodes](docs/modules.md#d3nodeoptions) and [`simulation`](docs/modules.md#d3simulationoptions) Options |
+| Name     | Type                                    | Default   | Description                                                                                                                                  |
+| -------- | --------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| nodes    | Array<[D3Node](docs/modules.md#d3node)> | []        | Array of nodes                                                                                                                               |
+| links    | Array<[D3Link](docs/modules.md#d3link)> | []        | Array of links                                                                                                                               |
+| options? | [D3Options](docs/modules.md#d3options)  | undefined | [Links](docs/modules.md#d3linkoptions), [nodes](docs/modules.md#d3nodeoptions) and [simulation](docs/modules.md#d3simulationoptions) Options |
 
 **events**
 
-| Name         | Type                                             | Description                                         |
-| ------------ | ------------------------------------------------ | --------------------------------------------------- |
-| 'node-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
-| 'link-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
+| Name         | Type                                           | Description                                         |
+| ------------ | ---------------------------------------------- | --------------------------------------------------- |
+| 'node-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
+| 'link-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
 
 ## TODO :
 
