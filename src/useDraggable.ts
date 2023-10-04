@@ -1,9 +1,9 @@
-import { D3Link, D3Node } from "./types";
-import { Simulation } from "d3-force";
-import { reactive, Ref, ref } from "vue";
+import type { Simulation } from "d3-force";
+import { reactive, type Ref, ref } from "vue";
+import type { D3LinkSimulation, D3NodeSimulation } from "./types";
 
 export function useDraggable(
-  simulation: Ref<Simulation<D3Node, D3Link>>,
+  simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>,
   draggables: Readonly<Ref<boolean>>
 ): {
   dragStart: (event: Event, index: number) => void;
@@ -37,7 +37,7 @@ export function useDraggable(
         })()
       : undefined;
 
-  const setMouseOffset = (event?: Event, node?: D3Node) => {
+  const setMouseOffset = (event?: Event, node?: D3NodeSimulation) => {
     let x = 0;
     let y = 0;
     if (event && node && node?.x && node?.y) {

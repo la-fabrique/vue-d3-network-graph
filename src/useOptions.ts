@@ -1,87 +1,81 @@
-import { Ref, computed } from "vue";
-import { D3Options } from "./types";
+import { type Ref, computed, toRef } from "vue";
+import type { useSimulationOptions, D3Options } from "./types";
 
-export const DEFAULT_FORCE_X = 0.5;
-export const DEFAULT_FORCE_Y = 0.5;
+export const DEFAULT_FORCE_X = 0.1;
+export const DEFAULT_FORCE_Y = 0.1;
 export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -300;
-const DEFAULT_NODE_SIZE = 40;
-const DEFAULT_NODE_FONT_SIZE = 10;
-const DEFAULT_WIDTH = 2;
+const DEFAULT_NODE_SIZE = 25;
+const DEFAULT_NODE_FONT_SIZE = 12;
+const DEFAULT_LINK_WIDTH = 2;
 const DEFAULT_FORCE_COLLIDE_STRENGTH = 45;
 
-export const useOptions = (options: Readonly<Ref<D3Options | undefined>>) => {
+export const useOptions = (d3Options: Readonly<Ref<D3Options | undefined>>) => {
   const theme = computed(() => ({
     node: {
-      stroke: options.value?.nodes?.colors?.stroke || "#E2EB98",
-      fill: options.value?.nodes?.colors?.fill || "#93A392",
+      stroke: d3Options.value?.nodes?.colors?.stroke || "#E2EB98",
+      fill: d3Options.value?.nodes?.colors?.fill || "#93A392",
       selected: {
-        stroke: options.value?.nodes?.colors?.selected?.stroke || "#9DC4B5",
-        fill: options.value?.nodes?.colors?.selected?.fill,
+        stroke: d3Options.value?.nodes?.colors?.selected?.stroke || "#9DC4B5",
+        fill: d3Options.value?.nodes?.colors?.selected?.fill,
       },
       hover: {
         stroke: "#9DC4B5",
-        fill: options.value?.nodes?.colors?.hover?.fill,
+        fill: d3Options.value?.nodes?.colors?.hover?.fill,
       },
       pinned: {
         stroke: "#9DC4B5",
-        fill: options.value?.nodes?.colors?.pinned?.fill,
+        fill: d3Options.value?.nodes?.colors?.pinned?.fill,
       },
       label: {
-        fill: options.value?.nodes?.colors?.label?.fill || "#93A392",
+        fill: d3Options.value?.nodes?.colors?.label?.fill || "#93A392",
       },
     },
     link: {
-      stroke: options.value?.links?.colors?.stroke || "#BAD9A2",
-      fill: options.value?.links?.colors?.fill,
+      stroke: d3Options.value?.links?.colors?.stroke || "#BAD9A2",
+      fill: d3Options.value?.links?.colors?.fill,
       selected: {
-        stroke: options.value?.links?.colors?.selected?.stroke || "#9DC4B5",
-        fill: options.value?.links?.colors?.selected?.fill,
+        stroke: d3Options.value?.links?.colors?.selected?.stroke || "#9DC4B5",
+        fill: d3Options.value?.links?.colors?.selected?.fill,
       },
       hover: {
         stroke: "#9DC4B5",
-        fill: options.value?.links?.colors?.hover?.fill,
+        fill: d3Options.value?.links?.colors?.hover?.fill,
       },
       label: {
-        fill: options.value?.links?.colors?.label?.fill || "#93A392",
+        fill: d3Options.value?.links?.colors?.label?.fill || "#93A392",
       },
     },
   }));
 
-  const simulation = computed(() => ({
-    static: options.value?.simulation?.static || false,
-    force: {
-      x: options.value?.simulation?.force.x || DEFAULT_FORCE_X,
-      y: options.value?.simulation?.force.y || DEFAULT_FORCE_Y,
-      charge:
-        options.value?.simulation?.force.charge ||
-        DEFAULT_FORCE_MANY_BODY_STRENGTH,
-      collide:
-        options.value?.simulation?.force.collide ||
-        DEFAULT_FORCE_COLLIDE_STRENGTH,
-    },
-  }));
-
-  const nodes = computed(() => ({
-    size: options.value?.nodes?.size || DEFAULT_NODE_SIZE,
-    font: {
-      size: options.value?.nodes?.font?.size || DEFAULT_NODE_FONT_SIZE,
-    },
-  }));
-
-  const links = computed(() => ({
-    width: options.value?.links?.width || DEFAULT_WIDTH,
-  }));
-
-  const layout = computed(() => ({
-    draggables: options.value?.layout?.draggables || false,
-    directed: options.value?.layout?.directed || false,
-  }));
+  const options: useSimulationOptions = {
+    static: toRef(() => d3Options.value?.simulation?.static || false),
+    forceXStrength: toRef(
+      () => d3Options.value?.simulation?.force.x || DEFAULT_FORCE_X
+    ),
+    forceYStrength: toRef(
+      () => d3Options.value?.simulation?.force.y || DEFAULT_FORCE_Y
+    ),
+    forcManyBodyStrength: toRef(
+      () =>
+        d3Options.value?.simulation?.force.charge ||
+        DEFAULT_FORCE_MANY_BODY_STRENGTH
+    ),
+    forceCollideStrength: toRef(
+      () =>
+        d3Options.value?.simulation?.force.collide ||
+        DEFAULT_FORCE_COLLIDE_STRENGTH
+    ),
+    nodeSize: toRef(() => d3Options.value?.nodes?.size || DEFAULT_NODE_SIZE),
+    nodeFontSize: toRef(
+      () => d3Options.value?.nodes?.font?.size || DEFAULT_NODE_FONT_SIZE
+    ),
+    linkWidth: toRef(() => d3Options.value?.links?.width || DEFAULT_LINK_WIDTH),
+    draggables: toRef(() => d3Options.value?.layout?.draggables || false),
+    directed: toRef(() => d3Options.value?.layout?.directed || false),
+  };
 
   return {
-    simulation,
+    options,
     theme,
-    nodes,
-    links,
-    layout,
   };
 };

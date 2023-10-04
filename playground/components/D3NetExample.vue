@@ -42,7 +42,12 @@ import { computed, ref } from "vue";
 import D3NetworkGraph from "../../src/D3NetworkGraph.vue";
 import Menu from "./Menu.vue";
 import { getDefaultOptions, getRandomLinks, getRandomNodes } from "../util";
-import { D3Link, D3Node } from "../../src/types";
+import type {
+  D3Link,
+  D3LinkSimulation,
+  D3Node,
+  D3NodeSimulation,
+} from "../../src/types";
 
 const settings = ref({
   maxNodes: 10,
@@ -65,11 +70,17 @@ const refresh = () => {
   links.value = getRandomLinks(nodes.value, settings.value.maxLinks);
 };
 
-function nodeClick(event: MouseEvent | TouchEvent, node: D3Node): void {
+function nodeClick(
+  event: MouseEvent | TouchEvent,
+  node: D3NodeSimulation
+): void {
   console.log("nodeClick", node);
 }
 
-function linkClick(event: MouseEvent | TouchEvent, link: D3Link): void {
+function linkClick(
+  event: MouseEvent | TouchEvent,
+  link: D3LinkSimulation
+): void {
   console.log("linkClick", link);
 }
 

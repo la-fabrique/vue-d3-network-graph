@@ -4,21 +4,21 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [D3Link](interfaces/D3Link.md)
-- [D3Node](interfaces/D3Node.md)
-
 ### Type Aliases
 
 - [D3LayoutOptions](modules.md#d3layoutoptions)
+- [D3Link](modules.md#d3link)
 - [D3LinkOptions](modules.md#d3linkoptions)
 - [D3LinkOptionsColors](modules.md#d3linkoptionscolors)
+- [D3LinkSimulation](modules.md#d3linksimulation)
 - [D3NeworkGraphEmits](modules.md#d3neworkgraphemits)
+- [D3Node](modules.md#d3node)
 - [D3NodeOptions](modules.md#d3nodeoptions)
 - [D3NodeOptionsColors](modules.md#d3nodeoptionscolors)
+- [D3NodeSimulation](modules.md#d3nodesimulation)
 - [D3Options](modules.md#d3options)
 - [D3SimulationOptions](modules.md#d3simulationoptions)
+- [useSimulationOptions](modules.md#usesimulationoptions)
 
 ### Variables
 
@@ -40,12 +40,35 @@ Layout options
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `directed?` | `boolean` | Indicate if the graph is directed. Edge arrow will be displayed |
-| `draggables?` | `boolean` | Indicates if the nodes should be draggable |
+| `directed?` | `boolean` | Indicate if the graph is directed. Edge arrow will be displayed **`Default Value`** `false` |
+| `draggables?` | `boolean` | Indicates if the nodes should be draggable **`Default Value`** `false` |
 
 #### Defined in
 
-[src/types.ts:223](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L223)
+[types.ts:236](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L236)
+
+___
+
+### D3Link
+
+Ƭ **D3Link**: `Object`
+
+Represents a link in the graph
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `color?` | `string` | Link color (stroke), e.g. red, #aa00bb, |
+| `id?` | `string` | Link id. If not provided uses array index |
+| `name?` | `string` | Link name. If not provided uses: 'link [link_id]' |
+| `source?` | `string` | - |
+| `target?` | `string` | - |
+| `twoWay?` | `boolean` | Is two-way link (bidirectional) |
+
+#### Defined in
+
+[types.ts:49](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L49)
 
 ___
 
@@ -60,11 +83,11 @@ Default link options
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `colors?` | [`D3LinkOptionsColors`](modules.md#d3linkoptionscolors) | Default link colors |
-| `width` | `number` | Default link width |
+| `width` | `number` | Default link width **`Default Value`** `2` |
 
 #### Defined in
 
-[src/types.ts:175](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L175)
+[types.ts:183](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L183)
 
 ___
 
@@ -91,13 +114,23 @@ Default link colors
 
 #### Defined in
 
-[src/types.ts:135](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L135)
+[types.ts:143](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L143)
+
+___
+
+### D3LinkSimulation
+
+Ƭ **D3LinkSimulation**: `SimulationLinkDatum`<[`D3NodeSimulation`](modules.md#d3nodesimulation)\> & { `class?`: `string`[] ; `d?`: `string` ; `id?`: `string` ; `key?`: `number` ; `marker-end?`: `string` ; `marker-start?`: `string` ; `stroke-width?`: `number` ; `style?`: `string`  }
+
+#### Defined in
+
+[types.ts:375](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L375)
 
 ___
 
 ### D3NeworkGraphEmits
 
-Ƭ **D3NeworkGraphEmits**: (`event`: ``"node-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `node`: [`D3Node`](interfaces/D3Node.md)) => `void`(`event`: ``"link-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `link`: [`D3Link`](interfaces/D3Link.md)) => `void`
+Ƭ **D3NeworkGraphEmits**: (`event`: ``"node-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `node`: [`D3NodeSimulation`](modules.md#d3nodesimulation)) => `void`(`event`: ``"link-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `link`: [`D3LinkSimulation`](modules.md#d3linksimulation)) => `void`
 
 #### Type declaration
 
@@ -111,7 +144,7 @@ Event exposed by the D3NetworkGraph component
 | :------ | :------ |
 | `event` | ``"node-click"`` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `node` | [`D3Node`](interfaces/D3Node.md) |
+| `node` | [`D3NodeSimulation`](modules.md#d3nodesimulation) |
 
 ##### Returns
 
@@ -127,7 +160,7 @@ Event exposed by the D3NetworkGraph component
 | :------ | :------ |
 | `event` | ``"link-click"`` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `link` | [`D3Link`](interfaces/D3Link.md) |
+| `link` | [`D3LinkSimulation`](modules.md#d3linksimulation) |
 
 ##### Returns
 
@@ -135,7 +168,35 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[src/types.ts:259](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L259)
+[types.ts:274](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L274)
+
+___
+
+### D3Node
+
+Ƭ **D3Node**: `Object`
+
+Represents a node in the graph
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `color?` | `string` | Node color, e.g. red, #aa00bb, |
+| `cssClass?` | `string`[] | Node css class names |
+| `group?` | `number` | - |
+| `height?` | `number` | Node height |
+| `id?` | `string` | Node id. If not provided uses array index |
+| `innerSVG?` | { `innerHtml`: `string` ; `viewBox`: `string`  } | Node svg image |
+| `innerSVG.innerHtml` | `string` | - |
+| `innerSVG.viewBox` | `string` | - |
+| `name?` | `string` | Node name. If not provided uses: 'node [node_id]' |
+| `size?` | `number` | Node size |
+| `width?` | `number` | Node width |
+
+#### Defined in
+
+[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L7)
 
 ___
 
@@ -151,12 +212,12 @@ Default node options
 | :------ | :------ | :------ |
 | `colors?` | [`D3NodeOptionsColors`](modules.md#d3nodeoptionscolors) | Default node colors |
 | `font?` | { `size?`: `number`  } | - |
-| `font.size?` | `number` | Default node size |
-| `size?` | `number` | Default node size |
+| `font.size?` | `number` | Default node size **`Default Value`** `12` |
+| `size?` | `number` | Default node size **`Default Value`** `25` |
 
 #### Defined in
 
-[src/types.ts:121](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L121)
+[types.ts:125](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L125)
 
 ___
 
@@ -186,7 +247,17 @@ Defaut node colors
 
 #### Defined in
 
-[src/types.ts:71](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L71)
+[types.ts:75](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L75)
+
+___
+
+### D3NodeSimulation
+
+Ƭ **D3NodeSimulation**: `SimulationNodeDatum` & { `color?`: `string` ; `cssClass?`: `string`[] ; `height?`: `number` ; `id?`: `number` ; `innerSVG?`: { `innerHtml`: `string` ; `viewBox`: `string`  } ; `name?`: `string` ; `r?`: `number` ; `size?`: `number` ; `style?`: `string` ; `width?`: `number`  }
+
+#### Defined in
+
+[types.ts:333](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L333)
 
 ___
 
@@ -207,7 +278,7 @@ Graph options
 
 #### Defined in
 
-[src/types.ts:237](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L237)
+[types.ts:252](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L252)
 
 ___
 
@@ -222,15 +293,42 @@ Simulation options
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `force` | { `charge`: `number` ; `collide`: `number` ; `x`: `number` ; `y`: `number`  } | d3 force configurations |
-| `force.charge` | `number` | d3 forceManyBody strenght |
-| `force.collide` | `number` | d3 forceCollide radius |
-| `force.x` | `number` | d3 forceX strenght |
-| `force.y` | `number` | d3 forceY strenght |
-| `static?` | `boolean` | Indicates if the simulation should not be animated **`Remarks`** Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick' |
+| `force.charge` | `number` | d3 forceManyBody strenght smaller than 0 **`Default Value`** `-300` |
+| `force.collide` | `number` | d3 forceCollide radius **`Default Value`** `45` |
+| `force.x` | `number` | d3 forceX strenght between 0 and 1 **`Default Value`** `0.1` |
+| `force.y` | `number` | d3 forceY strenght between 0 and 1 **`Default Value`** `0.1` |
+| `static?` | `boolean` | Indicates if the simulation should not be animated **`Remarks`** Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick' **`Default Value`** `false` |
 
 #### Defined in
 
-[src/types.ts:189](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/types.ts#L189)
+[types.ts:198](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L198)
+
+___
+
+### useSimulationOptions
+
+Ƭ **useSimulationOptions**: `Object`
+
+Options used by the useSimulation composition function
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `directed` | `Readonly`<`Ref`<`boolean`\>\> | Indicate if the graph is directed. Edge arrow will be displayed |
+| `draggables` | `Readonly`<`Ref`<`boolean`\>\> | Indicate if draggables are enabled |
+| `forcManyBodyStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceManyBody strenght smaller than 0 |
+| `forceCollideStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceCollide radius |
+| `forceXStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceX strenght between 0 and 1 |
+| `forceYStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceY strenght between 0 and 1 |
+| `linkWidth` | `Readonly`<`Ref`<`number`\>\> | Default link width |
+| `nodeFontSize` | `Readonly`<`Ref`<`number`\>\> | Default node font size |
+| `nodeSize` | `Readonly`<`Ref`<`number`\>\> | Default node size |
+| `static` | `Readonly`<`Ref`<`boolean`\>\> | Indicates if the simulation should not be animated |
+
+#### Defined in
+
+[types.ts:290](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L290)
 
 ## Variables
 
@@ -240,7 +338,7 @@ Simulation options
 
 #### Defined in
 
-[src/shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/shims-vue.d.ts#L4)
+[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/shims-vue.d.ts#L4)
 
 ## Functions
 
@@ -254,10 +352,10 @@ Composition function used by the D3NetworkGraph component to create a d3 simulat
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `nodes` | `Readonly`<`Ref`<[`D3Node`](interfaces/D3Node.md)[]\>\> | The nodes of the graph |
-| `links` | `Readonly`<`Ref`<[`D3Link`](interfaces/D3Link.md)[]\>\> | The links of the graph |
+| `nodes` | `Readonly`<`Ref`<[`D3Node`](modules.md#d3node)[]\>\> | The nodes of the graph |
+| `links` | `Readonly`<`Ref`<[`D3Link`](modules.md#d3link)[]\>\> | The links of the graph |
 | `rect` | `Readonly`<`Ref`<{ `height`: `number` ; `width`: `number`  }\>\> | The size of the graph |
-| `options` | `ComputedRef`<[`D3SimulationOptions`](modules.md#d3simulationoptions)\> | The options of the simulation |
+| `options` | [`useSimulationOptions`](modules.md#usesimulationoptions) | The options of the simulation |
 
 #### Returns
 
@@ -265,11 +363,10 @@ Composition function used by the D3NetworkGraph component to create a d3 simulat
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `graph` | { `links`: [`D3Link`](interfaces/D3Link.md)[] ; `nodes`: [`D3Node`](interfaces/D3Node.md)[]  } | The graph |
-| `graph.links` | [`D3Link`](interfaces/D3Link.md)[] | - |
-| `graph.nodes` | [`D3Node`](interfaces/D3Node.md)[] | - |
-| `refresh` | () => `void` | Refresh the simulation |
-| `simulation` | `Ref`<`Simulation`<[`D3Node`](interfaces/D3Node.md), [`D3Link`](interfaces/D3Link.md)\>\> | The d3 simulation |
+| `graph` | { `links`: [`D3LinkSimulation`](modules.md#d3linksimulation)[] ; `nodes`: [`D3NodeSimulation`](modules.md#d3nodesimulation)[]  } | The graph |
+| `graph.links` | [`D3LinkSimulation`](modules.md#d3linksimulation)[] | - |
+| `graph.nodes` | [`D3NodeSimulation`](modules.md#d3nodesimulation)[] | - |
+| `simulation` | `Ref`<`Simulation`<[`D3NodeSimulation`](modules.md#d3nodesimulation), [`D3LinkSimulation`](modules.md#d3linksimulation)\>\> | The d3 simulation |
 
 **`Remarks`**
 
@@ -277,4 +374,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[src/useSimulation.ts:28](https://github.com/la-fabrique/vue-d3-network-graph/blob/147ff2f/src/useSimulation.ts#L28)
+[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/useSimulation.ts#L36)
