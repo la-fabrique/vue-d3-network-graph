@@ -20,19 +20,22 @@
       </marker>
     </defs>
     <g id="l-links" class="links">
-      <path
-        v-for="link in graph.links"
-        :id="link.id"
-        :key="link.id"
-        :d="getLinkPath(link)"
-        v-bind="getLinkAttrs(link)"
-        :class="getLinkClass(link.id)"
-        :style="getLinkStyle(link)"
-        :marker-end="getLinkMarkerEnd(link)"
-        :marker-start="getLinkMarkerStart(link)"
-        @click="emit('link-click', $event, link)"
-        @touchstart.passive="emit('link-click', $event, link)"
-      ></path>
+      <template v-for="(link, index) in graph.links" :key="index">
+        <path
+          :id="index"
+          :d="getLinkPath(link)"
+          v-bind="getLinkAttrs(link)"
+          :class="getLinkClass(index)"
+          :style="getLinkStyle(link)"
+          @click="emit('link-click', $event, link)"
+          @touchstart.passive="emit('link-click', $event, link)"
+        />
+        <text class="link-label" :font-size="label.font.size">
+          <textPath :xlink:href="'#' + index" startOffset="50%">
+            {{ link.name }}
+          </textPath>
+        </text>
+      </template>
     </g>
     <g id="l-nodes" class="nodes">
       <template v-for="(node, index) in graph.nodes" :key="index">
