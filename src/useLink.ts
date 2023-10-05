@@ -78,6 +78,7 @@ export function useLink(
       target: link.target,
       id: link.id,
       key: link.id,
+      name: link.name,
       class: getClass(link.id),
       style: getStyle(link),
       "stroke-width": strokewidth.value,

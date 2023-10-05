@@ -26,6 +26,7 @@
 
 ### Functions
 
+- [isNode](modules.md#isnode)
 - [useSimulation](modules.md#usesimulation)
 
 ## Type Aliases
@@ -45,7 +46,7 @@ Layout options
 
 #### Defined in
 
-[types.ts:236](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L236)
+[types.ts:242](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L242)
 
 ___
 
@@ -68,7 +69,7 @@ Represents a link in the graph
 
 #### Defined in
 
-[types.ts:49](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L49)
+[types.ts:49](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L49)
 
 ___
 
@@ -83,11 +84,13 @@ Default link options
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `colors?` | [`D3LinkOptionsColors`](modules.md#d3linkoptionscolors) | Default link colors |
+| `font?` | { `size?`: `number`  } | - |
+| `font.size?` | `number` | Default link font size **`Default Value`** `12` |
 | `width` | `number` | Default link width **`Default Value`** `2` |
 
 #### Defined in
 
-[types.ts:183](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L183)
+[types.ts:183](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L183)
 
 ___
 
@@ -114,17 +117,17 @@ Default link colors
 
 #### Defined in
 
-[types.ts:143](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L143)
+[types.ts:143](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L143)
 
 ___
 
 ### D3LinkSimulation
 
-Ƭ **D3LinkSimulation**: `SimulationLinkDatum`<[`D3NodeSimulation`](modules.md#d3nodesimulation)\> & { `class?`: `string`[] ; `d?`: `string` ; `id?`: `string` ; `key?`: `number` ; `marker-end?`: `string` ; `marker-start?`: `string` ; `stroke-width?`: `number` ; `style?`: `string`  }
+Ƭ **D3LinkSimulation**: `SimulationLinkDatum`<[`D3NodeSimulation`](modules.md#d3nodesimulation)\> & { `class?`: `string`[] ; `d?`: `string` ; `id?`: `string` ; `key?`: `number` ; `marker-end?`: `string` ; `marker-start?`: `string` ; `name?`: `string` ; `stroke-width?`: `number` ; `style?`: `string`  }
 
 #### Defined in
 
-[types.ts:375](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L375)
+[types.ts:385](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L385)
 
 ___
 
@@ -168,7 +171,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[types.ts:274](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L274)
+[types.ts:280](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L280)
 
 ___
 
@@ -196,7 +199,7 @@ Represents a node in the graph
 
 #### Defined in
 
-[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L7)
+[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L7)
 
 ___
 
@@ -217,7 +220,7 @@ Default node options
 
 #### Defined in
 
-[types.ts:125](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L125)
+[types.ts:125](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L125)
 
 ___
 
@@ -247,7 +250,7 @@ Defaut node colors
 
 #### Defined in
 
-[types.ts:75](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L75)
+[types.ts:75](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L75)
 
 ___
 
@@ -257,7 +260,7 @@ ___
 
 #### Defined in
 
-[types.ts:333](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L333)
+[types.ts:343](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L343)
 
 ___
 
@@ -278,7 +281,7 @@ Graph options
 
 #### Defined in
 
-[types.ts:252](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L252)
+[types.ts:258](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L258)
 
 ___
 
@@ -301,7 +304,7 @@ Simulation options
 
 #### Defined in
 
-[types.ts:198](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L198)
+[types.ts:204](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L204)
 
 ___
 
@@ -321,6 +324,7 @@ Options used by the useSimulation composition function
 | `forceCollideStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceCollide radius |
 | `forceXStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceX strenght between 0 and 1 |
 | `forceYStrength` | `Readonly`<`Ref`<`number`\>\> | d3 forceY strenght between 0 and 1 |
+| `linkFontSize` | `Readonly`<`Ref`<`number`\>\> | Default link font size |
 | `linkWidth` | `Readonly`<`Ref`<`number`\>\> | Default link width |
 | `nodeFontSize` | `Readonly`<`Ref`<`number`\>\> | Default node font size |
 | `nodeSize` | `Readonly`<`Ref`<`number`\>\> | Default node size |
@@ -328,7 +332,7 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[types.ts:290](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/types.ts#L290)
+[types.ts:296](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L296)
 
 ## Variables
 
@@ -338,9 +342,29 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/shims-vue.d.ts#L4)
+[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/shims-vue.d.ts#L4)
 
 ## Functions
+
+### isNode
+
+▸ **isNode**(`node`): node is D3NodeSimulation
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `node` | `unknown` |
+
+#### Returns
+
+node is D3NodeSimulation
+
+#### Defined in
+
+[types.ts:397](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L397)
+
+___
 
 ### useSimulation
 
@@ -374,4 +398,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/60533cd/src/useSimulation.ts#L36)
+[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/useSimulation.ts#L36)

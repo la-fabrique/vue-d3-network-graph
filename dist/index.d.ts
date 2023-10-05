@@ -59,6 +59,12 @@ export declare type D3LinkOptions = {
      * @defaultValue `2`
      */
     width: number;
+    font?: {
+        /** Default link font size
+         * @defaultValue `12`
+         */
+        size?: number;
+    };
     /**
      * Default link colors
      */
@@ -111,6 +117,7 @@ export declare type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
     d?: string;
     class?: string[];
     style?: string;
+    name?: string;
     "stroke-width"?: number;
     "marker-end"?: string;
     "marker-start"?: string;
@@ -369,6 +376,8 @@ export declare type D3SimulationOptions = {
     };
 };
 
+export declare const isNode: (node: unknown) => node is D3NodeSimulation;
+
 /**
  * Composition function used by the D3NetworkGraph component to create a d3 simulation
  * @remarks
@@ -439,6 +448,10 @@ export declare type useSimulationOptions = {
      * Default link width
      */
     linkWidth: Readonly<Ref<number>>;
+    /**
+     * Default link font size
+     */
+    linkFontSize: Readonly<Ref<number>>;
 };
 
 export { }

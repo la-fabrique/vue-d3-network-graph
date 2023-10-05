@@ -92,30 +92,6 @@
           @input="updateOptions"
         />
       </li>
-      <li v-if="innerOptions.layout">
-        <input
-          v-model="innerOptions.layout.draggables"
-          type="checkbox"
-          @input="updateOptions"
-        />
-        <label>Draggables:</label>
-      </li>
-      <li v-if="innerOptions.layout">
-        <input
-          v-model="innerOptions.layout.directed"
-          type="checkbox"
-          @input="updateOptions"
-        />
-        <label>Directed:</label>
-      </li>
-      <li v-if="innerOptions.simulation">
-        <input
-          v-model="innerOptions.simulation.static"
-          type="checkbox"
-          @input="updateOptions"
-        />
-        <label>Static</label>
-      </li>
     </ul>
 
     <ul class="test-menu">
@@ -154,6 +130,33 @@
           step="1"
           @input="updateOptions"
         />
+      </li>
+    </ul>
+
+    <ul class="test-menu">
+      <li v-if="innerOptions.layout">
+        <input
+          v-model="innerOptions.layout.draggables"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Draggables:</label>
+      </li>
+      <li v-if="innerOptions.layout">
+        <input
+          v-model="innerOptions.layout.directed"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Directed:</label>
+      </li>
+      <li v-if="innerOptions.simulation">
+        <input
+          v-model="innerOptions.simulation.static"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Static</label>
       </li>
     </ul>
   </div>
@@ -215,7 +218,6 @@ const updateOptions = () => {
 }
 .test-menu {
   display: table-cell;
-  padding: 1em;
   list-style: none;
   li {
     margin: 0.5em 0;

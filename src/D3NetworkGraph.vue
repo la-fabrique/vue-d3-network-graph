@@ -19,21 +19,29 @@
         <path :fill="theme.link.stroke" d="M 10 5 L 0 0 L 10 -5"></path>
       </marker>
     </defs>
-    <g id="l-links" class="links">
-      <path
-        v-for="link in graph.links"
-        :id="link.id"
-        :key="link.id"
-        :d="getPath(link)"
-        :stroke-width="link['stroke-width']"
-        :class="link.class"
-        :style="link.style"
-        :marker-end="link['marker-end']"
-        :marker-start="link['marker-start']"
-        @click="emit('link-click', $event, link)"
-        @touchstart.passive="emit('link-click', $event, link)"
-      ></path>
-    </g>
+    <template v-for="(link, index) in graph.links" :key="index">
+      <g id="l-links" class="links">
+        <path
+          :id="`${index}`"
+          :d="getPath(link)"
+          :stroke-width="link['stroke-width']"
+          :class="link.class"
+          :style="link.style"
+          :marker-end="link['marker-end']"
+          :marker-start="link['marker-start']"
+          @click="emit('link-click', $event, link)"
+          @touchstart.passive="emit('link-click', $event, link)"
+        />
+        <text
+          class="link-label"
+          :font-size="linkLabel.font.size"
+          :x="getLinkLabelX(link)"
+          :y="getLinkLabelY(link)"
+        >
+          {{ link.name }}
+        </text>
+      </g>
+    </template>
     <g id="l-nodes" class="nodes">
       <template v-for="(node, index) in graph.nodes" :key="index">
         <svg
@@ -67,10 +75,10 @@
         ></circle>
         <text
           class="node-label"
-          :x="(node.x || 0) + (node.width || 0) / 2 + label.font.size / 2"
-          :y="(node.y || 0) + label.offset.y"
-          :font-size="label.font.size"
-          :stroke-width="label.font.size / 8"
+          :x="(node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2"
+          :y="(node.y || 0) + nodeLabel.offset.y"
+          :font-size="nodeLabel.font.size"
+          :stroke-width="nodeLabel.font.size / 8"
         >
           {{ node.name }}
         </text>
@@ -94,6 +102,8 @@ import { useSimulation } from "./useSimulation";
 import { useResizeObserver } from "@vueuse/core";
 import { useOptions } from "./useOptions";
 import { useNodeLabel } from "./useNodeLabel";
+import { useLinkLabel } from "./useLinkLabel";
+import { isNode } from "./types";
 
 const props = defineProps({
   nodes: {
@@ -132,14 +142,10 @@ useResizeObserver(svg, (entries) => {
 });
 
 const getPath = (link: D3LinkSimulation) =>
-  typeof link.source !== "number" &&
-  typeof link.source !== "string" &&
-  typeof link.target !== "number" &&
-  typeof link.target !== "string"
+  isNode(link.source) && isNode(link.target)
     ? `M${link.source.x} ${link.source.y} L${link.target.x} ${link.target.y}`
     : undefined;
 
-// reactive d3 simulation
 const { simulation, graph } = useSimulation(
   toRef(() => props.nodes),
   toRef(() => props.links),
@@ -153,7 +159,15 @@ const { dragStart, dragEnd, move } = useDraggable(
   options.draggables
 );
 
-const { label } = useNodeLabel(options.nodeFontSize, options.nodeSize);
+const { label: nodeLabel } = useNodeLabel(
+  options.nodeFontSize,
+  options.nodeSize
+);
+const {
+  label: linkLabel,
+  getX: getLinkLabelX,
+  getY: getLinkLabelY,
+} = useLinkLabel(options.linkFontSize);
 
 const { markers } = useLinkMarkers(
   options.linkWidth,
@@ -207,5 +221,9 @@ const { markers } = useLinkMarkers(
 }
 .node-label {
   fill: v-bind("theme.node.label.fill");
+}
+
+.link-label {
+  fill: v-bind("theme.link.label.fill");
 }
 </style>

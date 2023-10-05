@@ -186,6 +186,12 @@ export type D3LinkOptions = {
    * @defaultValue `2`
    */
   width: number;
+  font?: {
+    /** Default link font size
+     * @defaultValue `12`
+     */
+    size?: number;
+  };
   /**
    * Default link colors
    */
@@ -328,6 +334,10 @@ export type useSimulationOptions = {
    * Default link width
    */
   linkWidth: Readonly<Ref<number>>;
+  /**
+   * Default link font size
+   */
+  linkFontSize: Readonly<Ref<number>>;
 };
 
 export type D3NodeSimulation = SimulationNodeDatum & {
@@ -378,7 +388,11 @@ export type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
   d?: string;
   class?: string[];
   style?: string;
+  name?: string;
   "stroke-width"?: number;
   "marker-end"?: string;
   "marker-start"?: string;
 };
+
+export const isNode = (node: unknown): node is D3NodeSimulation =>
+  Boolean(node) && typeof node !== "number" && typeof node !== "string";

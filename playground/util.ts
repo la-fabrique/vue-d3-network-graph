@@ -58,7 +58,7 @@ export const getDefaultOptions = () =>
       colors: {
         fill: undefined,
         label: {
-          fill: undefined,
+          fill: "red",
         },
       },
     },
@@ -66,6 +66,9 @@ export const getDefaultOptions = () =>
       width: 1,
       colors: {
         stroke: undefined,
+        label: {
+          fill: "blue",
+        },
       },
     },
     simulation: {
