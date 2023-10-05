@@ -22,7 +22,7 @@
     <g id="l-links" class="links">
       <template v-for="(link, index) in graph.links" :key="index">
         <path
-          :id="index"
+          :id="`${index}`"
           :d="getPath(link)"
           :stroke-width="link['stroke-width']"
           :class="link.class"
