@@ -11,7 +11,7 @@
     @touchstart.passive="async () => {}"
     @mousemove="move"
   >
-    <defs v-if="layout.directed">
+    <defs v-if="options.directed">
       <marker v-bind="markers.arrowEnd">
         <path :fill="theme.link.stroke" d="M0 -5 L 10 0 L 0 5"></path>
       </marker>
@@ -20,32 +20,37 @@
       </marker>
     </defs>
     <g id="l-links" class="links">
-      <path
-        v-for="link in graph.links"
-        :id="link.id"
-        :key="link.id"
-        :d="getLinkPath(link)"
-        v-bind="getLinkAttrs(link)"
-        :class="getLinkClass(link.id)"
-        :style="getLinkStyle(link)"
-        :marker-end="getLinkMarkerEnd(link)"
-        :marker-start="getLinkMarkerStart(link)"
-        @click="emit('link-click', $event, link)"
-        @touchstart.passive="emit('link-click', $event, link)"
-      ></path>
+      <template v-for="(link, index) in graph.links" :key="index">
+        <path
+          :id="index"
+          :d="getPath(link)"
+          :stroke-width="link['stroke-width']"
+          :class="link.class"
+          :style="link.style"
+          :marker-end="link['marker-end']"
+          :marker-start="link['marker-start']"
+          @click="emit('link-click', $event, link)"
+          @touchstart.passive="emit('link-click', $event, link)"
+        />
+        <text class="link-label" :font-size="label.font.size">
+          <textPath :xlink:href="'#' + index" startOffset="50%">
+            {{ link.name }}
+          </textPath>
+        </text>
+      </template>
     </g>
     <g id="l-nodes" class="nodes">
       <template v-for="(node, index) in graph.nodes" :key="index">
         <svg
           v-if="node.innerSVG"
-          :viewBox="node.innerSVG!.viewBox"
-          :width="getNodeWidth(node)"
-          :height="getNodeHeight(node)"
-          :x="(node.x || 0) - getNodeWidth(node) / 2"
-          :y="(node.y || 0) - getNodeHeight(node) / 2"
-          :style="getNodeStyle(node)"
+          :viewBox="node.innerSVG.viewBox"
+          :width="node.width"
+          :height="node.height"
+          :x="(node.x || 0) - (node.width || 0) / 2"
+          :y="(node.y || 0) - (node.height || 0) / 2"
+          :style="node.style"
           :title="node.name"
-          :class="getNodeClass(node, ['node-svg'])"
+          :class="node.cssClass"
           @click="emit('node-click', $event, node)"
           @touchend.passive="emit('node-click', $event, node)"
           @mousedown.prevent="dragStart($event, index)"
@@ -54,12 +59,12 @@
         />
         <circle
           v-else
-          :r="getNodeSize(node) / 2"
-          :cx="node.x || 0"
-          :cy="node.y || 0"
-          :style="getNodeStyle(node)"
+          :cx="node.x"
+          :cy="node.y"
+          :r="node.r"
+          :style="node.style"
           :title="node.name"
-          :class="getNodeClass(node)"
+          :class="node.cssClass"
           @click="$emit('node-click', $event, node)"
           @touchend.passive="$emit('node-click', $event, node)"
           @mousedown.prevent="dragStart($event, index)"
@@ -67,7 +72,7 @@
         ></circle>
         <text
           class="node-label"
-          :x="(node.x || 0) + getNodeSize(node) / 2 + label.font.size / 2"
+          :x="(node.x || 0) + (node.width || 0) / 2 + label.font.size / 2"
           :y="(node.y || 0) + label.offset.y"
           :font-size="label.font.size"
           :stroke-width="label.font.size / 8"
@@ -81,13 +86,19 @@
 
 <script setup lang="ts">
 import { type PropType, ref, toRef } from "vue";
-import type { D3Link, D3NeworkGraphEmits, D3Node, D3Options } from "./types";
+import type {
+  D3Link,
+  D3NeworkGraphEmits,
+  D3Node,
+  D3Options,
+  D3LinkSimulation,
+} from "./types";
 import { useDraggable } from "./useDraggable";
-import { useNode } from "./useNode";
-import { useLink } from "./useLink";
+import { useLinkMarkers } from "./useLinkMarkers";
 import { useSimulation } from "./useSimulation";
 import { useResizeObserver } from "@vueuse/core";
 import { useOptions } from "./useOptions";
+import { useNodeLabel } from "./useNodeLabel";
 
 const props = defineProps({
   nodes: {
@@ -106,13 +117,7 @@ const props = defineProps({
 
 const emit = defineEmits<D3NeworkGraphEmits>();
 
-const {
-  theme,
-  simulation: optionsSimulation,
-  nodes: optionsNodes,
-  links: optionsLinks,
-  layout,
-} = useOptions(toRef(() => props.options));
+const { theme, options } = useOptions(toRef(() => props.options));
 
 // svg container resize observer
 const svg = ref(null);
@@ -131,40 +136,34 @@ useResizeObserver(svg, (entries) => {
   };
 });
 
+const getPath = (link: D3LinkSimulation) =>
+  typeof link.source !== "number" &&
+  typeof link.source !== "string" &&
+  typeof link.target !== "number" &&
+  typeof link.target !== "string"
+    ? `M${link.source.x} ${link.source.y} L${link.target.x} ${link.target.y}`
+    : undefined;
+
 // reactive d3 simulation
 const { simulation, graph } = useSimulation(
   toRef(() => props.nodes),
   toRef(() => props.links),
   rect,
-  optionsSimulation
+  options
 );
 
 // draggable nodes
 const { dragStart, dragEnd, move } = useDraggable(
   simulation,
-  toRef(() => layout.value.draggables)
+  options.draggables
 );
 
-const {
-  label,
-  getSize: getNodeSize,
-  getWidth: getNodeWidth,
-  getClass: getNodeClass,
-  getHeight: getNodeHeight,
-  getStyle: getNodeStyle,
-} = useNode(optionsNodes);
-const {
-  getPath: getLinkPath,
-  getAttrs: getLinkAttrs,
-  getClass: getLinkClass,
-  getStyle: getLinkStyle,
-  getMarkerEnd: getLinkMarkerEnd,
-  getMarkerStart: getLinkMarkerStart,
-  markers,
-} = useLink(
-  optionsLinks,
-  toRef(() => optionsNodes.value.size),
-  toRef(() => layout.value.directed)
+const { label } = useNodeLabel(options.nodeFontSize, options.nodeSize);
+
+const { markers } = useLinkMarkers(
+  options.linkWidth,
+  options.nodeSize,
+  options.directed
 );
 </script>
 

@@ -1,4 +1,10 @@
-import { D3Link, D3Node, D3SimulationOptions } from "./types";
+import type {
+  D3Link,
+  D3Node,
+  useSimulationOptions,
+  D3LinkSimulation,
+  D3NodeSimulation,
+} from "./types";
 import { watchDebounced } from "@vueuse/core";
 import {
   forceLink,
@@ -7,9 +13,11 @@ import {
   forceCollide,
   forceX,
   forceY,
-  Simulation,
+  type Simulation,
 } from "d3-force";
-import { ComputedRef, Ref, reactive, ref, toRaw } from "vue";
+import { type Ref, reactive, ref } from "vue";
+import { useNode } from "./useNode";
+import { useLink } from "./useLink";
 
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
@@ -33,28 +41,40 @@ export function useSimulation(
   /** The size of the graph */
   rect: Readonly<Ref<{ width: number; height: number }>>,
   /** The options of the simulation */
-  options: ComputedRef<D3SimulationOptions>
+  options: useSimulationOptions
 ): {
   /** The graph  */
-  graph: { nodes: D3Node[]; links: D3Link[] };
+  graph: { nodes: D3NodeSimulation[]; links: D3LinkSimulation[] };
   /** The d3 simulation */
-  simulation: Ref<Simulation<D3Node, D3Link>>;
-  /**
-   * Refresh the simulation
-   */
-  refresh: () => void;
+  simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>;
 } {
-  const graph = reactive<{ nodes: D3Node[]; links: D3Link[] }>({
+  const { getNode } = useNode(options.nodeSize);
+  const { getSimulationLink } = useLink(
+    options.linkWidth,
+    options.nodeSize,
+    options.directed
+  );
+
+  const graph = reactive<{
+    nodes: D3NodeSimulation[];
+    links: D3LinkSimulation[];
+  }>({
     nodes: [],
     links: [],
   });
 
+  const init = () => {
+    console.debug("useSimulation.init");
+    graph.nodes = nodes.value.map((n) => getNode(n));
+    graph.links = links.value.map((l) => getSimulationLink(l));
+    refresh();
+  };
+
   const refresh = async () => {
+    console.debug("useSimulation.refresh");
     simulation.value.stop();
-    graph.nodes = nodes.value.map((n) => toRaw(n));
-    graph.links = links.value.map((l) => toRaw(l));
     simulation.value = simulate();
-    if (options.value.static) {
+    if (options.static.value) {
       simulation.value.tick(TICK_NUMBER);
     } else {
       simulation.value.restart();
@@ -62,27 +82,29 @@ export function useSimulation(
   };
 
   const simulate = () => {
-    const sim = forceSimulation<D3Node, D3Link>()
-      .stop()
+    const sim = forceSimulation<D3NodeSimulation, D3LinkSimulation>()
       .alphaMin(ALPHA_MIN)
       .alphaDecay(ALPHA_DECAY)
       .nodes(graph.nodes);
     sim.force(
       FORCE_X_NAME,
-      forceX(rect.value.width / 2).strength(options.value.force.x)
+      forceX(rect.value.width / 2).strength(options.forceXStrength.value)
     );
     sim.force(
       FORCE_Y_NAME,
-      forceY(rect.value.height / 2).strength(options.value.force.y)
+      forceY(rect.value.height / 2).strength(options.forceYStrength.value)
     );
     sim.force(
       FORCE_CHARGE_NAME,
-      forceManyBody().strength(options.value.force.charge)
+      forceManyBody().strength(options.forcManyBodyStrength.value)
     );
-    sim.force(FORCE_COLLIDE_NAME, forceCollide(options.value.force.collide));
+    sim.force(
+      FORCE_COLLIDE_NAME,
+      forceCollide(options.forceCollideStrength.value)
+    );
     sim.force(
       FORCE_LINK_NAME,
-      forceLink(graph.links).id((d: D3Node) => {
+      forceLink(graph.links).id((d: D3NodeSimulation) => {
         if (!("id" in d)) {
           throw new Error("Node id is undefined");
         }
@@ -93,23 +115,35 @@ export function useSimulation(
     return sim;
   };
 
-  const simulation = ref<Simulation<D3Node, D3Link>>(simulate());
+  const simulation = ref<Simulation<D3NodeSimulation, D3LinkSimulation>>(
+    forceSimulation<D3NodeSimulation, D3LinkSimulation>()
+  );
 
   watchDebounced(
-    [() => nodes.value.length, () => links.value.length, rect],
-    async () => refresh(),
+    [
+      () => nodes.value.length,
+      () => links.value.length,
+      rect,
+      options.nodeSize,
+      options.linkWidth,
+      options.forcManyBodyStrength,
+      options.forceXStrength,
+      options.forceYStrength,
+      options.forceCollideStrength,
+      options.directed,
+    ],
+    async () => init(),
     { debounce: 100, maxWait: 1000 }
   );
 
-  watchDebounced(
-    () => options.value,
-    async () => refresh(),
-    { deep: true, debounce: 100, maxWait: 1000 }
-  );
+  watchDebounced(options.static, async () => refresh(), {
+    deep: true,
+    debounce: 100,
+    maxWait: 1000,
+  });
 
   return {
     simulation,
-    refresh,
     graph,
   };
 }

@@ -1,14 +1,13 @@
 import { AllowedComponentProps } from 'vue';
 import { ComponentCustomProps } from 'vue';
 import { ComponentOptionsMixin } from 'vue';
-import { ComputedRef } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
 import { PropType } from 'vue';
 import { Ref } from 'vue';
 import { Simulation } from 'd3-force';
-import { SimulationLinkDatum } from 'd3-force';
-import { SimulationNodeDatum } from 'd3-force';
+import type { SimulationLinkDatum } from 'd3-force';
+import type { SimulationNodeDatum } from 'd3-force';
 import { VNodeProps } from 'vue';
 
 /**
@@ -17,10 +16,12 @@ import { VNodeProps } from 'vue';
 export declare type D3LayoutOptions = {
     /**
      * Indicates if the nodes should be draggable
+     * @defaultValue `false`
      * */
     draggables?: boolean;
     /**
      * Indicate if the graph is directed. Edge arrow will be displayed
+     * @defaultValue `false`
      */
     directed?: boolean;
 };
@@ -28,7 +29,7 @@ export declare type D3LayoutOptions = {
 /**
  * Represents a link in the graph
  */
-export declare interface D3Link extends SimulationLinkDatum<D3Node> {
+export declare type D3Link = {
     /**
      * Link id. If not provided uses array index
      */
@@ -45,7 +46,9 @@ export declare interface D3Link extends SimulationLinkDatum<D3Node> {
      * Is  two-way link (bidirectional)
      */
     twoWay?: boolean;
-}
+    source?: string;
+    target?: string;
+};
 
 /**
  * Default link options
@@ -53,6 +56,7 @@ export declare interface D3Link extends SimulationLinkDatum<D3Node> {
 export declare type D3LinkOptions = {
     /**
      * Default link width
+     * @defaultValue `2`
      */
     width: number;
     /**
@@ -101,6 +105,17 @@ export declare type D3LinkOptionsColors = {
     };
 };
 
+export declare type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
+    id?: string;
+    key?: number;
+    d?: string;
+    class?: string[];
+    style?: string;
+    "stroke-width"?: number;
+    "marker-end"?: string;
+    "marker-start"?: string;
+};
+
 export declare const D3NetworkGraph: DefineComponent<{
     nodes: {
         type: PropType<D3Node[]>;
@@ -115,8 +130,8 @@ export declare const D3NetworkGraph: DefineComponent<{
         default: undefined;
     };
 }, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
-    "node-click": ($event: TouchEvent | MouseEvent, node: D3Node) => void;
-    "link-click": ($event: TouchEvent | MouseEvent, link: D3Link) => void;
+    "node-click": ($event: TouchEvent | MouseEvent, node: D3NodeSimulation) => void;
+    "link-click": ($event: TouchEvent | MouseEvent, link: D3LinkSimulation) => void;
 }, string, VNodeProps & AllowedComponentProps & ComponentCustomProps, Readonly<ExtractPropTypes<{
     nodes: {
         type: PropType<D3Node[]>;
@@ -131,8 +146,8 @@ export declare const D3NetworkGraph: DefineComponent<{
         default: undefined;
     };
 }>> & {
-    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3Node) => any) | undefined;
-    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3Link) => any) | undefined;
+    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3NodeSimulation) => any) | undefined;
+    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3LinkSimulation) => any) | undefined;
 }, {
     options: D3Options;
 }, {}>;
@@ -141,18 +156,18 @@ export declare const D3NetworkGraph: DefineComponent<{
  * Event exposed by the D3NetworkGraph component
  */
 export declare type D3NeworkGraphEmits = {
-    (event: "node-click", $event: TouchEvent | MouseEvent, node: D3Node): void;
-    (event: "link-click", $event: TouchEvent | MouseEvent, link: D3Link): void;
+    (event: "node-click", $event: TouchEvent | MouseEvent, node: D3NodeSimulation): void;
+    (event: "link-click", $event: TouchEvent | MouseEvent, link: D3LinkSimulation): void;
 };
 
 /**
  * Represents a node in the graph
  */
-export declare interface D3Node extends SimulationNodeDatum {
+export declare type D3Node = {
     /**
      * Node id. If not provided uses array index
      */
-    id?: number;
+    id?: string;
     /**
      * Node name. If not provided uses: 'node [node_id]'
      */
@@ -185,16 +200,20 @@ export declare interface D3Node extends SimulationNodeDatum {
         innerHtml: string;
     };
     group?: number;
-}
+};
 
 /**
  * Default node options
  */
 export declare type D3NodeOptions = {
-    /** Default node size */
+    /** Default node size
+     * @defaultValue `25`
+     */
     size?: number;
     font?: {
-        /** Default node size */
+        /** Default node size
+         * @defaultValue `12`
+         */
         size?: number;
     };
     /** Default node colors */
@@ -251,6 +270,46 @@ export declare type D3NodeOptionsColors = {
     };
 };
 
+export declare type D3NodeSimulation = SimulationNodeDatum & {
+    /**
+     * Node id. If not provided uses array index
+     */
+    id?: number;
+    /**
+     * Node name. If not provided uses: 'node [node_id]'
+     */
+    name?: string;
+    /**
+     * Node color, e.g. red, #aa00bb,
+     */
+    color?: string;
+    /**
+     * Node css class names
+     */
+    cssClass?: string[] | undefined;
+    /**
+     * Node size
+     */
+    size?: number;
+    /**
+     * Node width
+     */
+    width?: number;
+    /**
+     * Node height
+     */
+    height?: number;
+    /**
+     * Node svg image
+     */
+    innerSVG?: {
+        viewBox: string;
+        innerHtml: string;
+    };
+    style?: string;
+    r?: number;
+};
+
 /**
  * Graph options
  */
@@ -279,8 +338,8 @@ export declare type D3Options = {
 export declare type D3SimulationOptions = {
     /**
      * Indicates if the simulation should not be animated
-     * @remarks
-     * Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
+     * @remarks  Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
+     * @defaultValue `false`
      */
     static?: boolean;
     /**
@@ -288,19 +347,23 @@ export declare type D3SimulationOptions = {
      */
     force: {
         /**
-         * d3 forceX strenght
+         * d3 forceX strenght between 0 and 1
+         * @defaultValue `0.1`
          * */
         x: number;
         /**
-         * d3 forceY strenght
+         * d3 forceY strenght between 0 and 1
+         * @defaultValue `0.1`
          */
         y: number;
         /**
-         * d3 forceManyBody strenght
+         * d3 forceManyBody strenght smaller than 0
+         * @defaultValue `-300`
          */
         charge: number;
         /**
          * d3 forceCollide radius
+         * @defaultValue `45`
          */
         collide: number;
     };
@@ -322,18 +385,60 @@ rect: Readonly<Ref<{
     height: number;
 }>>, 
 /** The options of the simulation */
-options: ComputedRef<D3SimulationOptions>): {
+options: useSimulationOptions): {
     /** The graph  */
     graph: {
-        nodes: D3Node[];
-        links: D3Link[];
+        nodes: D3NodeSimulation[];
+        links: D3LinkSimulation[];
     };
     /** The d3 simulation */
-    simulation: Ref<Simulation<D3Node, D3Link>>;
+    simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>;
+};
+
+/**
+ * Options used by the useSimulation composition function
+ */
+export declare type useSimulationOptions = {
     /**
-     * Refresh the simulation
+     * Indicates if the simulation should not be animated
      */
-    refresh: () => void;
+    static: Readonly<Ref<boolean>>;
+    /**
+     * d3 forceX strenght between 0 and 1
+     */
+    forceXStrength: Readonly<Ref<number>>;
+    /**
+     * d3 forceY strenght between 0 and 1
+     */
+    forceYStrength: Readonly<Ref<number>>;
+    /**
+     * d3 forceManyBody strenght smaller than 0
+     * */
+    forcManyBodyStrength: Readonly<Ref<number>>;
+    /**
+     * d3 forceCollide radius
+     */
+    forceCollideStrength: Readonly<Ref<number>>;
+    /**
+     * Default node size
+     */
+    nodeSize: Readonly<Ref<number>>;
+    /**
+     * Default node font size
+     */
+    nodeFontSize: Readonly<Ref<number>>;
+    /**
+     * Indicate if draggables are enabled
+     */
+    draggables: Readonly<Ref<boolean>>;
+    /**
+     * Indicate if the graph is directed. Edge arrow will be displayed
+     */
+    directed: Readonly<Ref<boolean>>;
+    /**
+     * Default link width
+     */
+    linkWidth: Readonly<Ref<number>>;
 };
 
 export { }

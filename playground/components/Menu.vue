@@ -160,9 +160,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
-import { PropType } from "vue";
-import { D3Options } from "../../src/types";
+import { ref, defineProps, type PropType } from "vue";
+import type { D3Options } from "../../src/types";
 import { useVModel } from "@vueuse/core";
 
 const props = defineProps({

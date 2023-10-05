@@ -6,11 +6,12 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 
 ## Key features
 
-- Vue 3.3 features
+- Directed links (svg markers). see [D3LayoutOptions:directed](docs/modules.md#d3layoutoptions) and [D3Link:twoWay](docs/modules.md#d3link)
 - 'Static' mode to use d3-force tick instead of simulation.restart (No rendering vue component on each tick)
-- [VueUse/useResizeObserver](https://vueuse.org/core/useResizeObserver/)
-- Tpyescript support
 - Composition function : [useSimulation](docs/modules.md#usesimulation) (renderless use of d3 simulation)
+- Typescript support
+- Vue 3.3 features ([c-bind in css](https://vuejs.org/api/sfc-css-features.html#v-bind-in-css), [readonly ref from getter](https://vuejs.org/api/reactivity-utilities.html#toref) )
+- VueUse : [useResizeObserver](https://vueuse.org/core/useResizeObserver/), [watchDebounced](https://vueuse.org/shared/watchDebounced/#watchdebounced)
 
 ## Installation
 
@@ -72,18 +73,18 @@ See [API](docs/modules.md)
 
 **props**
 
-| Name     | Type                                       | Default   | Description                                                                                                                                      |
-| -------- | ------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| nodes    | Array<[D3Node](docs/interfaces/D3Node.md)> | []        | Array of nodes                                                                                                                                   |
-| links    | Array<[D3Link](docs/interfaces/D3Link.md)> | []        | Array of links                                                                                                                                   |
-| options? | [D3Options](docs/modules.md#d3options)     | undefined | [`Links`](docs/modules.md#d3linkoptions), [nodes](docs/modules.md#d3nodeoptions) and [`simulation`](docs/modules.md#d3simulationoptions) Options |
+| Name     | Type                                    | Default   | Description                                                                                                                                  |
+| -------- | --------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| nodes    | Array<[D3Node](docs/modules.md#d3node)> | []        | Array of nodes                                                                                                                               |
+| links    | Array<[D3Link](docs/modules.md#d3link)> | []        | Array of links                                                                                                                               |
+| options? | [D3Options](docs/modules.md#d3options)  | undefined | [Links](docs/modules.md#d3linkoptions), [nodes](docs/modules.md#d3nodeoptions) and [simulation](docs/modules.md#d3simulationoptions) Options |
 
 **events**
 
-| Name         | Type                                             | Description                                         |
-| ------------ | ------------------------------------------------ | --------------------------------------------------- |
-| 'node-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
-| 'link-click' | [`function`](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
+| Name         | Type                                           | Description                                         |
+| ------------ | ---------------------------------------------- | --------------------------------------------------- |
+| 'node-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
+| 'link-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
 
 ## TODO :
 

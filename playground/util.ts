@@ -5,7 +5,7 @@ export const getRandomLinks = (nodes: D3Node[], maxLinks: number): D3Link[] => {
   for (const node of nodes) {
     const total = Math.floor(Math.random() * maxLinks);
     for (let i = 0; i <= total; i++) {
-      const target = Math.floor(Math.random() * nodes.length);
+      const target = Math.floor(Math.random() * nodes.length).toString();
       const source = node.id!;
       if (
         target === source ||
@@ -27,7 +27,7 @@ export const getRandomLinks = (nodes: D3Node[], maxLinks: number): D3Link[] => {
   return links;
 };
 
-const newLink = (source: number, target: number) => ({
+const newLink = (source: string, target: string) => ({
   source: source,
   target: target,
   name: "Utilise",
@@ -36,12 +36,12 @@ const newLink = (source: number, target: number) => ({
 export const getRandomNodes = (maxNodes: number) => {
   const nodes = [];
   for (let i = 0; i <= maxNodes; i++) {
-    nodes.push(newNode(i));
+    nodes.push(newNode(i.toString()));
   }
   return nodes;
 };
 
-const newNode = (id: number): D3Node => ({
+const newNode = (id: string): D3Node => ({
   id: id,
   name: "Node " + id,
   group: Math.floor(Math.random() * 10),

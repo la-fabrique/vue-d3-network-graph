@@ -6,6 +6,8 @@
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
