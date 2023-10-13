@@ -45,7 +45,7 @@ Layout options
 
 #### Defined in
 
-[types.ts:244](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L244)
+[types.ts:244](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L244)
 
 ___
 
@@ -68,7 +68,7 @@ Represents a link in the graph
 
 #### Defined in
 
-[types.ts:45](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L45)
+[types.ts:45](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L45)
 
 ___
 
@@ -89,7 +89,7 @@ Default link options
 
 #### Defined in
 
-[types.ts:185](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L185)
+[types.ts:185](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L185)
 
 ___
 
@@ -116,7 +116,7 @@ Default link colors
 
 #### Defined in
 
-[types.ts:145](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L145)
+[types.ts:145](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L145)
 
 ___
 
@@ -128,7 +128,7 @@ Link used by the d3 simulation compisition function `useSimulation`
 
 #### Defined in
 
-[types.ts:389](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L389)
+[types.ts:389](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L389)
 
 ___
 
@@ -172,7 +172,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[types.ts:282](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L282)
+[types.ts:282](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L282)
 
 ___
 
@@ -199,7 +199,7 @@ Represents a node in the graph
 
 #### Defined in
 
-[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L7)
+[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L7)
 
 ___
 
@@ -220,7 +220,7 @@ Default node options
 
 #### Defined in
 
-[types.ts:127](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L127)
+[types.ts:127](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L127)
 
 ___
 
@@ -250,7 +250,7 @@ Defaut node colors
 
 #### Defined in
 
-[types.ts:77](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L77)
+[types.ts:77](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L77)
 
 ___
 
@@ -262,7 +262,7 @@ Node used by the d3 simulation compisition function `useSimulation`
 
 #### Defined in
 
-[types.ts:340](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L340)
+[types.ts:340](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L340)
 
 ___
 
@@ -283,7 +283,7 @@ Graph options
 
 #### Defined in
 
-[types.ts:260](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L260)
+[types.ts:260](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L260)
 
 ___
 
@@ -306,7 +306,7 @@ Simulation options
 
 #### Defined in
 
-[types.ts:206](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L206)
+[types.ts:206](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L206)
 
 ___
 
@@ -334,7 +334,7 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[types.ts:290](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L290)
+[types.ts:290](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/types.ts#L290)
 
 ## Variables
 
@@ -344,7 +344,7 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/shims-vue.d.ts#L4)
+[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/shims-vue.d.ts#L4)
 
 ## Functions
 
@@ -380,4 +380,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/useSimulation.ts#L36)
+[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/4604a99/src/useSimulation.ts#L36)

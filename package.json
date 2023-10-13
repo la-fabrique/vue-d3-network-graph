@@ -34,7 +34,7 @@
     "type-check": "vue-tsc --noEmit",
     "build": "vue-tsc --noEmit && vite build",
     "build-playground": "vue-tsc --noEmit && vite build --config vite-playground.config.js --base=/vue-d3-network-graph/",
-    "preview": "vite preview --config vite-playground.config.js",
+    "preview": "vite preview --config vite-playground.config.js --base=/vue-d3-network-graph/",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "doc": "ts-node ./scripts/doc.ts",
@@ -95,7 +95,13 @@
     "rules": {
       "vue/no-v-html": "off",
       "@typescript-eslint/no-unused-vars": "warn"
-    }
+    },
+    "ignorePatterns": [
+      "dist",
+      "node_modules",
+      "docs",
+      "playground-dist"
+    ]
   },
   "browserslist": [
     "> 1%",

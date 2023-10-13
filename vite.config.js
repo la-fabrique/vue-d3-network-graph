@@ -22,11 +22,6 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
-  define: {
-    "import.meta.env.VITE_APP_NAME": JSON.stringify(pkg.name),
-    "import.meta.env.VITE_APP_DESCRIPTION": JSON.stringify(pkg.description),
-    "import.meta.env.VITE_APP_VERSION": JSON.stringify(pkg.version),
-  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

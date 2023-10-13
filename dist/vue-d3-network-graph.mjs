@@ -287,15 +287,15 @@ function we(t) {
       for (h = ft(n, xe, _e).visitAfter(s), i = 0; i < u; ++i)
         d = n[i], v = r[d.index], c = v * v, g = d.x + d.vx, x = d.y + d.vy, h.visit(_);
     function _(m, w, N, T, b) {
-      var S = m.data, D = m.r, A = v + D;
-      if (S) {
-        if (S.index > d.index) {
-          var B = g - S.x - S.vx, Y = x - S.y - S.vy, R = B * B + Y * Y;
-          R < A * A && (B === 0 && (B = H(e), R += B * B), Y === 0 && (Y = H(e), R += Y * Y), R = (A - (R = Math.sqrt(R))) / R * o, d.vx += (B *= R) * (A = (D *= D) / (c + D)), d.vy += (Y *= R) * A, S.vx -= B * (A = 1 - A), S.vy -= Y * A);
+      var A = m.data, D = m.r, S = v + D;
+      if (A) {
+        if (A.index > d.index) {
+          var B = g - A.x - A.vx, Y = x - A.y - A.vy, R = B * B + Y * Y;
+          R < S * S && (B === 0 && (B = H(e), R += B * B), Y === 0 && (Y = H(e), R += Y * Y), R = (S - (R = Math.sqrt(R))) / R * o, d.vx += (B *= R) * (S = (D *= D) / (c + D)), d.vy += (Y *= R) * S, A.vx -= B * (S = 1 - S), A.vy -= Y * S);
         }
         return;
       }
-      return w > g + A || T < g - A || N > x + A || b < x - A;
+      return w > g + S || T < g - S || N > x + S || b < x - S;
     }
   }
   function s(i) {
@@ -338,8 +338,8 @@ function me(t) {
   }
   function d(c) {
     for (var y = 0, _ = t.length; y < u; ++y)
-      for (var m = 0, w, N, T, b, S, D, A; m < _; ++m)
-        w = t[m], N = w.source, T = w.target, b = T.x + T.vx - N.x - N.vx || H(i), S = T.y + T.vy - N.y - N.vy || H(i), D = Math.sqrt(b * b + S * S), D = (D - a[m]) / D * c * e[m], b *= D, S *= D, T.vx -= b * (A = f[m]), T.vy -= S * A, N.vx += b * (A = 1 - A), N.vy += S * A;
+      for (var m = 0, w, N, T, b, A, D, S; m < _; ++m)
+        w = t[m], N = w.source, T = w.target, b = T.x + T.vx - N.x - N.vx || H(i), A = T.y + T.vy - N.y - N.vy || H(i), D = Math.sqrt(b * b + A * A), D = (D - a[m]) / D * c * e[m], b *= D, A *= D, T.vx -= b * (S = f[m]), T.vy -= A * S, N.vx += b * (S = 1 - S), N.vy += A * S;
   }
   function g() {
     if (l) {
@@ -455,9 +455,9 @@ var O = 0, Q = 0, V = 0, Ht = 1e3, ot, Z, it = 0, G = 0, at = 0, J = typeof perf
   setTimeout(t, 17);
 };
 function Ut() {
-  return G || (Gt(Se), G = J.now() + at);
+  return G || (Gt(Ae), G = J.now() + at);
 }
-function Se() {
+function Ae() {
   G = 0;
 }
 function ut() {
@@ -478,7 +478,7 @@ function jt(t, n, r) {
   var e = new ut();
   return e.restart(t, n, r), e;
 }
-function Ae() {
+function Se() {
   Ut(), ++O;
   for (var t = ot, n; t; )
     (n = G - t._time) >= 0 && t._call.call(void 0, n), t = t._next;
@@ -487,7 +487,7 @@ function Ae() {
 function $t() {
   G = (it = J.now()) + at, O = Q = 0;
   try {
-    Ae();
+    Se();
   } finally {
     O = 0, Te(), G = 0;
   }
@@ -581,10 +581,10 @@ function Yt(t) {
       return arguments.length > 1 ? (c == null ? s.delete(v) : s.set(v, x(c)), n) : s.get(v);
     },
     find: function(v, c, y) {
-      var _ = 0, m = t.length, w, N, T, b, S;
+      var _ = 0, m = t.length, w, N, T, b, A;
       for (y == null ? y = 1 / 0 : y *= y, _ = 0; _ < m; ++_)
-        b = t[_], w = v - b.x, N = c - b.y, T = w * w + N * N, T < y && (S = b, y = T);
-      return S;
+        b = t[_], w = v - b.x, N = c - b.y, T = w * w + N * N, T < y && (A = b, y = T);
+      return A;
     },
     on: function(v, c) {
       return arguments.length > 1 ? (i.on(v, c), n) : i.on(v);
@@ -745,9 +745,9 @@ function Ve(t, n, r, e) {
     nodes: [],
     links: []
   }), s = () => {
-    console.debug("useSimulation.init"), l.nodes = t.value.map((h) => o(h)), l.links = n.value.map((h) => a(h)), f();
+    l.nodes = t.value.map((h) => o(h)), l.links = n.value.map((h) => a(h)), f();
   }, f = async () => {
-    console.debug("useSimulation.refresh"), u.value.stop(), u.value = i(), e.static.value ? u.value.tick(Oe) : u.value.restart();
+    u.value.stop(), u.value = i(), e.static.value ? u.value.tick(Oe) : u.value.restart();
   }, i = () => {
     const h = Yt().alphaMin(Kt).alphaDecay(Ot).nodes(l.nodes);
     return h.force(
@@ -799,7 +799,7 @@ function Ve(t, n, r, e) {
 }
 const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t) => {
   const n = q(() => {
-    var e, o, a, l, s, f, i, u, h, d, g, x, v, c, y, _, m, w, N, T, b, S, D, A, B, Y, R, tt, et, k, z, p, C, E, vt, gt, yt, dt, xt, _t, wt, pt, mt, Mt, kt, Nt, St, At;
+    var e, o, a, l, s, f, i, u, h, d, g, x, v, c, y, _, m, w, N, T, b, A, D, S, B, Y, R, tt, et, k, z, p, C, E, vt, gt, yt, dt, xt, _t, wt, pt, mt, Mt, kt, Nt, At, St;
     return {
       node: {
         stroke: ((a = (o = (e = t.value) == null ? void 0 : e.nodes) == null ? void 0 : o.colors) == null ? void 0 : a.stroke) || "#E2EB98",
@@ -814,10 +814,10 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
         },
         pinned: {
           stroke: "#9DC4B5",
-          fill: (S = (b = (T = (N = t.value) == null ? void 0 : N.nodes) == null ? void 0 : T.colors) == null ? void 0 : b.pinned) == null ? void 0 : S.fill
+          fill: (A = (b = (T = (N = t.value) == null ? void 0 : N.nodes) == null ? void 0 : T.colors) == null ? void 0 : b.pinned) == null ? void 0 : A.fill
         },
         label: {
-          fill: ((Y = (B = (A = (D = t.value) == null ? void 0 : D.nodes) == null ? void 0 : A.colors) == null ? void 0 : B.label) == null ? void 0 : Y.fill) || "#93A392"
+          fill: ((Y = (B = (S = (D = t.value) == null ? void 0 : D.nodes) == null ? void 0 : S.colors) == null ? void 0 : B.label) == null ? void 0 : Y.fill) || "#93A392"
         }
       },
       link: {
@@ -832,7 +832,7 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
           fill: (Mt = (mt = (pt = (wt = t.value) == null ? void 0 : wt.links) == null ? void 0 : pt.colors) == null ? void 0 : mt.hover) == null ? void 0 : Mt.fill
         },
         label: {
-          fill: ((At = (St = (Nt = (kt = t.value) == null ? void 0 : kt.links) == null ? void 0 : Nt.colors) == null ? void 0 : St.label) == null ? void 0 : At.fill) || "#93A392"
+          fill: ((St = (At = (Nt = (kt = t.value) == null ? void 0 : kt.links) == null ? void 0 : Nt.colors) == null ? void 0 : At.label) == null ? void 0 : St.fill) || "#93A392"
         }
       }
     };
@@ -965,22 +965,22 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
   setup(t, { emit: n }) {
     const r = t;
     Qt((k) => ({
-      "2c3695d2": M(e).node.stroke,
-      "1ea8339d": M(e).node.fill,
-      "79f1048e": M(e).node.selected.stroke || M(e).node.stroke,
-      "147925ee": M(e).node.selected.fill || M(e).node.fill,
-      a594526a: M(e).node.pinned.stroke || M(e).node.stroke,
-      "76d29eab": M(e).node.pinned.fill || M(e).node.fill,
-      "4359ac8a": M(e).node.hover.stroke || M(e).node.stroke,
-      "75eee99b": M(e).node.hover.fill || M(e).node.fill,
-      fab0264c: M(e).link.stroke,
-      bbd8a6b6: M(e).link.fill,
-      "2c5bf489": M(e).link.selected.stroke,
-      "1333d414": M(e).link.selected.fill,
-      "1ef63b44": M(e).node.hover.stroke,
-      d8d2e4e2: M(e).node.hover.fill,
-      bcef8442: M(e).link.label.fill,
-      "2129aad7": M(e).node.label.fill
+      "1a59dbe0": M(e).node.stroke,
+      "553cb5aa": M(e).node.fill,
+      "1450be1c": M(e).node.selected.stroke || M(e).node.stroke,
+      "19dfd67c": M(e).node.selected.fill || M(e).node.fill,
+      "189ac84e": M(e).node.pinned.stroke || M(e).node.stroke,
+      "5ba81ab9": M(e).node.pinned.fill || M(e).node.fill,
+      f47aea26: M(e).node.hover.stroke || M(e).node.stroke,
+      f4da9866: M(e).node.hover.fill || M(e).node.fill,
+      "70cb32e8": M(e).link.stroke,
+      "58cd1e33": M(e).link.fill,
+      "32e8c38a": M(e).link.selected.stroke,
+      "6f737b74": M(e).link.selected.fill,
+      "7fa43ed2": M(e).node.hover.stroke,
+      d927c6c6: M(e).node.hover.fill,
+      bd446626: M(e).link.label.fill,
+      "20ff39e5": M(e).node.label.fill
     }));
     const { theme: e, options: o } = rn($(() => r.options)), a = K(null), l = K(null), s = K({ width: 100, height: 100, top: 0, left: 0 }), { transform: f, zoom: i, panMove: u, panStart: h, panEnd: d } = sn(s);
     Jt(a, (k) => {
@@ -1014,11 +1014,11 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
       o.linkWidth,
       o.nodeSize,
       o.directed
-    ), S = (k, z, p) => {
+    ), A = (k, z, p) => {
       n("node-click", k, r.nodes[p]);
     }, D = (k, z, p) => {
       n("link-click", k, r.links[p]);
-    }, A = (k) => {
+    }, S = async (k) => {
       if (!k.ctrlKey || !l.value)
         return;
       const z = k.deltaY || k.deltaX, p = Math.abs(z) < 50 ? 0.05 : 0.25, C = z < 0 ? p : -p;
@@ -1044,7 +1044,7 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
       onTouchstartPassive: z[0] || (z[0] = async () => {
       }),
       onMousemove: B,
-      onWheel: U(A, ["prevent"])
+      onWheel: U(S, ["prevent"])
     }, [
       M(o).directed ? (X(), W("defs", un, [
         P("marker", Et(Tt(M(b).arrowEnd)), [
@@ -1099,8 +1099,8 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
               style: lt(p.style),
               title: p.name,
               class: st(p.cssClass),
-              onClick: (E) => S(E, p, C),
-              onTouchendPassive: (E) => S(E, p, C),
+              onClick: (E) => A(E, p, C),
+              onTouchendPassive: (E) => A(E, p, C),
               onMousedown: U((E) => R(E, C), ["prevent"]),
               onTouchstartPassive: U((E) => R(E, C), ["prevent"]),
               innerHTML: p.innerSVG.innerHtml
@@ -1112,8 +1112,8 @@ const Qe = 0.1, Ze = 0.1, Je = -300, qe = 25, tn = 12, en = 2, nn = 45, rn = (t)
               style: lt(p.style),
               title: p.name,
               class: st(p.cssClass),
-              onClick: (E) => S(E, p, C),
-              onTouchendPassive: (E) => S(E, p, C),
+              onClick: (E) => A(E, p, C),
+              onTouchendPassive: (E) => A(E, p, C),
               onMousedown: U((E) => R(E, C), ["prevent"]),
               onTouchstartPassive: U((E) => R(E, C), ["prevent"])
             }, null, 46, _n)),
