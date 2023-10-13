@@ -39,8 +39,6 @@ const settings = ref({
 
 const options = ref(getDefaultOptions());
 
-const name = import.meta.env.VITE_APP_NAME;
-
 const ns = computed(() => nodes.value);
 
 const nodes = ref<D3Node[]>(getRandomNodes(settings.value.maxNodes));
