@@ -13,19 +13,6 @@
     </div>
     <!-- Menu -->
     <div class="over">
-      <div class="options menu">
-        <div class="title">
-          <h1>{{ name }}</h1>
-        </div>
-        <ul class="inline">
-          <li>
-            <small>nodes: {{ nodes.length }}</small>
-          </li>
-          <li>
-            <small>links: {{ links.length }}</small>
-          </li>
-        </ul>
-      </div>
       <div class="menu-net">
         <Menu
           v-model:settings="settings"

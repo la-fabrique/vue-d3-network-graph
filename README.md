@@ -13,6 +13,10 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 - Vue 3.3 features ([c-bind in css](https://vuejs.org/api/sfc-css-features.html#v-bind-in-css), [readonly ref from getter](https://vuejs.org/api/reactivity-utilities.html#toref) )
 - VueUse : [useResizeObserver](https://vueuse.org/core/useResizeObserver/), [watchDebounced](https://vueuse.org/shared/watchDebounced/#watchdebounced)
 
+## Demo
+
+[vue-d3-network-graph demo page](https://la-fabrique.github.io/vue-d3-network-graph/)
+
 ## Installation
 
 ~~npm install vue-d3-network-graph~~
