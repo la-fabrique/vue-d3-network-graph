@@ -1,10 +1,8 @@
-vue-d3-network-graph / [Exports](docs/modules.md)
+# 🔆 [vue-d3-network-graph](https://la-fabrique.github.io/vue-d3-network-graph/) 🔆
 
-# vue-d3-network-graph
+> inspired by https://github.com/emiliorizzo/vue-d3-network
 
-inspired by https://github.com/emiliorizzo/vue-d3-network
-
-## Key features
+## 💫 Key features
 
 - Directed links (svg markers). see [D3LayoutOptions:directed](docs/modules.md#d3layoutoptions) and [D3Link:twoWay](docs/modules.md#d3link)
 - 'Static' mode to use d3-force tick instead of simulation.restart (No rendering of vue components on each tick)
@@ -13,17 +11,15 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 - Vue 3.3 features ([c-bind in css](https://vuejs.org/api/sfc-css-features.html#v-bind-in-css), [readonly ref from getter](https://vuejs.org/api/reactivity-utilities.html#toref) )
 - VueUse : [useResizeObserver](https://vueuse.org/core/useResizeObserver/), [watchDebounced](https://vueuse.org/shared/watchDebounced/#watchdebounced)
 
-## Demo
+## 📦 Install
 
-[vue-d3-network-graph demo page](https://la-fabrique.github.io/vue-d3-network-graph/)
-
-## Installation
-
-~~npm install vue-d3-network-graph~~
+```bash
+npm install vue-d3-network-graph@beta
+```
 
 > Not production ready yet, use at your own risk. Api may change.
 
-## Utilisation
+## 🛠️ Usage
 
 ```html
 <template>
@@ -71,11 +67,11 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 </script>
 ```
 
-## API
+# 🖥️ API
 
-See [API](docs/modules.md)
+See [API documentation](docs/modules.md)
 
-### D3NetworkGraph Component
+## D3NetworkGraph Component
 
 **props**
 
@@ -92,14 +88,38 @@ See [API](docs/modules.md)
 | 'node-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is clicked     |
 | 'link-click' | [function](docs/modules.md#d3neworkgraphemits) | Callback function called when a node is mouseovered |
 
-## TODO :
+# 🪴What next ?
 
 - [x] Zoom-Pan
-- [ ] Children nodes
+- [ ] Enforce better option API
+- [ ] Enforce better css API
+- [ ] Children nodes group
+- [ ] Mobile support
 - [ ] Selection
 - [ ] Custom forces
-- [ ] Better css theming support
-- [ ] (Canvas rendering ?)
-- [ ] (Remove vueuse dependency ?)
+- [ ] Remove third party dependencies
 
 > Issues and PR are welcome !
+
+# 👨‍🚀 Contributors
+
+<ul style="list-style: none; display: flex; flex-wrap: wrap;">
+    <li style="margin-bottom:8px; margin-right:8px">
+      <a href="https://github.com/deka" class="" data-hovercard-type="user" data-hovercard-url="/users/deka/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/349156?s=64&amp;v=4" alt="@deka" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+      </a>
+    </li>
+    <li style="margin-bottom:8px; margin-right:8px">
+      <a href="https://github.com/dependabot" class="">
+        <img src="https://avatars.githubusercontent.com/u/27347476?s=64&amp;v=4" alt="@dependabot" size="32" height="32" width="32" data-view-component="true" class="avatar">
+      </a>
+    </li>
+    <li style="margin-bottom:8px; margin-right:8px">
+      <a href="https://github.com/zomkd" class="" data-hovercard-type="user" data-hovercard-url="/users/zomkd/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/92479660?s=64&amp;v=4" alt="@zomkd" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+      </a>
+    </li>
+</ul>
+<div style="margin-top: 8px; color: rgb(125, 133, 144)" >
+    deka, dependabot, and zomkd
+  </div>
