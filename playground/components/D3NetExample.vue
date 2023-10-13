@@ -1,15 +1,16 @@
 <template>
   <div id="example">
     <!-- Network -->
-    <D3NetworkGraph
-      ref="net"
-      :options="options"
-      :nodes="ns"
-      :links="links"
-      @node-click="nodeClick"
-      @link-click="linkClick"
-    />
-
+    <div class="graph">
+      <D3NetworkGraph
+        ref="net"
+        :options="options"
+        :nodes="ns"
+        :links="links"
+        @node-click="nodeClick"
+        @link-click="linkClick"
+      />
+    </div>
     <!-- Menu -->
     <div class="over">
       <div class="options menu">
@@ -42,12 +43,7 @@ import { computed, ref } from "vue";
 import D3NetworkGraph from "../../src/D3NetworkGraph.vue";
 import Menu from "./Menu.vue";
 import { getDefaultOptions, getRandomLinks, getRandomNodes } from "../util";
-import type {
-  D3Link,
-  D3LinkSimulation,
-  D3Node,
-  D3NodeSimulation,
-} from "../../src/types";
+import type { D3Link, D3Node } from "../../src/types";
 
 const settings = ref({
   maxNodes: 10,
@@ -70,17 +66,13 @@ const refresh = () => {
   links.value = getRandomLinks(nodes.value, settings.value.maxLinks);
 };
 
-function nodeClick(
-  event: MouseEvent | TouchEvent,
-  node: D3NodeSimulation
-): void {
-  console.log("nodeClick", node);
+function nodeClick(event: MouseEvent | TouchEvent, node: D3Node): void {
+  if (event instanceof MouseEvent) {
+    console.log("nodeClick", event.x, event.y, node);
+  }
 }
 
-function linkClick(
-  event: MouseEvent | TouchEvent,
-  link: D3LinkSimulation
-): void {
+function linkClick(event: MouseEvent | TouchEvent, link: D3Link): void {
   console.log("linkClick", link);
 }
 
@@ -93,6 +85,19 @@ const reset = () => {
 <style lang="scss">
 @import "../variables.scss";
 
+.graph {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  bottom: 10%;
+  right: 10%;
+}
+
+.svg-container {
+  border-width: 1px;
+  border-style: solid;
+  border-color: "grey";
+}
 body {
   overflow-x: hidden;
 }
@@ -207,11 +212,9 @@ ul {
 
 .menu-net {
   background-color: $bg-plus;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.5em;
   border: $dark solid 2px;
-  //border-width: 6px 2px 3px;
   position: relative;
-  margin-bottom: 1em;
   border-radius: 0.5em;
   .close {
     position: absolute;

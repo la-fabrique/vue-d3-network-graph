@@ -8,7 +8,7 @@ export function useDraggable(
 ): {
   dragStart: (event: Event, index: number) => void;
   dragEnd: () => void;
-  move: (event: Event) => void;
+  dragMove: (event: Event) => void;
 } {
   const dragging = ref<number | undefined>(undefined);
   const mouseOfst = reactive({
@@ -65,7 +65,7 @@ export function useDraggable(
     setMouseOffset();
   };
 
-  const move = (event: Event) => {
+  const dragMove = (event: Event) => {
     const pos = clientPos(event);
     if (dragging.value != undefined) {
       if (simulation.value.nodes()[dragging.value]) {
@@ -80,6 +80,6 @@ export function useDraggable(
   return {
     dragStart,
     dragEnd,
-    move,
+    dragMove,
   };
 }

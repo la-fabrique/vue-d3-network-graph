@@ -1,5 +1,6 @@
 import { type Ref, computed } from "vue";
-import { isNode, type D3LinkSimulation } from "./types";
+import type { D3LinkSimulation } from "./types";
+import { isNode } from "./utils";
 
 export const useLinkLabel = (fontSize: Readonly<Ref<number>>) => {
   const label = computed(() => ({

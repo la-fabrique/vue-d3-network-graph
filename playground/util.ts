@@ -27,7 +27,7 @@ export const getRandomLinks = (nodes: D3Node[], maxLinks: number): D3Link[] => {
   return links;
 };
 
-const newLink = (source: string, target: string) => ({
+const newLink = (source: string | number, target: string | number) => ({
   source: source,
   target: target,
   name: "Utilise",
@@ -69,6 +69,9 @@ export const getDefaultOptions = () =>
         label: {
           fill: "blue",
         },
+      },
+      font: {
+        size: 10,
       },
     },
     simulation: {

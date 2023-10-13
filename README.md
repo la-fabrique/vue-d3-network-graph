@@ -15,7 +15,11 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 
 ## Installation
 
-> npm install vue-d3-network-graph
+```
+~~npm install vue-d3-network-graph~~
+```
+
+> Not production ready yet, use at your own risk. Api may change.
 
 ## Utilisation
 
@@ -88,11 +92,11 @@ See [API](docs/modules.md)
 
 ## TODO :
 
-- [ ] Zoom
+- [x] Zoom-Pan
 - [ ] Children nodes
 - [ ] Selection
 - [ ] Custom forces
-- [ ] Better theming support
+- [ ] Better css theming support
 - [ ] (Canvas rendering ?)
 - [ ] (Remove vueuse dependency ?)
 

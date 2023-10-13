@@ -31,9 +31,9 @@ export declare type D3LayoutOptions = {
  */
 export declare type D3Link = {
     /**
-     * Link id. If not provided uses array index
+     * Unique link id. If not provided uses array index
      */
-    id?: string;
+    id?: number | string;
     /**
      * Link name. If not provided uses: 'link [link_id]'
      */
@@ -43,11 +43,17 @@ export declare type D3Link = {
      */
     color?: string;
     /**
-     * Is  two-way link (bidirectional)
+     * Is two-way link (bidirectional)
      */
     twoWay?: boolean;
-    source?: string;
-    target?: string;
+    /**
+     * Node source id
+     * */
+    source: string | number;
+    /**
+     * Node target id
+     * */
+    target: string | number;
 };
 
 /**
@@ -111,15 +117,21 @@ export declare type D3LinkOptionsColors = {
     };
 };
 
+/**
+ * Link used by the d3 simulation compisition function `useSimulation`
+ */
 export declare type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
-    id?: string;
-    key?: number;
-    d?: string;
+    /** Link css class */
     class?: string[];
+    /** Link style */
     style?: string;
+    /** Link name */
     name?: string;
+    /** Link thickness */
     "stroke-width"?: number;
+    /** Link marker-end */
     "marker-end"?: string;
+    /** Link marker-start */
     "marker-start"?: string;
 };
 
@@ -137,8 +149,8 @@ export declare const D3NetworkGraph: DefineComponent<{
         default: undefined;
     };
 }, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
-    "node-click": ($event: TouchEvent | MouseEvent, node: D3NodeSimulation) => void;
-    "link-click": ($event: TouchEvent | MouseEvent, link: D3LinkSimulation) => void;
+    "node-click": ($event: TouchEvent | MouseEvent, node: D3Node) => void;
+    "link-click": ($event: TouchEvent | MouseEvent, link: D3Link) => void;
 }, string, VNodeProps & AllowedComponentProps & ComponentCustomProps, Readonly<ExtractPropTypes<{
     nodes: {
         type: PropType<D3Node[]>;
@@ -153,8 +165,8 @@ export declare const D3NetworkGraph: DefineComponent<{
         default: undefined;
     };
 }>> & {
-    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3NodeSimulation) => any) | undefined;
-    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3LinkSimulation) => any) | undefined;
+    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3Node) => any) | undefined;
+    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3Link) => any) | undefined;
 }, {
     options: D3Options;
 }, {}>;
@@ -163,8 +175,8 @@ export declare const D3NetworkGraph: DefineComponent<{
  * Event exposed by the D3NetworkGraph component
  */
 export declare type D3NeworkGraphEmits = {
-    (event: "node-click", $event: TouchEvent | MouseEvent, node: D3NodeSimulation): void;
-    (event: "link-click", $event: TouchEvent | MouseEvent, link: D3LinkSimulation): void;
+    (event: "node-click", $event: TouchEvent | MouseEvent, node: D3Node): void;
+    (event: "link-click", $event: TouchEvent | MouseEvent, link: D3Link): void;
 };
 
 /**
@@ -172,9 +184,9 @@ export declare type D3NeworkGraphEmits = {
  */
 export declare type D3Node = {
     /**
-     * Node id. If not provided uses array index
+     * Unique node id. If not provided uses array index
      */
-    id?: string;
+    id: number | string;
     /**
      * Node name. If not provided uses: 'node [node_id]'
      */
@@ -183,10 +195,6 @@ export declare type D3Node = {
      * Node color, e.g. red, #aa00bb,
      */
     color?: string;
-    /**
-     * Node css class names
-     */
-    cssClass?: string[] | undefined;
     /**
      * Node size
      */
@@ -277,6 +285,9 @@ export declare type D3NodeOptionsColors = {
     };
 };
 
+/**
+ * Node used by the d3 simulation compisition function `useSimulation`
+ */
 export declare type D3NodeSimulation = SimulationNodeDatum & {
     /**
      * Node id. If not provided uses array index
@@ -313,7 +324,11 @@ export declare type D3NodeSimulation = SimulationNodeDatum & {
         viewBox: string;
         innerHtml: string;
     };
+    /**
+     * Node style
+     * */
     style?: string;
+    /** Noderadius */
     r?: number;
 };
 
@@ -375,8 +390,6 @@ export declare type D3SimulationOptions = {
         collide: number;
     };
 };
-
-export declare const isNode: (node: unknown) => node is D3NodeSimulation;
 
 /**
  * Composition function used by the D3NetworkGraph component to create a d3 simulation

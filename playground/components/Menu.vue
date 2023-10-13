@@ -38,8 +38,29 @@
           "
         />
       </li>
-      <li>
-        <label>Render type</label>
+      <li v-if="innerOptions.layout" class="checkbox">
+        <input
+          v-model="innerOptions.layout.draggables"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Draggables:</label>
+      </li>
+      <li v-if="innerOptions.layout" class="checkbox">
+        <input
+          v-model="innerOptions.layout.directed"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Directed:</label>
+      </li>
+      <li v-if="innerOptions.simulation" class="checkbox">
+        <input
+          v-model="innerOptions.simulation.static"
+          type="checkbox"
+          @input="updateOptions"
+        />
+        <label>Static</label>
       </li>
     </ul>
 
@@ -120,7 +141,7 @@
         />
       </li>
       <li v-if="innerOptions.nodes?.font?.size">
-        <label>Font Size:</label>
+        <label>Node font Size:</label>
         <span>{{ innerOptions.nodes.font.size }}</span>
         <input
           v-model.number="innerOptions.nodes.font.size"
@@ -131,39 +152,24 @@
           @input="updateOptions"
         />
       </li>
-    </ul>
-
-    <ul class="test-menu">
-      <li v-if="innerOptions.layout">
+      <li v-if="innerOptions.links?.font?.size">
+        <label>Link font Size:</label>
+        <span>{{ innerOptions.links.font.size }}</span>
         <input
-          v-model="innerOptions.layout.draggables"
-          type="checkbox"
+          v-model.number="innerOptions.links.font.size"
+          type="range"
+          min="1"
+          max="30"
+          step="1"
           @input="updateOptions"
         />
-        <label>Draggables:</label>
-      </li>
-      <li v-if="innerOptions.layout">
-        <input
-          v-model="innerOptions.layout.directed"
-          type="checkbox"
-          @input="updateOptions"
-        />
-        <label>Directed:</label>
-      </li>
-      <li v-if="innerOptions.simulation">
-        <input
-          v-model="innerOptions.simulation.static"
-          type="checkbox"
-          @input="updateOptions"
-        />
-        <label>Static</label>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, type PropType } from "vue";
+import { ref, type PropType } from "vue";
 import type { D3Options } from "../../src/types";
 import { useVModel } from "@vueuse/core";
 
@@ -186,29 +192,7 @@ const menu = ref<HTMLElement | null>(null);
 
 const updateOptions = () => {
   console.log("updateOptions", innerOptions.value);
-  //emit("update:options", innerOptions);
 };
-/* const reset = () => {
-  innerOptions.value = {
-    draggables: true,
-    nodes: {
-      size: 10,
-      font: {
-        size: 10,
-      },
-    },
-    links: {
-      width: 1,
-    },
-    simulation: {
-      charge: -100,
-      force: {
-        x: 0.1,
-        y: 0.1,
-      },
-    },
-  };
-}; */
 </script>
 
 <style scoped lang="scss">
@@ -220,7 +204,6 @@ const updateOptions = () => {
   display: table-cell;
   list-style: none;
   li {
-    margin: 0.5em 0;
     label {
       font-size: 0.85em;
       display: block;
@@ -233,6 +216,10 @@ const updateOptions = () => {
         display: inline;
         margin-left: 0.5em;
       }
+    }
+
+    &.checkbox {
+      text-align: start;
     }
   }
 }

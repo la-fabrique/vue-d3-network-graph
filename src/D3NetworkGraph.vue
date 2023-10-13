@@ -6,10 +6,12 @@
     preserveAspectRatio="xMinYMin"
     :viewBox="`0 0 ${rect.width} ${rect.height}`"
     class="svg-container"
-    @mouseup="dragEnd"
-    @touchend.passive="dragEnd"
+    @mousedown.self.prevent="onMouseDown"
+    @mouseup="onMouseUp"
+    @touchend.passive="onTouchEnd"
     @touchstart.passive="async () => {}"
-    @mousemove="move"
+    @mousemove="onMouseMove"
+    @wheel.prevent="onWheel"
   >
     <defs v-if="options.directed">
       <marker v-bind="markers.arrowEnd">
@@ -19,70 +21,72 @@
         <path :fill="theme.link.stroke" d="M 10 5 L 0 0 L 10 -5"></path>
       </marker>
     </defs>
-    <template v-for="(link, index) in graph.links" :key="index">
-      <g id="l-links" class="links">
-        <path
-          :id="`${index}`"
-          :d="getPath(link)"
-          :stroke-width="link['stroke-width']"
-          :class="link.class"
-          :style="link.style"
-          :marker-end="link['marker-end']"
-          :marker-start="link['marker-start']"
-          @click="emit('link-click', $event, link)"
-          @touchstart.passive="emit('link-click', $event, link)"
-        />
-        <text
-          class="link-label"
-          :font-size="linkLabel.font.size"
-          :x="getLinkLabelX(link)"
-          :y="getLinkLabelY(link)"
-        >
-          {{ link.name }}
-        </text>
+    <g ref="canvas" class="svg-canvas" :transform="transform">
+      <g class="links">
+        <template v-for="(link, index) in graph.links" :key="index">
+          <path
+            :id="`${index}`"
+            :d="getPath(link)"
+            :stroke-width="link['stroke-width']"
+            :class="link.class"
+            :style="link.style"
+            :marker-end="link['marker-end']"
+            :marker-start="link['marker-start']"
+            @click="onLinkClick($event, link, index)"
+            @touchstart.passive="onLinkClick($event, link, index)"
+          />
+          <text
+            class="link-label"
+            :font-size="linkLabel.font.size"
+            :x="getLinkLabelX(link)"
+            :y="getLinkLabelY(link)"
+          >
+            {{ link.name }}
+          </text>
+        </template>
       </g>
-    </template>
-    <g id="l-nodes" class="nodes">
-      <template v-for="(node, index) in graph.nodes" :key="index">
-        <svg
-          v-if="node.innerSVG"
-          :viewBox="node.innerSVG.viewBox"
-          :width="node.width"
-          :height="node.height"
-          :x="(node.x || 0) - (node.width || 0) / 2"
-          :y="(node.y || 0) - (node.height || 0) / 2"
-          :style="node.style"
-          :title="node.name"
-          :class="node.cssClass"
-          @click="emit('node-click', $event, node)"
-          @touchend.passive="emit('node-click', $event, node)"
-          @mousedown.prevent="dragStart($event, index)"
-          @touchstart.prevent.passive="dragStart($event, index)"
-          v-html="node.innerSVG!.innerHtml"
-        />
-        <circle
-          v-else
-          :cx="node.x"
-          :cy="node.y"
-          :r="node.r"
-          :style="node.style"
-          :title="node.name"
-          :class="node.cssClass"
-          @click="$emit('node-click', $event, node)"
-          @touchend.passive="$emit('node-click', $event, node)"
-          @mousedown.prevent="dragStart($event, index)"
-          @touchstart.prevent.passive="dragStart($event, index)"
-        ></circle>
-        <text
-          class="node-label"
-          :x="(node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2"
-          :y="(node.y || 0) + nodeLabel.offset.y"
-          :font-size="nodeLabel.font.size"
-          :stroke-width="nodeLabel.font.size / 8"
-        >
-          {{ node.name }}
-        </text>
-      </template>
+
+      <g id="l-nodes" class="nodes">
+        <template v-for="(node, index) in graph.nodes" :key="index">
+          <svg
+            v-if="node.innerSVG"
+            :viewBox="node.innerSVG.viewBox"
+            :width="node.width"
+            :height="node.height"
+            :x="(node.x || 0) - (node.width || 0) / 2"
+            :y="(node.y || 0) - (node.height || 0) / 2"
+            :style="node.style"
+            :title="node.name"
+            :class="node.cssClass"
+            @click="onNodeClick($event, node, index)"
+            @touchend.passive="onNodeClick($event, node, index)"
+            @mousedown.prevent="onNodeMousedown($event, index)"
+            @touchstart.prevent.passive="onNodeMousedown($event, index)"
+            v-html="node.innerSVG!.innerHtml"
+          />
+          <circle
+            v-else
+            :cx="node.x"
+            :cy="node.y"
+            :r="node.r"
+            :style="node.style"
+            :title="node.name"
+            :class="node.cssClass"
+            @click="onNodeClick($event, node, index)"
+            @touchend.passive="onNodeClick($event, node, index)"
+            @mousedown.prevent="onNodeMousedown($event, index)"
+            @touchstart.prevent.passive="onNodeMousedown($event, index)"
+          ></circle>
+          <text
+            class="node-label"
+            :x="(node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2"
+            :y="(node.y || 0) + nodeLabel.offset.y"
+            :font-size="nodeLabel.font.size"
+          >
+            {{ node.name }}
+          </text>
+        </template>
+      </g>
     </g>
   </svg>
 </template>
@@ -95,6 +99,7 @@ import type {
   D3Node,
   D3Options,
   D3LinkSimulation,
+  D3NodeSimulation,
 } from "./types";
 import { useDraggable } from "./useDraggable";
 import { useLinkMarkers } from "./useLinkMarkers";
@@ -103,7 +108,8 @@ import { useResizeObserver } from "@vueuse/core";
 import { useOptions } from "./useOptions";
 import { useNodeLabel } from "./useNodeLabel";
 import { useLinkLabel } from "./useLinkLabel";
-import { isNode } from "./types";
+import { useCanvas } from "./useCanvas";
+import { isNode } from "./utils";
 
 const props = defineProps({
   nodes: {
@@ -126,7 +132,9 @@ const { theme, options } = useOptions(toRef(() => props.options));
 
 // svg container resize observer
 const svg = ref(null);
-const rect = ref({ width: 100, height: 100 });
+const canvas = ref<SVGGElement | null>(null);
+const rect = ref({ width: 100, height: 100, top: 0, left: 0 });
+const { transform, zoom, panMove, panStart, panEnd } = useCanvas(rect);
 
 useResizeObserver(svg, (entries) => {
   const entry = entries[0];
@@ -135,7 +143,10 @@ useResizeObserver(svg, (entries) => {
     entry.contentRect.height === rect.value.height
   )
     return;
+  const clientRect = entry.target.getBoundingClientRect();
   rect.value = {
+    top: clientRect.top,
+    left: clientRect.left,
     width: entry.contentRect.width,
     height: entry.contentRect.height,
   };
@@ -154,7 +165,7 @@ const { simulation, graph } = useSimulation(
 );
 
 // draggable nodes
-const { dragStart, dragEnd, move } = useDraggable(
+const { dragStart, dragEnd, dragMove } = useDraggable(
   simulation,
   options.draggables
 );
@@ -163,6 +174,7 @@ const { label: nodeLabel } = useNodeLabel(
   options.nodeFontSize,
   options.nodeSize
 );
+
 const {
   label: linkLabel,
   getX: getLinkLabelX,
@@ -174,6 +186,54 @@ const { markers } = useLinkMarkers(
   options.nodeSize,
   options.directed
 );
+
+const onNodeClick = (
+  event: MouseEvent | TouchEvent,
+  node: D3NodeSimulation,
+  index: number
+) => {
+  emit("node-click", event, props.nodes[index]);
+};
+
+const onLinkClick = (
+  event: MouseEvent | TouchEvent,
+  link: D3LinkSimulation,
+  index: number
+) => {
+  emit("link-click", event, props.links[index]);
+};
+
+const onWheel = (event: WheelEvent) => {
+  if (!event.ctrlKey || !canvas.value) return;
+
+  const delta = event.deltaY || event.deltaX;
+  const scaleStep =
+    Math.abs(delta) < 50
+      ? 0.05 // touchpad pitch
+      : 0.25; // mouse wheel
+
+  const scaleDelta = delta < 0 ? scaleStep : -scaleStep;
+  zoom(event.clientX, event.clientY, scaleDelta);
+};
+
+const onMouseMove = (event: MouseEvent) => {
+  dragMove(event);
+  panMove(event.clientX, event.clientY);
+};
+
+const onMouseDown = (event: MouseEvent) => {
+  panStart(event.clientX, event.clientY);
+};
+
+const onNodeMousedown = (event: Event, index: number) =>
+  dragStart(event, index);
+
+const onMouseUp = () => {
+  dragEnd();
+  panEnd();
+};
+
+const onTouchEnd = () => dragEnd();
 </script>
 
 <style lang="scss">
@@ -222,7 +282,6 @@ const { markers } = useLinkMarkers(
 .node-label {
   fill: v-bind("theme.node.label.fill");
 }
-
 .link-label {
   fill: v-bind("theme.link.label.fill");
 }

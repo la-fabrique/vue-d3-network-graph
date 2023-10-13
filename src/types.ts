@@ -6,9 +6,9 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
  */
 export type D3Node = {
   /**
-   * Node id. If not provided uses array index
+   * Unique node id. If not provided uses array index
    */
-  id?: string;
+  id: number | string;
   /**
    * Node name. If not provided uses: 'node [node_id]'
    */
@@ -17,10 +17,6 @@ export type D3Node = {
    * Node color, e.g. red, #aa00bb,
    */
   color?: string;
-  /**
-   * Node css class names
-   */
-  cssClass?: string[] | undefined;
   /**
    * Node size
    */
@@ -48,9 +44,9 @@ export type D3Node = {
  */
 export type D3Link = {
   /**
-   * Link id. If not provided uses array index
+   * Unique link id. If not provided uses array index
    */
-  id?: string;
+  id?: number | string;
   /**
    * Link name. If not provided uses: 'link [link_id]'
    */
@@ -60,13 +56,19 @@ export type D3Link = {
    */
   color?: string;
   /**
-   * Is  two-way link (bidirectional)
+   * Is two-way link (bidirectional)
    */
   twoWay?: boolean;
 
-  source?: string;
+  /**
+   * Node source id
+   * */
+  source: string | number;
 
-  target?: string;
+  /**
+   * Node target id
+   * */
+  target: string | number;
 };
 
 /**
@@ -278,16 +280,8 @@ export type D3Options = {
  * Event exposed by the D3NetworkGraph component
  */
 export type D3NeworkGraphEmits = {
-  (
-    event: "node-click",
-    $event: TouchEvent | MouseEvent,
-    node: D3NodeSimulation
-  ): void;
-  (
-    event: "link-click",
-    $event: TouchEvent | MouseEvent,
-    link: D3LinkSimulation
-  ): void;
+  (event: "node-click", $event: TouchEvent | MouseEvent, node: D3Node): void;
+  (event: "link-click", $event: TouchEvent | MouseEvent, link: D3Link): void;
 };
 
 /**
@@ -340,6 +334,9 @@ export type useSimulationOptions = {
   linkFontSize: Readonly<Ref<number>>;
 };
 
+/**
+ * Node used by the d3 simulation compisition function `useSimulation`
+ */
 export type D3NodeSimulation = SimulationNodeDatum & {
   /**
    * Node id. If not provided uses array index
@@ -377,22 +374,29 @@ export type D3NodeSimulation = SimulationNodeDatum & {
     innerHtml: string;
   };
 
+  /**
+   * Node style
+   * */
   style?: string;
 
+  /** Noderadius */
   r?: number;
 };
 
+/**
+ * Link used by the d3 simulation compisition function `useSimulation`
+ */
 export type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
-  id?: string;
-  key?: number;
-  d?: string;
+  /** Link css class */
   class?: string[];
+  /** Link style */
   style?: string;
+  /** Link name */
   name?: string;
+  /** Link thickness */
   "stroke-width"?: number;
+  /** Link marker-end */
   "marker-end"?: string;
+  /** Link marker-start */
   "marker-start"?: string;
 };
-
-export const isNode = (node: unknown): node is D3NodeSimulation =>
-  Boolean(node) && typeof node !== "number" && typeof node !== "string";

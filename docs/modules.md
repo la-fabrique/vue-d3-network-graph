@@ -26,7 +26,6 @@
 
 ### Functions
 
-- [isNode](modules.md#isnode)
 - [useSimulation](modules.md#usesimulation)
 
 ## Type Aliases
@@ -46,7 +45,7 @@ Layout options
 
 #### Defined in
 
-[types.ts:242](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L242)
+[types.ts:244](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L244)
 
 ___
 
@@ -61,15 +60,15 @@ Represents a link in the graph
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `color?` | `string` | Link color (stroke), e.g. red, #aa00bb, |
-| `id?` | `string` | Link id. If not provided uses array index |
+| `id?` | `number` \| `string` | Unique link id. If not provided uses array index |
 | `name?` | `string` | Link name. If not provided uses: 'link [link_id]' |
-| `source?` | `string` | - |
-| `target?` | `string` | - |
+| `source` | `string` \| `number` | Node source id |
+| `target` | `string` \| `number` | Node target id |
 | `twoWay?` | `boolean` | Is two-way link (bidirectional) |
 
 #### Defined in
 
-[types.ts:49](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L49)
+[types.ts:45](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L45)
 
 ___
 
@@ -90,7 +89,7 @@ Default link options
 
 #### Defined in
 
-[types.ts:183](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L183)
+[types.ts:185](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L185)
 
 ___
 
@@ -117,23 +116,25 @@ Default link colors
 
 #### Defined in
 
-[types.ts:143](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L143)
+[types.ts:145](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L145)
 
 ___
 
 ### D3LinkSimulation
 
-Ƭ **D3LinkSimulation**: `SimulationLinkDatum`<[`D3NodeSimulation`](modules.md#d3nodesimulation)\> & { `class?`: `string`[] ; `d?`: `string` ; `id?`: `string` ; `key?`: `number` ; `marker-end?`: `string` ; `marker-start?`: `string` ; `name?`: `string` ; `stroke-width?`: `number` ; `style?`: `string`  }
+Ƭ **D3LinkSimulation**: `SimulationLinkDatum`<[`D3NodeSimulation`](modules.md#d3nodesimulation)\> & { `class?`: `string`[] ; `marker-end?`: `string` ; `marker-start?`: `string` ; `name?`: `string` ; `stroke-width?`: `number` ; `style?`: `string`  }
+
+Link used by the d3 simulation compisition function `useSimulation`
 
 #### Defined in
 
-[types.ts:385](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L385)
+[types.ts:389](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L389)
 
 ___
 
 ### D3NeworkGraphEmits
 
-Ƭ **D3NeworkGraphEmits**: (`event`: ``"node-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `node`: [`D3NodeSimulation`](modules.md#d3nodesimulation)) => `void`(`event`: ``"link-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `link`: [`D3LinkSimulation`](modules.md#d3linksimulation)) => `void`
+Ƭ **D3NeworkGraphEmits**: (`event`: ``"node-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `node`: [`D3Node`](modules.md#d3node)) => `void`(`event`: ``"link-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `link`: [`D3Link`](modules.md#d3link)) => `void`
 
 #### Type declaration
 
@@ -147,7 +148,7 @@ Event exposed by the D3NetworkGraph component
 | :------ | :------ |
 | `event` | ``"node-click"`` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `node` | [`D3NodeSimulation`](modules.md#d3nodesimulation) |
+| `node` | [`D3Node`](modules.md#d3node) |
 
 ##### Returns
 
@@ -163,7 +164,7 @@ Event exposed by the D3NetworkGraph component
 | :------ | :------ |
 | `event` | ``"link-click"`` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `link` | [`D3LinkSimulation`](modules.md#d3linksimulation) |
+| `link` | [`D3Link`](modules.md#d3link) |
 
 ##### Returns
 
@@ -171,7 +172,7 @@ Event exposed by the D3NetworkGraph component
 
 #### Defined in
 
-[types.ts:280](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L280)
+[types.ts:282](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L282)
 
 ___
 
@@ -186,10 +187,9 @@ Represents a node in the graph
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `color?` | `string` | Node color, e.g. red, #aa00bb, |
-| `cssClass?` | `string`[] | Node css class names |
 | `group?` | `number` | - |
 | `height?` | `number` | Node height |
-| `id?` | `string` | Node id. If not provided uses array index |
+| `id` | `number` \| `string` | Unique node id. If not provided uses array index |
 | `innerSVG?` | { `innerHtml`: `string` ; `viewBox`: `string`  } | Node svg image |
 | `innerSVG.innerHtml` | `string` | - |
 | `innerSVG.viewBox` | `string` | - |
@@ -199,7 +199,7 @@ Represents a node in the graph
 
 #### Defined in
 
-[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L7)
+[types.ts:7](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L7)
 
 ___
 
@@ -220,7 +220,7 @@ Default node options
 
 #### Defined in
 
-[types.ts:125](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L125)
+[types.ts:127](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L127)
 
 ___
 
@@ -250,7 +250,7 @@ Defaut node colors
 
 #### Defined in
 
-[types.ts:75](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L75)
+[types.ts:77](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L77)
 
 ___
 
@@ -258,9 +258,11 @@ ___
 
 Ƭ **D3NodeSimulation**: `SimulationNodeDatum` & { `color?`: `string` ; `cssClass?`: `string`[] ; `height?`: `number` ; `id?`: `number` ; `innerSVG?`: { `innerHtml`: `string` ; `viewBox`: `string`  } ; `name?`: `string` ; `r?`: `number` ; `size?`: `number` ; `style?`: `string` ; `width?`: `number`  }
 
+Node used by the d3 simulation compisition function `useSimulation`
+
 #### Defined in
 
-[types.ts:343](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L343)
+[types.ts:340](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L340)
 
 ___
 
@@ -281,7 +283,7 @@ Graph options
 
 #### Defined in
 
-[types.ts:258](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L258)
+[types.ts:260](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L260)
 
 ___
 
@@ -304,7 +306,7 @@ Simulation options
 
 #### Defined in
 
-[types.ts:204](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L204)
+[types.ts:206](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L206)
 
 ___
 
@@ -332,7 +334,7 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[types.ts:296](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L296)
+[types.ts:290](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/types.ts#L290)
 
 ## Variables
 
@@ -342,29 +344,9 @@ Options used by the useSimulation composition function
 
 #### Defined in
 
-[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/shims-vue.d.ts#L4)
+[shims-vue.d.ts:4](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/shims-vue.d.ts#L4)
 
 ## Functions
-
-### isNode
-
-▸ **isNode**(`node`): node is D3NodeSimulation
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `node` | `unknown` |
-
-#### Returns
-
-node is D3NodeSimulation
-
-#### Defined in
-
-[types.ts:397](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/types.ts#L397)
-
-___
 
 ### useSimulation
 
@@ -398,4 +380,4 @@ This function can be used to create a d3 simulation for a network graph without 
 
 #### Defined in
 
-[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/0d9d8db/src/useSimulation.ts#L36)
+[useSimulation.ts:36](https://github.com/la-fabrique/vue-d3-network-graph/blob/a33e03f/src/useSimulation.ts#L36)
