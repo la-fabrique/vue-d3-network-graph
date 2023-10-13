@@ -26,7 +26,6 @@ export default defineConfig({
     "import.meta.env.VITE_APP_NAME": JSON.stringify(pkg.name),
     "import.meta.env.VITE_APP_DESCRIPTION": JSON.stringify(pkg.description),
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(pkg.version),
-    "import.meta.env.VITE_APP_REPO": JSON.stringify(pkg.repository.url),
   },
   resolve: {
     alias: {

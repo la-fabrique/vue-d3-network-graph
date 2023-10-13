@@ -64,14 +64,12 @@ export function useSimulation(
   });
 
   const init = () => {
-    console.debug("useSimulation.init");
     graph.nodes = nodes.value.map((n) => getNode(n));
     graph.links = links.value.map((l) => getSimulationLink(l));
     refresh();
   };
 
   const refresh = async () => {
-    console.debug("useSimulation.refresh");
     simulation.value.stop();
     simulation.value = simulate();
     if (options.static.value) {

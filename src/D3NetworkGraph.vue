@@ -203,7 +203,7 @@ const onLinkClick = (
   emit("link-click", event, props.links[index]);
 };
 
-const onWheel = (event: WheelEvent) => {
+const onWheel = async (event: WheelEvent) => {
   if (!event.ctrlKey || !canvas.value) return;
 
   const delta = event.deltaY || event.deltaX;
