@@ -33,7 +33,7 @@
     "dev": "vite",
     "type-check": "vue-tsc --noEmit",
     "build": "vue-tsc --noEmit && vite build",
-    "build-playground": "vue-tsc --noEmit && vite build --config vite-playground.config.js",
+    "build-playground": "vue-tsc --noEmit && vite build --config vite-playground.config.js --base=/vue-d3-network-graph/",
     "preview": "vite preview --config vite-playground.config.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
