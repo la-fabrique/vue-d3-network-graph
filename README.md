@@ -7,7 +7,7 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 ## Key features
 
 - Directed links (svg markers). see [D3LayoutOptions:directed](docs/modules.md#d3layoutoptions) and [D3Link:twoWay](docs/modules.md#d3link)
-- 'Static' mode to use d3-force tick instead of simulation.restart (No rendering vue component on each tick)
+- 'Static' mode to use d3-force tick instead of simulation.restart (No rendering of vue components on each tick)
 - Composition function : [useSimulation](docs/modules.md#usesimulation) (renderless use of d3 simulation)
 - Typescript support
 - Vue 3.3 features ([c-bind in css](https://vuejs.org/api/sfc-css-features.html#v-bind-in-css), [readonly ref from getter](https://vuejs.org/api/reactivity-utilities.html#toref) )
@@ -15,9 +15,7 @@ inspired by https://github.com/emiliorizzo/vue-d3-network
 
 ## Installation
 
-```
 ~~npm install vue-d3-network-graph~~
-```
 
 > Not production ready yet, use at your own risk. Api may change.
 
