@@ -1,6 +1,19 @@
 import type { Ref } from "vue";
 import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
+export type D3NodeSize =
+  | number
+  | {
+      /**
+       * Node width
+       */
+      width: number;
+      /**
+       * Node height
+       */
+      height: number;
+    };
+
 /**
  * Represents a node in the graph
  */
@@ -20,15 +33,8 @@ export type D3Node = {
   /**
    * Node size
    */
-  size?: number;
-  /**
-   * Node width
-   */
-  width?: number;
-  /**
-   * Node height
-   */
-  height?: number;
+  size?: D3NodeSize;
+
   /**
    * Node svg image
    */
@@ -36,6 +42,9 @@ export type D3Node = {
     viewBox: string;
     innerHtml: string;
   };
+  /**
+   * Group id
+   * */
   group?: number;
 };
 
@@ -341,7 +350,7 @@ export type D3NodeSimulation = SimulationNodeDatum & {
   /**
    * Node id. If not provided uses array index
    */
-  id?: number;
+  id?: number | string;
   /**
    * Node name. If not provided uses: 'node [node_id]'
    */
@@ -399,4 +408,9 @@ export type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
   "marker-end"?: string;
   /** Link marker-start */
   "marker-start"?: string;
+
+  xT?: number;
+  yT?: number;
+  xS?: number;
+  yS?: number;
 };

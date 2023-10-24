@@ -6,10 +6,9 @@ const MARKER_ARROW_END_ID = "arrow-end";
 
 export function useLink(
   strokewidth: Readonly<Ref<number>>,
-  nodeSize: Readonly<Ref<number>>,
   directed: Readonly<Ref<boolean>>
 ): {
-  getSimulationLink: (link: D3Link) => D3LinkSimulation;
+  getLink: (link: D3Link) => D3LinkSimulation;
   getClass: (linkId: string | undefined) => string[];
   getStyle: (link: D3Link) => { stroke: string } | undefined;
   getMarkerStart: (link: D3Link) => string | undefined;
@@ -37,7 +36,7 @@ export function useLink(
   const getMarkerEnd = (link: D3Link) =>
     directed.value ? `url(#${MARKER_ARROW_END_ID})` : undefined;
 
-  const getSimulationLink = (link: D3Link) => {
+  const getLink = (link: D3Link) => {
     return {
       source: link.source,
       target: link.target,
@@ -55,6 +54,6 @@ export function useLink(
     getStyle,
     getMarkerEnd,
     getMarkerStart,
-    getSimulationLink,
+    getLink,
   };
 }
