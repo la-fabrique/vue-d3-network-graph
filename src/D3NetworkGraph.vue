@@ -15,10 +15,10 @@
   >
     <defs v-if="options.directed">
       <marker v-bind="markers.arrowEnd">
-        <path :fill="theme.link.stroke" d="M0 -5 L 10 0 L 0 5"></path>
+        <path class="link" d="M0 -5 L 10 0 L 0 5"></path>
       </marker>
       <marker v-bind="markers.arrowStart">
-        <path :fill="theme.link.stroke" d="M 10 5 L 0 0 L 10 -5"></path>
+        <path class="link" d="M 10 5 L 0 0 L 10 -5"></path>
       </marker>
     </defs>
     <g ref="canvas" class="svg-canvas" :transform="transform">
@@ -46,7 +46,7 @@
         </template>
       </g>
 
-      <g id="l-nodes" class="nodes">
+      <g class="nodes">
         <template v-for="(node, index) in graph.nodes" :key="index">
           <svg
             v-if="node.innerSVG"
@@ -104,12 +104,11 @@ import type {
 import { useDraggable } from "./useDraggable";
 import { useLinkMarkers } from "./useLinkMarkers";
 import { useSimulation } from "./useSimulation";
-import { useResizeObserver } from "@vueuse/core";
+import { isDefined, useResizeObserver } from "@vueuse/core";
 import { useOptions } from "./useOptions";
 import { useNodeLabel } from "./useNodeLabel";
 import { useLinkLabel } from "./useLinkLabel";
 import { useCanvas } from "./useCanvas";
-import { isNode } from "./utils";
 
 const props = defineProps({
   nodes: {
@@ -153,8 +152,11 @@ useResizeObserver(svg, (entries) => {
 });
 
 const getPath = (link: D3LinkSimulation) =>
-  isNode(link.source) && isNode(link.target)
-    ? `M${link.source.x} ${link.source.y} L${link.target.x} ${link.target.y}`
+  isDefined(link.xS) &&
+  isDefined(link.yS) &&
+  isDefined(link.xT) &&
+  isDefined(link.yT)
+    ? `M${link.xS} ${link.yS} L${link.xT} ${link.yT}`
     : undefined;
 
 const { simulation, graph } = useSimulation(
@@ -245,44 +247,5 @@ const onTouchEnd = () => dragEnd();
   & > g {
     pointer-events: all;
   }
-}
-.node {
-  stroke: v-bind("theme.node.stroke");
-  fill: v-bind("theme.node.fill");
-  &.selected {
-    stroke: v-bind("theme.node.selected.stroke || theme.node.stroke");
-    fill: v-bind("theme.node.selected.fill || theme.node.fill");
-  }
-  &.pinned {
-    stroke: v-bind("theme.node.pinned.stroke || theme.node.stroke");
-    fill: v-bind("theme.node.pinned.fill || theme.node.fill");
-  }
-  &:hover {
-    stroke: v-bind("theme.node.hover.stroke || theme.node.stroke");
-    fill: v-bind("theme.node.hover.fill || theme.node.fill");
-  }
-}
-.link {
-  stroke: v-bind("theme.link.stroke");
-  fill: v-bind("theme.link.fill");
-  &.selected {
-    stroke: v-bind("theme.link.selected.stroke");
-    fill: v-bind("theme.link.selected.fill");
-  }
-  &:hover {
-    stroke: v-bind("theme.node.hover.stroke");
-    fill: v-bind("theme.node.hover.fill");
-  }
-  & > text {
-    fill: v-bind("theme.link.label.fill");
-    transform: translate(0, -0.5em);
-    text-anchor: middle;
-  }
-}
-.node-label {
-  fill: v-bind("theme.node.label.fill");
-}
-.link-label {
-  fill: v-bind("theme.link.label.fill");
 }
 </style>

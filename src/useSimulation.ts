@@ -16,8 +16,8 @@ import {
   type Simulation,
 } from "d3-force";
 import { type Ref, reactive, ref } from "vue";
-import { useNode } from "./useNode";
-import { useLink } from "./useLink";
+import { useNodes } from "./useNodes";
+import { getNodeIntersectionPoint, isNode } from "./utils";
 
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
@@ -48,12 +48,13 @@ export function useSimulation(
   /** The d3 simulation */
   simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>;
 } {
-  const { getNode } = useNode(options.nodeSize);
-  const { getSimulationLink } = useLink(
-    options.linkWidth,
+  const { reduce } = useNodes(
     options.nodeSize,
+    options.linkWidth,
     options.directed
   );
+
+  let _links: D3LinkSimulation[] = [];
 
   const graph = reactive<{
     nodes: D3NodeSimulation[];
@@ -64,8 +65,11 @@ export function useSimulation(
   });
 
   const init = () => {
-    graph.nodes = nodes.value.map((n) => getNode(n));
-    graph.links = links.value.map((l) => getSimulationLink(l));
+    const data = reduce(nodes.value, links.value);
+    graph.nodes = data.nodes; // nodes.value.map((n) => getNode(n));
+    _links = data.links;
+    graph.links = [];
+    //graph.links = data.links; //links.value.map((l) => getLink(l));
     refresh();
   };
 
@@ -102,13 +106,41 @@ export function useSimulation(
     );
     sim.force(
       FORCE_LINK_NAME,
-      forceLink(graph.links).id((d: D3NodeSimulation) => {
+      forceLink(_links).id((d: D3NodeSimulation) => {
         if (!("id" in d)) {
           throw new Error("Node id is undefined");
         }
         return d.id!;
       })
     );
+
+    sim.on("end", () => {
+      console.log("end");
+      _links.forEach((l) => {
+        if (isNode(l.target) && isNode(l.source)) {
+          const targtePoint = getNodeIntersectionPoint(
+            l.target.x!,
+            l.target.y!,
+            l.target.r!,
+            l.source.x!,
+            l.source.y!
+          );
+          const sourcePoint = getNodeIntersectionPoint(
+            l.source.x!,
+            l.source.y!,
+            l.source.r!,
+            l.target.x!,
+            l.target.y!
+          );
+
+          l.xS = sourcePoint.x;
+          l.yS = sourcePoint.y;
+          l.xT = targtePoint.x;
+          l.yT = targtePoint.y;
+        }
+      });
+      graph.links = _links;
+    });
 
     return sim;
   };

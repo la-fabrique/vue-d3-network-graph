@@ -31,28 +31,21 @@ export function useLinkMarkers(
   const markers = computed(() => ({
     arrowStart: {
       id: MARKER_ARROW_START_ID,
-      refX: -(nodeSize.value / 2 - strokewidth.value),
+      refX: 0,
       refY: 0,
-      viewBox: `0 -${5 * strokewidth.value} ${10 * strokewidth.value} ${
-        10 * strokewidth.value
-      }`,
+      viewBox: `0 -5 10 10`,
       orient: "auto",
-      markerWidth: 10 + strokewidth.value,
-      markerHeight: 10 + strokewidth.value,
-      "stroke-width": "1",
-      "marker-units": "userSpaceOnUse",
+      markerWidth: 10,
+      markerHeight: 10,
     },
     arrowEnd: {
       id: MARKER_ARROW_END_ID,
-      refX: nodeSize.value / 2 + (10 - strokewidth.value),
+      refX: 10,
       refY: 0,
-      viewBox: `0 -${5 * strokewidth.value} ${10 * strokewidth.value} ${
-        10 * strokewidth.value
-      }`,
+      viewBox: `0 -5 10 10`,
       orient: "auto",
-      markerWidth: 10 + strokewidth.value,
-      markerHeight: 10 + strokewidth.value,
-      "marker-units": "userSpaceOnUse",
+      markerWidth: 10,
+      markerHeight: 10,
     },
   }));
 
@@ -62,3 +55,21 @@ export function useLinkMarkers(
     markers,
   };
 }
+
+/*
+// Coordonnées du cercle C et de la droite AO
+const xO = ...; // Coordonnée x du centre du cercle C
+const yO = ...; // Coordonnée y du centre du cercle C
+const R = ...; // Rayon du cercle C
+
+// Coordonnées du point A
+const xA = ...; // Coordonnée x du point A
+const yA = ...; // Coordonnée y du point A
+
+// Calcul de la distance entre les points O et A
+const dOA = Math.sqrt((xA - xO) * (xA - xO) + (yA - yO) * (yA - yO));
+
+// Calcul des coordonnées du point P sur le cercle de centre O et de rayon R
+const xP = xO + R * (xA - xO) / dOA;
+const yP = yO + R * (yA - yO) / dOA;
+*/

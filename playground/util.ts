@@ -34,17 +34,24 @@ const newLink = (source: string | number, target: string | number) => ({
 });
 
 export const getRandomNodes = (maxNodes: number) => {
-  const nodes = [];
+  const nodes: D3Node[] = [];
   for (let i = 0; i <= maxNodes; i++) {
-    nodes.push(newNode(i.toString()));
+    nodes.push(newNode(i.toString(), maxNodes));
   }
+  nodes.forEach((n) => {
+    //if n.group used only once, replace by undefined
+    if (!nodes.some((n2) => n2.group === n.group && n.id !== n2.id)) {
+      n.group = undefined;
+    }
+  });
+
   return nodes;
 };
 
-const newNode = (id: string): D3Node => ({
+const newNode = (id: string, nbGroups: number): D3Node => ({
   id: id,
   name: "Node " + id,
-  group: Math.floor(Math.random() * 10),
+  group: Math.floor(Math.random() * nbGroups),
 });
 
 export const getDefaultOptions = () =>
