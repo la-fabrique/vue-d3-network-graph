@@ -62,6 +62,20 @@
         />
         <label>Static</label>
       </li>
+      <li class="checkbox">
+        <input
+          :value="settings.useGroups"
+          type="checkbox"
+          @input="
+            (event) =>
+              emit('update:settings', {
+                ...settings,
+                useGroups: (event.target as HTMLInputElement)?.checked,
+              })
+          "
+        />
+        <label>Use node groups</label>
+      </li>
     </ul>
 
     <ul class="test-menu">
@@ -175,7 +189,11 @@ import { useVModel } from "@vueuse/core";
 
 const props = defineProps({
   settings: {
-    type: Object as PropType<{ maxNodes: number; maxLinks: number }>,
+    type: Object as PropType<{
+      maxNodes: number;
+      maxLinks: number;
+      useGroups: boolean;
+    }>,
     required: true,
   },
   options: {
