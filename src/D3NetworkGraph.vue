@@ -23,7 +23,7 @@
     </defs>
     <g ref="canvas" class="svg-canvas" :transform="transform">
       <g class="links">
-        <template v-for="(link, index) in graph.links" :key="index">
+        <template v-for="(link, index) in links" :key="index">
           <path
             :id="`${index}`"
             :d="getPath(link)"
@@ -47,7 +47,7 @@
       </g>
 
       <g class="nodes">
-        <template v-for="(node, index) in graph.nodes" :key="index">
+        <template v-for="(node, index) in nodes" :key="index">
           <svg
             v-if="node.innerSVG"
             :viewBox="node.innerSVG.viewBox"
@@ -127,7 +127,7 @@ const props = defineProps({
 
 const emit = defineEmits<D3NeworkGraphEmits>();
 
-const { theme, options } = useOptions(toRef(() => props.options));
+const { options } = useOptions(toRef(() => props.options));
 
 // svg container resize observer
 const svg = ref(null);
@@ -137,17 +137,18 @@ const { transform, zoom, panMove, panStart, panEnd } = useCanvas(rect);
 
 useResizeObserver(svg, (entries) => {
   const entry = entries[0];
+  const clientRect = entry.target.getBoundingClientRect();
   if (
-    entry.contentRect.width === rect.value.width &&
-    entry.contentRect.height === rect.value.height
+    clientRect.width === rect.value.width &&
+    clientRect.height === rect.value.height
   )
     return;
-  const clientRect = entry.target.getBoundingClientRect();
+
   rect.value = {
     top: clientRect.top,
     left: clientRect.left,
-    width: entry.contentRect.width,
-    height: entry.contentRect.height,
+    width: clientRect.width,
+    height: clientRect.height,
   };
 });
 
@@ -159,7 +160,7 @@ const getPath = (link: D3LinkSimulation) =>
     ? `M${link.xS} ${link.yS} L${link.xT} ${link.yT}`
     : undefined;
 
-const { simulation, graph } = useSimulation(
+const { simulation, nodes, links } = useSimulation(
   toRef(() => props.nodes),
   toRef(() => props.links),
   rect,

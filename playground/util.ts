@@ -33,10 +33,10 @@ const newLink = (source: string | number, target: string | number) => ({
   name: "Utilise",
 });
 
-export const getRandomNodes = (maxNodes: number) => {
+export const getRandomNodes = (maxNodes: number, useGroups: boolean) => {
   const nodes: D3Node[] = [];
   for (let i = 0; i <= maxNodes; i++) {
-    nodes.push(newNode(i.toString(), maxNodes));
+    nodes.push(newNode(i.toString(), maxNodes, useGroups));
   }
   nodes.forEach((n) => {
     //if n.group used only once, replace by undefined
@@ -48,10 +48,10 @@ export const getRandomNodes = (maxNodes: number) => {
   return nodes;
 };
 
-const newNode = (id: string, nbGroups: number): D3Node => ({
+const newNode = (id: string, nbGroups: number, useGroups: boolean): D3Node => ({
   id: id,
   name: "Node " + id,
-  group: Math.floor(Math.random() * nbGroups),
+  group: useGroups ? Math.floor(Math.random() * nbGroups) : undefined,
 });
 
 export const getDefaultOptions = () =>

@@ -81,56 +81,6 @@ export type D3Link = {
 };
 
 /**
- * Defaut node colors
- */
-export type D3NodeOptionsColors = {
-  /**
-   * Default node stroke color
-   */
-  stroke?: string;
-  /**
-   * Default node fill color
-   */
-  fill?: string;
-  selected?: {
-    /**
-     * Selected node stroke color
-     * */
-    stroke?: string;
-    /**
-     * Selected node fill color
-     */
-    fill?: string;
-  };
-  hover?: {
-    /**
-     * Hovered node stroke color
-     */
-    stroke?: string;
-    /**
-     * Hovered node fill color
-     */
-    fill?: string;
-  };
-  pinned?: {
-    /**
-     * Pinned node stroke color
-     */
-    stroke?: string;
-    /**
-     * Pinned node fill color
-     */
-    fill?: string;
-  };
-  label?: {
-    /**
-     * Node label color
-     */
-    fill?: string;
-  };
-};
-
-/**
  * Default node options
  */
 export type D3NodeOptions = {
@@ -143,48 +93,6 @@ export type D3NodeOptions = {
      * @defaultValue `12`
      */
     size?: number;
-  };
-  /** Default node colors */
-  colors?: D3NodeOptionsColors;
-};
-
-/**
- * Default link colors
- */
-export type D3LinkOptionsColors = {
-  /**
-   * Default link stroke color
-   */
-  stroke?: string;
-  /**
-   * Default link fill color
-   */
-  fill?: string;
-  selected?: {
-    /**
-     * Selected link stroke color
-     */
-    stroke?: string;
-    /**
-     * Selected link fill color
-     */
-    fill?: string;
-  };
-  hover?: {
-    /**
-     * Hovered link stroke color
-     */
-    stroke?: string;
-    /**
-     * Hovered link fill color
-     */
-    fill?: string;
-  };
-  label?: {
-    /**
-     * Link label color
-     */
-    fill?: string;
   };
 };
 
@@ -203,10 +111,6 @@ export type D3LinkOptions = {
      */
     size?: number;
   };
-  /**
-   * Default link colors
-   */
-  colors?: D3LinkOptionsColors;
 };
 
 /**

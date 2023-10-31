@@ -5,7 +5,7 @@
       <D3NetworkGraph
         ref="net"
         :options="options"
-        :nodes="ns"
+        :nodes="nodes"
         :links="links"
         @node-click="nodeClick"
         @link-click="linkClick"
@@ -26,8 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import D3NetworkGraph from "../../src/D3NetworkGraph.vue";
+import { ref } from "vue";
 import Menu from "./Menu.vue";
 import { getDefaultOptions, getRandomLinks, getRandomNodes } from "../util";
 import type { D3Link, D3Node } from "../../src/types";
@@ -35,19 +34,23 @@ import type { D3Link, D3Node } from "../../src/types";
 const settings = ref({
   maxNodes: 10,
   maxLinks: 2,
+  useGroups: false,
 });
 
 const options = ref(getDefaultOptions());
 
-const ns = computed(() => nodes.value);
-
-const nodes = ref<D3Node[]>(getRandomNodes(settings.value.maxNodes));
+const nodes = ref<D3Node[]>(
+  getRandomNodes(settings.value.maxNodes, settings.value.useGroups)
+);
 const links = ref<D3Link[]>(
   getRandomLinks(nodes.value, settings.value.maxLinks)
 );
 
 const refresh = () => {
-  nodes.value = getRandomNodes(settings.value.maxNodes);
+  nodes.value = getRandomNodes(
+    settings.value.maxNodes,
+    settings.value.useGroups
+  );
   links.value = getRandomLinks(nodes.value, settings.value.maxLinks);
 };
 
