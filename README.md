@@ -28,7 +28,7 @@ npm install vue-d3-network-graph@beta
   </div>
 </template>
 <script lang="ts">
-  import D3NetworkGraph from "vue-d3-network-graph";
+  import { D3NetworkGraph } from "vue-d3-network-graph";
   import "vue-d3-network-graph/dist/style.css";
 
   const nodes = ref([
