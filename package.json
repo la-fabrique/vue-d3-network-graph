@@ -17,6 +17,7 @@
   "module": "./dist/vue-d3-network-graph.mjs",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/vue-d3-network-graph.mjs",
       "require": "./dist/vue-d3-network-graph.umd.js"
     },
