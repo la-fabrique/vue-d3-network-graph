@@ -6,12 +6,12 @@ export const DEFAULT_FORCE_Y = 0.1;
 export const DEFAULT_FORCE_MANY_BODY_STRENGTH = -300;
 const DEFAULT_NODE_SIZE = 25;
 const DEFAULT_NODE_FONT_SIZE = 12;
-const DEFAULT_LINK_WIDTH = 2;
+const DEFAULT_LINK_WIDTH = 1;
 const DEFAULT_FORCE_COLLIDE_STRENGTH = 45;
 
 export const useOptions = (d3Options: Readonly<Ref<D3Options | undefined>>) => {
   const options: useSimulationOptions = {
-    static: toRef(() => d3Options.value?.simulation?.static || false),
+    static: toRef(() => d3Options.value?.layout?.static || false),
     forceXStrength: toRef(
       () => d3Options.value?.simulation?.force.x || DEFAULT_FORCE_X
     ),

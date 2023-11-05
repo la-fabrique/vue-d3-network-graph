@@ -1,10 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import eslintPlugin from "vite-plugin-eslint";
-import vuetify from "vite-plugin-vuetify";
 import { resolve } from "path";
 import dts from "vite-plugin-dts";
-import pkg from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,9 +16,6 @@ export default defineConfig({
     }),
     vue(),
     eslintPlugin(),
-    vuetify({
-      autoImport: true,
-    }),
   ],
   resolve: {
     alias: {

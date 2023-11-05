@@ -1,6 +1,10 @@
 import type { Ref } from "vue";
 import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
+/**
+ * Represents a node size
+ * @category Node types
+ */
 export type D3NodeSize =
   | number
   | {
@@ -16,6 +20,7 @@ export type D3NodeSize =
 
 /**
  * Represents a node in the graph
+ * @category Node types
  */
 export type D3Node = {
   /**
@@ -50,6 +55,7 @@ export type D3Node = {
 
 /**
  * Represents a link in the graph
+ * @category Node types
  */
 export type D3Link = {
   /**
@@ -82,6 +88,7 @@ export type D3Link = {
 
 /**
  * Default node options
+ * @category Options types
  */
 export type D3NodeOptions = {
   /** Default node size
@@ -98,11 +105,12 @@ export type D3NodeOptions = {
 
 /**
  * Default link options
+ * @category Options types
  */
 export type D3LinkOptions = {
   /**
    * Default link width
-   * @defaultValue `2`
+   * @defaultValue `1`
    */
   width: number;
   font?: {
@@ -115,14 +123,9 @@ export type D3LinkOptions = {
 
 /**
  * Simulation options
+ * @category Options types
  */
 export type D3SimulationOptions = {
-  /**
-   * Indicates if the simulation should not be animated
-   * @remarks  Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
-   * @defaultValue `false`
-   */
-  static?: boolean;
   /**
    * d3 force configurations
    */
@@ -131,28 +134,29 @@ export type D3SimulationOptions = {
      * d3 forceX strenght between 0 and 1
      * @defaultValue `0.1`
      * */
-    x: number;
+    x?: number;
     /**
      * d3 forceY strenght between 0 and 1
      * @defaultValue `0.1`
      */
-    y: number;
+    y?: number;
     /**
      * d3 forceManyBody strenght smaller than 0
      * @defaultValue `-300`
      */
-    charge: number;
+    charge?: number;
 
     /**
      * d3 forceCollide radius
      * @defaultValue `45`
      */
-    collide: number;
+    collide?: number;
   };
 };
 
 /**
  * Layout options
+ * @category Options types
  */
 export type D3LayoutOptions = {
   /**
@@ -165,10 +169,17 @@ export type D3LayoutOptions = {
    * @defaultValue `false`
    */
   directed?: boolean;
+  /**
+   * Indicates if the simulation should not be animated
+   * @remarks  Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
+   * @defaultValue `false`
+   */
+  static?: boolean;
 };
 
 /**
  * Graph options
+ * @category Options types
  */
 export type D3Options = {
   /**
@@ -191,6 +202,7 @@ export type D3Options = {
 
 /**
  * Event exposed by the D3NetworkGraph component
+ * @category Events
  */
 export type D3NeworkGraphEmits = {
   (event: "node-click", $event: TouchEvent | MouseEvent, node: D3Node): void;

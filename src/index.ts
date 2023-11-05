@@ -1,9 +1,36 @@
 import type { Plugin, App } from "vue";
-export * from "./types";
-import D3NetworkGraph from "./D3NetworkGraph.vue";
-import { useSimulation } from "./useSimulation";
-export { D3NetworkGraph, useSimulation };
 
+import type {
+  D3Link,
+  D3Node,
+  D3Options,
+  D3NodeSize,
+  D3NodeOptions,
+  D3LinkOptions,
+  D3SimulationOptions,
+  D3LayoutOptions,
+  D3NeworkGraphEmits,
+} from "./types";
+
+/** @ignore */
+import D3NetworkGraph from "./D3NetworkGraph.vue";
+
+export type {
+  D3Link,
+  D3Node,
+  D3Options,
+  D3NodeSize,
+  D3NodeOptions,
+  D3LinkOptions,
+  D3SimulationOptions,
+  D3LayoutOptions,
+  D3NeworkGraphEmits,
+};
+
+/** @ignore */
+export { D3NetworkGraph };
+
+/** @ignore */
 export default {
   install(app: App) {
     import("./themes/default.scss");
