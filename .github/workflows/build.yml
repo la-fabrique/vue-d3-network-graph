@@ -24,10 +24,7 @@ jobs:
         run: npm i
 
       - name: Build
-        run: npm run build
+        run: npm run lib:build
 
       - name: Build
-        run: npm run build-playground
-
-      - name: Build docs
-        run: npm run doc
+        run: npm run docs:build

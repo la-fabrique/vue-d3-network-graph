@@ -38,7 +38,7 @@
     "lib:format": "prettier .  --write",
     "docs:api": "ts-node ./scripts/doc.ts",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs && histoire build -c ./histoire/config.ts",
+    "docs:build": "ts-node ./scripts/doc.ts && vuepress build docs && histoire build -c ./histoire/config.ts",
     "docs:preview": "vite preview --outDir ./dist-docs --base=/vue-d3-network-graph/",
     "story:dev": "histoire dev -c histoire/configs.ts",
     "story:preview": "histoire preview"
