@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: Build
+      - name: Build lib
         run: npm run lib:build
 
-      - name: Build
+      - name: Build docs
         run: npm run docs:build
