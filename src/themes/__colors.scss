@@ -1,0 +1,77 @@
+$teal: #009688;
+$teal-lighten-5: #e0f2f1;
+$teal-lighten-4: #b2dfdb;
+$teal-lighten-3: #80cbc4;
+$teal-lighten-2: #4db6ac;
+$teal-lighten-1: #26a69a;
+$teal-darken-1: #00897b;
+$teal-darken-2: #00796b;
+$teal-darken-3: #00695c;
+$teal-darken-4: #004d40;
+$teal-accent-1: #a7ffeb;
+$teal-accent-2: #64ffda;
+$teal-accent-3: #1de9b6;
+$teal-accent-4: #00bfa5;
+
+$green: #4caf50;
+$green-lighten-5: #e8f5e9;
+$green-lighten-4: #c8e6c9;
+$green-lighten-3: #a5d6a7;
+$green-lighten-2: #81c784;
+$green-lighten-1: #66bb6a;
+$green-darken-1: #43a047;
+$green-darken-2: #388e3c;
+$green-darken-3: #2e7d32;
+$green-darken-4: #1b5e20;
+$green-accent-1: #b9f6ca;
+$green-accent-2: #69f0ae;
+$green-accent-3: #00e676;
+$green-accent-4: #00c853;
+
+$purple: #9c27b0;
+$purple-lighten-5: #f3e5f5;
+$purple-lighten-4: #e1bee7;
+$purple-lighten-3: #ce93d8;
+$purple-lighten-2: #ba68c8;
+$purple-lighten-1: #ab47bc;
+$purple-darken-1: #8e24aa;
+$purple-darken-2: #7b1fa2;
+$purple-darken-3: #6a1b9a;
+$purple-darken-4: #4a148c;
+$purple-accent-1: #ea80fc;
+$purple-accent-2: #e040fb;
+$purple-accent-3: #d500f9;
+$purple-accent-4: #aa00ff;
+
+$themes: (
+  teal: (
+    node-stroke: $teal-darken-2,
+    node-stroke-hover: $teal-darken-4,
+    node-fill: $teal-lighten-3,
+    node-fill-hover: $teal-lighten-1,
+    node-label: $teal-darken-4,
+    link-stroke: $teal-darken-2,
+    link-stroke-hover: $teal-darken-4,
+    link-label: $teal-darken-2,
+  ),
+  green: (
+    node-stroke: $green-darken-2,
+    node-stroke-hover: $green-darken-4,
+    node-fill: $green-lighten-3,
+    node-fill-hover: $green-lighten-1,
+    node-label: $green-darken-4,
+    link-stroke: $green-darken-2,
+    link-stroke-hover: $green-darken-4,
+    link-label: $green-darken-2,
+  ),
+  purple: (
+    node-stroke: $purple-darken-2,
+    node-stroke-hover: $purple-darken-4,
+    node-fill: $purple-lighten-3,
+    node-fill-hover: $purple-lighten-1,
+    node-label: $purple-darken-4,
+    link-stroke: $purple-darken-2,
+    link-stroke-hover: $purple-darken-4,
+    link-label: $purple-darken-2,
+  ),
+);

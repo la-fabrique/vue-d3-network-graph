@@ -33,8 +33,7 @@ export { D3NetworkGraph };
 /** @ignore */
 export default {
   install(app: App) {
-    import("./themes/default.scss");
-
+    import("./themes/index.scss");
     app.component("D3NetworkGraph", D3NetworkGraph);
   },
 } as Plugin;

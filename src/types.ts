@@ -155,6 +155,12 @@ export type D3SimulationOptions = {
 };
 
 /**
+ * Represents a CSS theme
+ * @category Options types
+ */
+export type Theme = string | "green" | "purple" | "teal";
+
+/**
  * Layout options
  * @category Options types
  */
@@ -175,6 +181,12 @@ export type D3LayoutOptions = {
    * @defaultValue `false`
    */
   static?: boolean;
+
+  /**
+   * Css Theme
+   * @defaultValue `teal`
+   */
+  theme?: Theme;
 };
 
 /**
@@ -257,6 +269,10 @@ export type useSimulationOptions = {
    * Default link font size
    */
   linkFontSize: Readonly<Ref<number>>;
+  /**
+   * Css Theme class
+   */
+  themeClass: Readonly<Ref<string>>;
 };
 
 /**

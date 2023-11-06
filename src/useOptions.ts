@@ -36,6 +36,11 @@ export const useOptions = (d3Options: Readonly<Ref<D3Options | undefined>>) => {
     linkFontSize: toRef(() => d3Options.value?.links?.font?.size || 12),
     draggables: toRef(() => d3Options.value?.layout?.draggables || false),
     directed: toRef(() => d3Options.value?.layout?.directed || false),
+    themeClass: toRef(() =>
+      d3Options.value?.layout?.theme
+        ? `theme-${d3Options.value?.layout?.theme}`
+        : "theme-teal"
+    ),
   };
 
   return {

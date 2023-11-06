@@ -38,6 +38,11 @@
         <HstCheckbox v-model="options.layout!.draggables" title="Draggables" />
         <HstCheckbox v-model="options.layout!.directed" title="Directed" />
         <HstCheckbox v-model="options.layout!.static" title="Static" />
+        <HstSelect
+          v-model="options.layout!.theme"
+          :options="['teal', 'green', 'purple']"
+          title="Theme"
+        />
         <label class="htw-p-2 d3-label">Simulation</label>
         <HstSlider
           v-model="options.simulation!.force!.charge"

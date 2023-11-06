@@ -5,7 +5,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     preserveAspectRatio="xMinYMin"
     :viewBox="`0 0 ${rect.width} ${rect.height}`"
-    class="svg-container"
+    :class="cssClass"
     @mousedown.self.prevent="onMouseDown"
     @mouseup="onMouseUp"
     @touchend.passive="onTouchEnd"
@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { type PropType, ref, toRef } from "vue";
+import { type PropType, ref, toRef, computed } from "vue";
 import type {
   D3Link,
   D3NeworkGraphEmits,
@@ -109,6 +109,7 @@ import { useOptions } from "./useOptions";
 import { useNodeLabel } from "./useNodeLabel";
 import { useLinkLabel } from "./useLinkLabel";
 import { useCanvas } from "./useCanvas";
+import { onMounted } from "vue";
 
 const props = defineProps({
   nodes: {
@@ -130,14 +131,13 @@ const emit = defineEmits<D3NeworkGraphEmits>();
 const { options } = useOptions(toRef(() => props.options));
 
 // svg container resize observer
-const svg = ref(null);
+const svg = ref<SVGAElement | null>(null);
 const canvas = ref<SVGGElement | null>(null);
 const rect = ref({ width: 100, height: 100, top: 0, left: 0 });
 const { transform, zoom, panMove, panStart, panEnd } = useCanvas(rect);
+const cssClass = computed(() => ["svg-container", options.themeClass.value]);
 
-useResizeObserver(svg, (entries) => {
-  const entry = entries[0];
-  const clientRect = entry.target.getBoundingClientRect();
+const updateRect = (clientRect: DOMRect) => {
   if (
     clientRect.width === rect.value.width &&
     clientRect.height === rect.value.height
@@ -150,6 +150,12 @@ useResizeObserver(svg, (entries) => {
     width: clientRect.width,
     height: clientRect.height,
   };
+};
+
+useResizeObserver(svg, (entries) => {
+  const entry = entries[0];
+  const clientRect = entry.target.getBoundingClientRect();
+  updateRect(clientRect);
 });
 
 const getPath = (link: D3LinkSimulation) =>
@@ -237,6 +243,13 @@ const onMouseUp = () => {
 };
 
 const onTouchEnd = () => dragEnd();
+
+onMounted(() => {
+  if (svg.value) {
+    const clientRect = svg.value.getBoundingClientRect();
+    updateRect(clientRect);
+  }
+});
 </script>
 
 <style lang="scss">
