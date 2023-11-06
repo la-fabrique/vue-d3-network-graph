@@ -57,16 +57,18 @@
           title="Collide (forceCollide radius)"
         />
         <HstSlider
-          v-model="chargeX"
+          v-model="options.simulation!.force!.x"
           :min="0"
-          :max="10"
-          title="X: x10 (forceX strenght) "
+          :max="1"
+          step="0.1"
+          title="X (forceX strenght) "
         />
         <HstSlider
-          v-model="chargeY"
+          v-model="options.simulation!.force!.y"
           :min="0"
-          :max="10"
-          title="Y: x10 (forceY strenght)"
+          :max="1"
+          step="0.1"
+          title="Y (forceY strenght)"
         />
       </div>
     </template>
@@ -116,15 +118,6 @@ const options = reactive<D3Options>({
       y: 0.1,
     },
   },
-});
-
-const chargeX = computed({
-  get: () => options.simulation!.force!.x! * 10,
-  set: (value) => (options.simulation!.force!.x = value / 10),
-});
-const chargeY = computed({
-  get: () => options.simulation!.force!.y! * 10,
-  set: (value) => (options.simulation!.force!.y = value / 10),
 });
 </script>
 <style></style>
