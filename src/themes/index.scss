@@ -1,11 +1,11 @@
 @import "_colors";
 
+#arrow-start {
+  fill: "context-color";
+}
+
 @each $name, $theme in $themes {
   .theme-#{"" + $name} {
-    #arrow-start {
-      fill: "context-color";
-    }
-
     .node-group {
       stroke: map-get($theme, node-stroke);
       fill: transparent;

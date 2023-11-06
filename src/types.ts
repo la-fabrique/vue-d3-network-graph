@@ -32,9 +32,9 @@ export type D3Node = {
    */
   name?: string;
   /**
-   * Node color, e.g. red, #aa00bb,
+   * Node css class names,
    */
-  color?: string;
+  class?: string[];
   /**
    * Node size
    */
@@ -67,9 +67,9 @@ export type D3Link = {
    */
   name?: string;
   /**
-   * Link color (stroke), e.g. red, #aa00bb,
+   * Link css class names
    */
-  color?: string;
+  class?: string[];
   /**
    * Is two-way link (bidirectional)
    */
@@ -294,7 +294,7 @@ export type D3NodeSimulation = SimulationNodeDatum & {
   /**
    * Node css class names
    */
-  cssClass?: string[] | undefined;
+  class?: string[];
   /**
    * Node size
    */

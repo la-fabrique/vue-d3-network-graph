@@ -55,21 +55,3 @@ export function useLinkMarkers(
     markers,
   };
 }
-
-/*
-// Coordonnées du cercle C et de la droite AO
-const xO = ...; // Coordonnée x du centre du cercle C
-const yO = ...; // Coordonnée y du centre du cercle C
-const R = ...; // Rayon du cercle C
-
-// Coordonnées du point A
-const xA = ...; // Coordonnée x du point A
-const yA = ...; // Coordonnée y du point A
-
-// Calcul de la distance entre les points O et A
-const dOA = Math.sqrt((xA - xO) * (xA - xO) + (yA - yO) * (yA - yO));
-
-// Calcul des coordonnées du point P sur le cercle de centre O et de rayon R
-const xP = xO + R * (xA - xO) / dOA;
-const yP = yO + R * (yA - yO) / dOA;
-*/

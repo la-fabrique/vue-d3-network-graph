@@ -18,23 +18,12 @@ export function useNode(nodeSize: Readonly<Ref<number>>): {
   getSize: (size?: number) => number;
   getX: (x?: number, width?: number) => number;
   getY: (y?: number, height?: number) => number;
-  getClass: (
-    fx?: number | null | undefined,
-    fy?: number | null | undefined
-  ) => string[];
 } {
   const getSize = (size?: number) => size || nodeSize.value;
 
   const getWidth = (node: D3Node) => getNodeWidth(nodeSize.value, node.size);
 
   const getHeight = (node: D3Node) => getNodeHeight(nodeSize.value, node.size);
-
-  const getStyle = (node: D3Node) => (node.color ? "fill: " + node.color : "");
-
-  const getClass = (
-    fx?: number | null | undefined,
-    fy?: number | null | undefined
-  ) => ["node"];
 
   const getX = (x?: number, width?: number) => (x || 0) - (width || 0) / 2;
 
@@ -47,67 +36,75 @@ export function useNode(nodeSize: Readonly<Ref<number>>): {
     children
       .map(
         (node) =>
-          `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" style="${node.style}" class="${node.cssClass}" >
+          `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" style="${node.style}" class="${node.class}" >
               <title>${node.name}</title>
           </circle>`
       )
       .join("");
 
-  const getNode = (
+  const getNodeGroup = (
     node: D3Node,
-    children?: D3Node[],
+    children: D3Node[],
     defaultX?: number,
     defaultY?: number
-  ): D3NodeSimulation => {
-    let enclosedNode: PackCircle | undefined = undefined;
-    let packedNodes: Array<D3NodeSimulation & PackCircle> | undefined =
-      undefined;
-
-    if (children && children.length > 0) {
-      packedNodes = packSiblings(
-        children.map(
-          (n) =>
-            ({
-              ...getNode(n),
-              r: getNodeRadius(nodeSize.value, n.size),
-            }) as D3NodeSimulation & PackRadius
-        )
-      );
-
-      enclosedNode = packEnclose(packedNodes);
-    }
+  ) => {
+    const packedNodes = packSiblings(
+      children.map(
+        (n) =>
+          ({
+            ...getNode(n),
+            r: getNodeRadius(nodeSize.value, n.size),
+          }) as D3NodeSimulation & PackRadius
+      )
+    );
+    const enclosedNode = packEnclose(packedNodes);
 
     return {
       id: node.id,
       key: node.id,
       x: defaultX,
       y: defaultY,
-      innerSVG:
-        enclosedNode && packedNodes
-          ? {
-              viewBox: `-${enclosedNode.r + 2} -${enclosedNode.r + 2} ${
-                enclosedNode.r * 2 + 4
-              } ${enclosedNode.r * 2 + 4}`,
-              innerHtml: getInnerSvg(enclosedNode, packedNodes),
-            }
-          : node.innerSVG,
-      width: enclosedNode ? enclosedNode.r * 2 : getWidth(node),
-      height: enclosedNode ? enclosedNode.r * 2 : getHeight(node),
+      innerSVG: {
+        viewBox: `-${enclosedNode.r + 2} -${enclosedNode.r + 2} ${
+          enclosedNode.r * 2 + 4
+        } ${enclosedNode.r * 2 + 4}`,
+        innerHtml: getInnerSvg(enclosedNode, packedNodes),
+      },
+      width: enclosedNode.r * 2,
+      height: enclosedNode.r * 2,
       name: node.name,
-      style: getStyle(node),
       title: node.name,
-      cssClass: enclosedNode ? ["node-group"] : ["node"],
-      r: enclosedNode
-        ? enclosedNode.r
-        : node.innerSVG
-        ? undefined
-        : getNodeRadius(nodeSize.value, node.size),
+      class: ["node-group"],
+      r: enclosedNode.r,
     } as D3NodeSimulation;
   };
 
+  const getNode = (
+    node: D3Node,
+    children?: D3Node[],
+    defaultX?: number,
+    defaultY?: number
+  ): D3NodeSimulation =>
+    children && children.length > 0
+      ? getNodeGroup(node, children, defaultX, defaultY)
+      : ({
+          id: node.id,
+          key: node.id,
+          x: defaultX,
+          y: defaultY,
+          innerSVG: node.innerSVG,
+          width: getWidth(node),
+          height: getHeight(node),
+          name: node.name,
+          title: node.name,
+          class: node.class ? ["node", ...(node.class || [])] : ["node"],
+          r: node.innerSVG
+            ? undefined
+            : getNodeRadius(nodeSize.value, node.size),
+        } as D3NodeSimulation);
+
   return {
     getNode,
-    getClass,
     getSize,
     getX,
     getY,

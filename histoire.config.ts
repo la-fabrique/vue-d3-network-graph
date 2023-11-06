@@ -6,12 +6,23 @@ export default defineConfig({
   viteIgnorePlugins: ["vite-plugin-eslint", "vite:dts"],
   setupFile: "./docs/.histoire/setup.ts",
   storyMatch: ["**/.histoire/*.story.vue"],
-  storyIgnored: [
-    "**/node_modules/**",
-    "**/dist/**",
-    "**/playground/**",
-    //"**/docs/**",
-  ],
+  storyIgnored: ["**/node_modules/**", "**/dist/**", "**/playground/**"],
+  tree: {
+    groups: [
+      {
+        title: "Basic",
+        include: (file) => /Play with/.test(file.title),
+      },
+      {
+        title: "Grouping",
+        include: (file) => /Node groups/.test(file.title),
+      },
+      {
+        title: "Theming",
+        include: (file) => /Custom theme|Custom CSS/.test(file.title),
+      },
+    ],
+  },
   outDir: "./dist-docs/histoire/",
   theme: {
     title: "D3 Network graph",
