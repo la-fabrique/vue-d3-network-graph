@@ -21,6 +21,10 @@ export default defineConfig({
         title: "Theming",
         include: (file) => /Custom theme|Custom CSS/.test(file.title),
       },
+      {
+        title: "C4 Model",
+        include: (file) => /C4/.test(file.title),
+      },
     ],
   },
   outDir: "./dist-docs/histoire/",

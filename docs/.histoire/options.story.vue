@@ -40,7 +40,7 @@
         <HstCheckbox v-model="options.layout!.static" title="Static" />
         <HstSelect
           v-model="options.layout!.theme"
-          :options="['teal', 'green', 'purple']"
+          :options="['teal', 'green', 'purple', 'blue', 'grey']"
           title="Theme"
         />
         <label class="htw-p-2 d3-label">Simulation</label>
@@ -77,8 +77,8 @@
 
 <script setup lang="ts">
 import type { D3Options } from "@/types";
-import { logEvent } from "histoire/client";
-import { computed, reactive } from "vue";
+import { logEvent, isDark } from "histoire/client";
+import {  reactive } from "vue";
 
 const nodes = [
   { id: 1, name: "my awesome node 1" },
@@ -109,6 +109,8 @@ const options = reactive<D3Options>({
     draggables: true,
     directed: true,
     static: false,
+    theme:'teal',
+    dark: isDark(),
   },
   simulation: {
     force: {

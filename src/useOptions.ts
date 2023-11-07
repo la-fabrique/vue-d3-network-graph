@@ -41,6 +41,7 @@ export const useOptions = (d3Options: Readonly<Ref<D3Options | undefined>>) => {
         ? `theme-${d3Options.value?.layout?.theme}`
         : "theme-teal"
     ),
+    dark: toRef(() => d3Options.value?.layout?.dark || false),
   };
 
   return {

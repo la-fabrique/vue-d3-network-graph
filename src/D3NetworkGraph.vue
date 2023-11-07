@@ -15,10 +15,10 @@
   >
     <defs v-if="options.directed">
       <marker v-bind="markers.arrowEnd">
-        <path class="link" d="M0 -5 L 10 0 L 0 5"></path>
+        <path class="link" d="M 0 5 L 0 -5 L 10 0 L 0 5"></path>
       </marker>
       <marker v-bind="markers.arrowStart">
-        <path class="link" d="M 10 5 L 0 0 L 10 -5"></path>
+        <path class="link" d="M 10 5 L 0 0 L 10 -5 L 10 5"></path>
       </marker>
     </defs>
     <g ref="canvas" class="svg-canvas" :transform="transform">
@@ -38,10 +38,16 @@
           <text
             class="link-label"
             :font-size="linkLabel.font.size"
-            :x="getLinkLabelX(link)"
             :y="getLinkLabelY(link)"
           >
-            {{ link.name }}
+            <tspan
+              v-for="(label, idx) in link.labels"
+              :key="idx"
+              dy="1.1em"
+              :x="getLinkLabelX(link)"
+            >
+              {{ label }}
+            </tspan>
           </text>
         </template>
       </g>
@@ -79,11 +85,19 @@
           ></circle>
           <text
             class="node-label"
-            :x="(node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2"
             :y="(node.y || 0) + nodeLabel.offset.y"
             :font-size="nodeLabel.font.size"
           >
-            {{ node.name }}
+            <tspan
+              v-for="(label, idx) in node.labels"
+              :key="idx"
+              dy="1.1em"
+              :x="
+                (node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2
+              "
+            >
+              {{ label }}
+            </tspan>
           </text>
         </template>
       </g>
@@ -135,7 +149,10 @@ const svg = ref<SVGAElement | null>(null);
 const canvas = ref<SVGGElement | null>(null);
 const rect = ref({ width: 100, height: 100, top: 0, left: 0 });
 const { transform, zoom, panMove, panStart, panEnd } = useCanvas(rect);
-const cssClass = computed(() => ["svg-container", options.themeClass.value]);
+const cssClass = computed(() => [
+  "svg-container",
+  `${options.themeClass.value}${options.dark ? "--dark" : ""}`,
+]);
 
 const updateRect = (clientRect: DOMRect) => {
   if (

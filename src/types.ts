@@ -28,9 +28,13 @@ export type D3Node = {
    */
   id: number | string;
   /**
-   * Node name. If not provided uses: 'node [node_id]'
+   * Node name
    */
   name?: string;
+  /**
+   * Node labels
+   */
+  labels?: string[];
   /**
    * Node css class names,
    */
@@ -51,6 +55,14 @@ export type D3Node = {
    * Group id
    * */
   group?: number;
+
+  /**
+   * Initial fixed position
+   */
+  position?: {
+    x?: number;
+    y?: number;
+  };
 };
 
 /**
@@ -63,9 +75,13 @@ export type D3Link = {
    */
   id?: number | string;
   /**
-   * Link name. If not provided uses: 'link [link_id]'
+   * Link name
    */
   name?: string;
+  /**
+   * Link labels
+   */
+  labels?: string[];
   /**
    * Link css class names
    */
@@ -158,7 +174,7 @@ export type D3SimulationOptions = {
  * Represents a CSS theme
  * @category Options types
  */
-export type Theme = string | "green" | "purple" | "teal";
+export type Theme = string | "green" | "purple" | "teal" | "blue" | "grey";
 
 /**
  * Layout options
@@ -187,6 +203,10 @@ export type D3LayoutOptions = {
    * @defaultValue `teal`
    */
   theme?: Theme;
+  /**
+   * Indicate if is dark mode enabled
+   */
+  dark?: boolean;
 };
 
 /**
@@ -273,6 +293,10 @@ export type useSimulationOptions = {
    * Css Theme class
    */
   themeClass: Readonly<Ref<string>>;
+  /**
+   * Css dark mode
+   */
+  dark: Readonly<Ref<boolean>>;
 };
 
 /**
@@ -284,7 +308,7 @@ export type D3NodeSimulation = SimulationNodeDatum & {
    */
   id?: number | string;
   /**
-   * Node name. If not provided uses: 'node [node_id]'
+   * Node name.
    */
   name?: string;
   /**

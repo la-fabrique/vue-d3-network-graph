@@ -33,10 +33,10 @@
 
     .link {
       stroke: map-get($theme, link-stroke);
-      fill: transparent;
+      fill: map-get($theme, link-stroke);
       &:hover {
         stroke: map-get($theme, link-stroke-hover);
-        fill: transparent;
+        fill: map-get($theme, link-stroke-hover);
       }
     }
 

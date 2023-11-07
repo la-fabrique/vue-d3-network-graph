@@ -51,3 +51,6 @@ const yA = ...; // Coordonnée y du point A
   // Calcul des coordonnées du point P sur le cercle de centre O et de rayon R
   return { x: xO + (r * (xA - xO)) / dOA, y: yO + (r * (yA - yO)) / dOA };
 };
+
+export const getLabels = (name?: string, labels?: string[]) =>
+  name ? [name, ...(labels || [])] : labels || [];

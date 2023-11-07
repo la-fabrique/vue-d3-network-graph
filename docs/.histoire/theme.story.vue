@@ -57,10 +57,10 @@ const options = reactive<D3Options>({
 
   .link {
     stroke: #d32f2f;
-    fill: transparent;
+    fill: #d32f2f;
     &:hover {
       stroke: #b71c1c;
-      fill: transparent;
+      fill: #b71c1c;
     }
   }
 

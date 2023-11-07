@@ -1,6 +1,6 @@
 import type { D3NodeSimulation, D3Node } from "./types";
 import type { Ref } from "vue";
-import { getNodeHeight, getNodeRadius, getNodeWidth } from "./utils";
+import { getLabels, getNodeHeight, getNodeRadius, getNodeWidth } from "./utils";
 import {
   packEnclose,
   packSiblings,
@@ -72,7 +72,7 @@ export function useNode(nodeSize: Readonly<Ref<number>>): {
       },
       width: enclosedNode.r * 2,
       height: enclosedNode.r * 2,
-      name: node.name,
+      labels: getLabels(node.name, node.labels),
       title: node.name,
       class: ["node-group"],
       r: enclosedNode.r,
@@ -92,15 +92,15 @@ export function useNode(nodeSize: Readonly<Ref<number>>): {
           key: node.id,
           x: defaultX,
           y: defaultY,
+          fx: node.position?.x,
+          fy: node.position?.y,
           innerSVG: node.innerSVG,
           width: getWidth(node),
           height: getHeight(node),
-          name: node.name,
+          labels: getLabels(node.name, node.labels),
           title: node.name,
           class: node.class ? ["node", ...(node.class || [])] : ["node"],
-          r: node.innerSVG
-            ? undefined
-            : getNodeRadius(nodeSize.value, node.size),
+          r: getNodeRadius(nodeSize.value, node.size),
         } as D3NodeSimulation);
 
   return {

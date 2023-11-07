@@ -1,5 +1,6 @@
 import type { D3Link, D3LinkSimulation } from "./types";
 import { type Ref } from "vue";
+import { getLabels } from "./utils";
 
 const MARKER_ARROW_START_ID = "arrow-start";
 const MARKER_ARROW_END_ID = "arrow-end";
@@ -25,7 +26,7 @@ export function useLink(
     return {
       source: link.source,
       target: link.target,
-      name: link.name,
+      labels: getLabels(link.name, link.labels),
       class: link.class ? ["link", link.class] : ["link"],
       "stroke-width": strokewidth.value,
       "marker-end": getMarkerEnd(link),
