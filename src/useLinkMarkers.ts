@@ -31,28 +31,21 @@ export function useLinkMarkers(
   const markers = computed(() => ({
     arrowStart: {
       id: MARKER_ARROW_START_ID,
-      refX: -(nodeSize.value / 2 - strokewidth.value),
+      refX: 0,
       refY: 0,
-      viewBox: `0 -${5 * strokewidth.value} ${10 * strokewidth.value} ${
-        10 * strokewidth.value
-      }`,
+      viewBox: `0 -5 10 10`,
       orient: "auto",
-      markerWidth: 10 + strokewidth.value,
-      markerHeight: 10 + strokewidth.value,
-      "stroke-width": "1",
-      "marker-units": "userSpaceOnUse",
+      markerWidth: 10,
+      markerHeight: 10,
     },
     arrowEnd: {
       id: MARKER_ARROW_END_ID,
-      refX: nodeSize.value / 2 + (10 - strokewidth.value),
+      refX: 10,
       refY: 0,
-      viewBox: `0 -${5 * strokewidth.value} ${10 * strokewidth.value} ${
-        10 * strokewidth.value
-      }`,
+      viewBox: `0 -5 10 10`,
       orient: "auto",
-      markerWidth: 10 + strokewidth.value,
-      markerHeight: 10 + strokewidth.value,
-      "marker-units": "userSpaceOnUse",
+      markerWidth: 10,
+      markerHeight: 10,
     },
   }));
 

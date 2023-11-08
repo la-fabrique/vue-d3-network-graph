@@ -1,0 +1,47 @@
+@import "_colors";
+
+#arrow-start {
+  fill: "context-color";
+}
+
+@each $name, $theme in $themes {
+  .theme-#{"" + $name} {
+    .node-group {
+      stroke: map-get($theme, node-stroke);
+      fill: transparent;
+      overflow: visible;
+
+      &:hover {
+        stroke: map-get($theme, node-stroke-hover);
+        fill: transparent;
+      }
+    }
+
+    .node {
+      stroke: map-get($theme, node-stroke);
+      fill: map-get($theme, node-fill);
+
+      &:hover {
+        stroke: map-get($theme, node-stroke-hover);
+        fill: map-get($theme, node-fill-hover);
+      }
+    }
+
+    .node-label {
+      fill: map-get($theme, node-label);
+    }
+
+    .link {
+      stroke: map-get($theme, link-stroke);
+      fill: map-get($theme, link-stroke);
+      &:hover {
+        stroke: map-get($theme, link-stroke-hover);
+        fill: map-get($theme, link-stroke-hover);
+      }
+    }
+
+    .link-label {
+      fill: map-get($theme, link-label);
+    }
+  }
+}

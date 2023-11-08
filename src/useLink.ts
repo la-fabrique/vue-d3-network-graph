@@ -1,33 +1,18 @@
 import type { D3Link, D3LinkSimulation } from "./types";
 import { type Ref } from "vue";
+import { getLabels } from "./utils";
 
 const MARKER_ARROW_START_ID = "arrow-start";
 const MARKER_ARROW_END_ID = "arrow-end";
 
 export function useLink(
   strokewidth: Readonly<Ref<number>>,
-  nodeSize: Readonly<Ref<number>>,
   directed: Readonly<Ref<boolean>>
 ): {
-  getSimulationLink: (link: D3Link) => D3LinkSimulation;
-  getClass: (linkId: string | undefined) => string[];
-  getStyle: (link: D3Link) => { stroke: string } | undefined;
+  getLink: (link: D3Link) => D3LinkSimulation;
   getMarkerStart: (link: D3Link) => string | undefined;
   getMarkerEnd: (link: D3Link) => string | undefined;
 } {
-  const getStyle = (link: D3Link) =>
-    link.color
-      ? {
-          stroke: link.color,
-        }
-      : undefined;
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getClass = (linkId: string | number | undefined): string[] => {
-    const cssClass = ["link"];
-    return cssClass;
-  };
-
   const getMarkerStart = (link: D3Link) =>
     directed.value && link.twoWay
       ? `url(#${MARKER_ARROW_START_ID})`
@@ -37,13 +22,12 @@ export function useLink(
   const getMarkerEnd = (link: D3Link) =>
     directed.value ? `url(#${MARKER_ARROW_END_ID})` : undefined;
 
-  const getSimulationLink = (link: D3Link) => {
+  const getLink = (link: D3Link) => {
     return {
       source: link.source,
       target: link.target,
-      name: link.name,
-      class: getClass(link.id),
-      style: getStyle(link),
+      labels: getLabels(link.name, link.labels),
+      class: link.class ? ["link", link.class] : ["link"],
       "stroke-width": strokewidth.value,
       "marker-end": getMarkerEnd(link),
       "marker-start": getMarkerStart(link),
@@ -51,10 +35,8 @@ export function useLink(
   };
 
   return {
-    getClass,
-    getStyle,
     getMarkerEnd,
     getMarkerStart,
-    getSimulationLink,
+    getLink,
   };
 }

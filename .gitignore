@@ -25,4 +25,10 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+#vuepress
+.temp
+.cache
+
+dist-docs
+
 playground-dist

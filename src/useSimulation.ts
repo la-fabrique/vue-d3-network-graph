@@ -15,9 +15,9 @@ import {
   forceY,
   type Simulation,
 } from "d3-force";
-import { type Ref, reactive, ref } from "vue";
-import { useNode } from "./useNode";
-import { useLink } from "./useLink";
+import { type Ref, ref, type ComputedRef, computed, shallowRef } from "vue";
+import { useNodes } from "./useNodes";
+import { getNodeIntersectionPoint, isNode } from "./utils";
 
 const FORCE_X_NAME = "X";
 const FORCE_Y_NAME = "Y";
@@ -43,29 +43,54 @@ export function useSimulation(
   /** The options of the simulation */
   options: useSimulationOptions
 ): {
-  /** The graph  */
-  graph: { nodes: D3NodeSimulation[]; links: D3LinkSimulation[] };
+  /** The graph nodes  */
+  nodes: Ref<D3NodeSimulation[]>;
+
+  links: ComputedRef<D3LinkSimulation[]>;
   /** The d3 simulation */
   simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>;
 } {
-  const { getNode } = useNode(options.nodeSize);
-  const { getSimulationLink } = useLink(
-    options.linkWidth,
+  const { reduce } = useNodes(
     options.nodeSize,
+    options.linkWidth,
     options.directed
   );
 
-  const graph = reactive<{
-    nodes: D3NodeSimulation[];
-    links: D3LinkSimulation[];
-  }>({
-    nodes: [],
-    links: [],
-  });
+  const _links = shallowRef<D3LinkSimulation[]>([]);
+  const ns = ref<D3NodeSimulation[]>([]);
+  const ls = computed(() =>
+    _links.value.map((l) => {
+      if (isNode(l.target) && isNode(l.source)) {
+        const targtePoint = getNodeIntersectionPoint(
+          l.target.x!,
+          l.target.y!,
+          l.target.r!,
+          l.source.x!,
+          l.source.y!
+        );
+        const sourcePoint = getNodeIntersectionPoint(
+          l.source.x!,
+          l.source.y!,
+          l.source.r!,
+          l.target.x!,
+          l.target.y!
+        );
+
+        l.xS = sourcePoint.x;
+        l.yS = sourcePoint.y;
+        l.xT = targtePoint.x;
+        l.yT = targtePoint.y;
+      }
+      return l;
+    })
+  );
 
   const init = () => {
-    graph.nodes = nodes.value.map((n) => getNode(n));
-    graph.links = links.value.map((l) => getSimulationLink(l));
+    const data = reduce(nodes.value, links.value);
+    ns.value = data.nodes; // nodes.value.map((n) => getNode(n));
+    _links.value = data.links;
+    //graph.links = [];
+    //graph.links = data.links; //links.value.map((l) => getLink(l));
     refresh();
   };
 
@@ -83,7 +108,7 @@ export function useSimulation(
     const sim = forceSimulation<D3NodeSimulation, D3LinkSimulation>()
       .alphaMin(ALPHA_MIN)
       .alphaDecay(ALPHA_DECAY)
-      .nodes(graph.nodes);
+      .nodes(ns.value);
     sim.force(
       FORCE_X_NAME,
       forceX(rect.value.width / 2).strength(options.forceXStrength.value)
@@ -102,7 +127,7 @@ export function useSimulation(
     );
     sim.force(
       FORCE_LINK_NAME,
-      forceLink(graph.links).id((d: D3NodeSimulation) => {
+      forceLink(_links.value).id((d: D3NodeSimulation) => {
         if (!("id" in d)) {
           throw new Error("Node id is undefined");
         }
@@ -142,6 +167,7 @@ export function useSimulation(
 
   return {
     simulation,
-    graph,
+    nodes: ns,
+    links: ls,
   };
 }

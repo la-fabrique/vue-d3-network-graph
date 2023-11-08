@@ -4,7 +4,7 @@ import type { D3LinkSimulation, D3NodeSimulation } from "./types";
 
 export function useDraggable(
   simulation: Ref<Simulation<D3NodeSimulation, D3LinkSimulation>>,
-  draggables: Readonly<Ref<boolean>>
+  draggable: Readonly<Ref<boolean>>
 ): {
   dragStart: (event: Event, index: number) => void;
   dragEnd: () => void;
@@ -30,7 +30,7 @@ export function useDraggable(
   };
 
   const dragStart = (event: Event, index: number) =>
-    draggables.value
+    draggable.value
       ? (() => {
           dragging.value = index;
           setMouseOffset(event, simulation.value.nodes()[index]);
@@ -51,9 +51,9 @@ export function useDraggable(
 
   const dragEnd = () => {
     if (dragging.value !== undefined) {
-      const node = simulation.value.nodes()[dragging.value];
-      node.fx = null;
-      node.fy = null;
+      //  const node = simulation.value.nodes()[dragging.value];
+      // node.fx = null;
+      // node.fy = null;
       dragStop();
     }
   };

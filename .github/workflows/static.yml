@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy doc
 
 on:
   # Runs on pushes targeting the default branch
@@ -40,14 +40,14 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Build
-        run: npm run build-playground 
+        run: npm run docs:build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload entire repository
-          path: './playground-dist/'
+          path: "./dist-docs/"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

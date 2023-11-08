@@ -2,7 +2,25 @@ import type { Ref } from "vue";
 import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
 /**
+ * Represents a node size
+ * @category Node types
+ */
+export type D3NodeSize =
+  | number
+  | {
+      /**
+       * Node width
+       */
+      width: number;
+      /**
+       * Node height
+       */
+      height: number;
+    };
+
+/**
  * Represents a node in the graph
+ * @category Node types
  */
 export type D3Node = {
   /**
@@ -10,25 +28,22 @@ export type D3Node = {
    */
   id: number | string;
   /**
-   * Node name. If not provided uses: 'node [node_id]'
+   * Node name
    */
   name?: string;
   /**
-   * Node color, e.g. red, #aa00bb,
+   * Node labels
    */
-  color?: string;
+  labels?: string[];
+  /**
+   * Node css class names,
+   */
+  class?: string[];
   /**
    * Node size
    */
-  size?: number;
-  /**
-   * Node width
-   */
-  width?: number;
-  /**
-   * Node height
-   */
-  height?: number;
+  size?: D3NodeSize;
+
   /**
    * Node svg image
    */
@@ -36,11 +51,23 @@ export type D3Node = {
     viewBox: string;
     innerHtml: string;
   };
+  /**
+   * Group id
+   * */
   group?: number;
+
+  /**
+   * Initial fixed position
+   */
+  position?: {
+    x?: number;
+    y?: number;
+  };
 };
 
 /**
  * Represents a link in the graph
+ * @category Node types
  */
 export type D3Link = {
   /**
@@ -48,13 +75,17 @@ export type D3Link = {
    */
   id?: number | string;
   /**
-   * Link name. If not provided uses: 'link [link_id]'
+   * Link name
    */
   name?: string;
   /**
-   * Link color (stroke), e.g. red, #aa00bb,
+   * Link labels
    */
-  color?: string;
+  labels?: string[];
+  /**
+   * Link css class names
+   */
+  class?: string[];
   /**
    * Is two-way link (bidirectional)
    */
@@ -72,57 +103,8 @@ export type D3Link = {
 };
 
 /**
- * Defaut node colors
- */
-export type D3NodeOptionsColors = {
-  /**
-   * Default node stroke color
-   */
-  stroke?: string;
-  /**
-   * Default node fill color
-   */
-  fill?: string;
-  selected?: {
-    /**
-     * Selected node stroke color
-     * */
-    stroke?: string;
-    /**
-     * Selected node fill color
-     */
-    fill?: string;
-  };
-  hover?: {
-    /**
-     * Hovered node stroke color
-     */
-    stroke?: string;
-    /**
-     * Hovered node fill color
-     */
-    fill?: string;
-  };
-  pinned?: {
-    /**
-     * Pinned node stroke color
-     */
-    stroke?: string;
-    /**
-     * Pinned node fill color
-     */
-    fill?: string;
-  };
-  label?: {
-    /**
-     * Node label color
-     */
-    fill?: string;
-  };
-};
-
-/**
  * Default node options
+ * @category Options types
  */
 export type D3NodeOptions = {
   /** Default node size
@@ -135,57 +117,16 @@ export type D3NodeOptions = {
      */
     size?: number;
   };
-  /** Default node colors */
-  colors?: D3NodeOptionsColors;
-};
-
-/**
- * Default link colors
- */
-export type D3LinkOptionsColors = {
-  /**
-   * Default link stroke color
-   */
-  stroke?: string;
-  /**
-   * Default link fill color
-   */
-  fill?: string;
-  selected?: {
-    /**
-     * Selected link stroke color
-     */
-    stroke?: string;
-    /**
-     * Selected link fill color
-     */
-    fill?: string;
-  };
-  hover?: {
-    /**
-     * Hovered link stroke color
-     */
-    stroke?: string;
-    /**
-     * Hovered link fill color
-     */
-    fill?: string;
-  };
-  label?: {
-    /**
-     * Link label color
-     */
-    fill?: string;
-  };
 };
 
 /**
  * Default link options
+ * @category Options types
  */
 export type D3LinkOptions = {
   /**
    * Default link width
-   * @defaultValue `2`
+   * @defaultValue `1`
    */
   width: number;
   font?: {
@@ -194,22 +135,13 @@ export type D3LinkOptions = {
      */
     size?: number;
   };
-  /**
-   * Default link colors
-   */
-  colors?: D3LinkOptionsColors;
 };
 
 /**
  * Simulation options
+ * @category Options types
  */
 export type D3SimulationOptions = {
-  /**
-   * Indicates if the simulation should not be animated
-   * @remarks  Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
-   * @defaultValue `false`
-   */
-  static?: boolean;
   /**
    * d3 force configurations
    */
@@ -218,44 +150,68 @@ export type D3SimulationOptions = {
      * d3 forceX strenght between 0 and 1
      * @defaultValue `0.1`
      * */
-    x: number;
+    x?: number;
     /**
      * d3 forceY strenght between 0 and 1
      * @defaultValue `0.1`
      */
-    y: number;
+    y?: number;
     /**
      * d3 forceManyBody strenght smaller than 0
      * @defaultValue `-300`
      */
-    charge: number;
+    charge?: number;
 
     /**
      * d3 forceCollide radius
      * @defaultValue `45`
      */
-    collide: number;
+    collide?: number;
   };
 };
 
 /**
+ * Represents a CSS theme
+ * @category Options types
+ */
+export type Theme = string | "green" | "purple" | "teal" | "blue" | "grey";
+
+/**
  * Layout options
+ * @category Options types
  */
 export type D3LayoutOptions = {
   /**
    * Indicates if the nodes should be draggable
    * @defaultValue `false`
    * */
-  draggables?: boolean;
+  draggable?: boolean;
   /**
    * Indicate if the graph is directed. Edge arrow will be displayed
    * @defaultValue `false`
    */
   directed?: boolean;
+  /**
+   * Indicates if the simulation should not be animated
+   * @remarks  Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick'
+   * @defaultValue `false`
+   */
+  static?: boolean;
+
+  /**
+   * Css Theme
+   * @defaultValue `teal`
+   */
+  theme?: Theme;
+  /**
+   * Indicate if is dark mode enabled
+   */
+  dark?: boolean;
 };
 
 /**
  * Graph options
+ * @category Options types
  */
 export type D3Options = {
   /**
@@ -278,6 +234,7 @@ export type D3Options = {
 
 /**
  * Event exposed by the D3NetworkGraph component
+ * @category Events
  */
 export type D3NeworkGraphEmits = {
   (event: "node-click", $event: TouchEvent | MouseEvent, node: D3Node): void;
@@ -317,9 +274,9 @@ export type useSimulationOptions = {
    */
   nodeFontSize: Readonly<Ref<number>>;
   /**
-   * Indicate if draggables are enabled
+   * Indicate if draggable are enabled
    */
-  draggables: Readonly<Ref<boolean>>;
+  draggable: Readonly<Ref<boolean>>;
   /**
    * Indicate if the graph is directed. Edge arrow will be displayed
    */
@@ -332,6 +289,14 @@ export type useSimulationOptions = {
    * Default link font size
    */
   linkFontSize: Readonly<Ref<number>>;
+  /**
+   * Css Theme class
+   */
+  themeClass: Readonly<Ref<string>>;
+  /**
+   * Css dark mode
+   */
+  dark: Readonly<Ref<boolean>>;
 };
 
 /**
@@ -341,19 +306,15 @@ export type D3NodeSimulation = SimulationNodeDatum & {
   /**
    * Node id. If not provided uses array index
    */
-  id?: number;
+  id?: number | string;
   /**
-   * Node name. If not provided uses: 'node [node_id]'
+   * Node labels.
    */
-  name?: string;
-  /**
-   * Node color, e.g. red, #aa00bb,
-   */
-  color?: string;
+  labels?: string[];
   /**
    * Node css class names
    */
-  cssClass?: string[] | undefined;
+  class?: string[];
   /**
    * Node size
    */
@@ -373,12 +334,6 @@ export type D3NodeSimulation = SimulationNodeDatum & {
     viewBox: string;
     innerHtml: string;
   };
-
-  /**
-   * Node style
-   * */
-  style?: string;
-
   /** Noderadius */
   r?: number;
 };
@@ -399,4 +354,9 @@ export type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
   "marker-end"?: string;
   /** Link marker-start */
   "marker-start"?: string;
+
+  xT?: number;
+  yT?: number;
+  xS?: number;
+  yS?: number;
 };
