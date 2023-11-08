@@ -51,4 +51,3 @@ const options = reactive<D3Options>({
   },
 });
 </script>
-<style></style>

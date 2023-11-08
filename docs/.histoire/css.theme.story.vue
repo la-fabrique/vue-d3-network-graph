@@ -1,6 +1,11 @@
 <template>
   <Story title="Custom CSS & Custom theme" auto-props-disabled>
-    <D3NetworkGraph :options="options" :nodes="nodes" :links="links" />
+    <D3NetworkGraph
+      :options="options"
+      :nodes="nodes"
+      :links="links"
+      class="theme-css"
+    />
   </Story>
 </template>
 
@@ -74,22 +79,24 @@ const options = reactive<D3Options>({
   }
 }
 
-.node.green {
-  stroke: #388e3c;
-  fill: #a5d6a7;
+.theme-css {
+  .node.green {
+    stroke: #388e3c;
+    fill: #a5d6a7;
 
-  &:hover {
-    stroke: #1b5e20;
-    fill: #66bb6a;
+    &:hover {
+      stroke: #1b5e20;
+      fill: #66bb6a;
+    }
   }
-}
 
-.link.purple {
-  stroke: #7b1fa2;
-  fill: transparent;
-  &:hover {
-    stroke: #4a148c;
+  .link.purple {
+    stroke: #7b1fa2;
     fill: transparent;
+    &:hover {
+      stroke: #4a148c;
+      fill: transparent;
+    }
   }
 }
 </style>

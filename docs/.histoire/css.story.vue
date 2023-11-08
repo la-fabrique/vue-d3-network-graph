@@ -1,6 +1,11 @@
 <template>
   <Story title="Custom CSS" auto-props-disabled>
-    <D3NetworkGraph :options="options" :nodes="nodes" :links="links" />
+    <D3NetworkGraph
+      :options="options"
+      :nodes="nodes"
+      :links="links"
+      class="custom-css"
+    />
   </Story>
 </template>
 
@@ -31,36 +36,18 @@ const options = reactive<D3Options>({
 });
 </script>
 <style lang="scss">
-.node.green {
-  stroke: #388e3c;
-  fill: #a5d6a7;
+.custom-css {
+  .node.green {
+    stroke: #388e3c;
+    fill: #a5d6a7;
 
-  &:hover {
-    stroke: #1b5e20;
-    fill: #66bb6a;
+    &:hover {
+      stroke: #1b5e20;
+      fill: #66bb6a;
+    }
   }
-}
 
-.node.red {
-  stroke: #d32f2f;
-  fill: #ef9a9a;
-
-  &:hover {
-    stroke: #b71c1c;
-    fill: #ef5350;
-  }
-}
-
-.link.purple {
-  stroke: #7b1fa2;
-  fill: transparent;
-  &:hover {
-    stroke: #4a148c;
-    fill: transparent;
-  }
-}
-
-/* .node.n-3 {
+  .node.red {
     stroke: #d32f2f;
     fill: #ef9a9a;
 
@@ -68,18 +55,15 @@ const options = reactive<D3Options>({
       stroke: #b71c1c;
       fill: #ef5350;
     }
-  } */
+  }
 
-/*  .link {
-    stroke: #d32f2f;
+  .link.purple {
+    stroke: #7b1fa2;
     fill: transparent;
     &:hover {
-      stroke: #b71c1c;
+      stroke: #4a148c;
       fill: transparent;
     }
   }
-
-  .link-label {
-    fill: #d32f2f;
-  } */
+}
 </style>
