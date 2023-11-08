@@ -11,7 +11,7 @@ export default defineConfig({
     groups: [
       {
         title: "Basic",
-        include: (file) => /Play with/.test(file.title),
+        include: (file) => /Play with|Fixed nodes/.test(file.title),
       },
       {
         title: "Grouping",

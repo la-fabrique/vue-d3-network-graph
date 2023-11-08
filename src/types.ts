@@ -308,13 +308,9 @@ export type D3NodeSimulation = SimulationNodeDatum & {
    */
   id?: number | string;
   /**
-   * Node name.
+   * Node labels.
    */
-  name?: string;
-  /**
-   * Node color, e.g. red, #aa00bb,
-   */
-  color?: string;
+  labels?: string[];
   /**
    * Node css class names
    */
@@ -338,12 +334,6 @@ export type D3NodeSimulation = SimulationNodeDatum & {
     viewBox: string;
     innerHtml: string;
   };
-
-  /**
-   * Node style
-   * */
-  style?: string;
-
   /** Noderadius */
   r?: number;
 };

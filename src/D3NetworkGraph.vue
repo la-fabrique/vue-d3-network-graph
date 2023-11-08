@@ -43,7 +43,7 @@
             <tspan
               v-for="(label, idx) in link.labels"
               :key="idx"
-              dy="1.1em"
+              :dy="idx > 0 ? '1.1em' : '0'"
               :x="getLinkLabelX(link)"
             >
               {{ label }}
@@ -61,7 +61,6 @@
             :height="node.height"
             :x="(node.x || 0) - (node.width || 0) / 2"
             :y="(node.y || 0) - (node.height || 0) / 2"
-            :style="node.style"
             :title="node.name"
             :class="node.class"
             @click="onNodeClick($event, node, index)"
@@ -75,7 +74,6 @@
             :cx="node.x"
             :cy="node.y"
             :r="node.r"
-            :style="node.style"
             :title="node.name"
             :class="node.class"
             @click="onNodeClick($event, node, index)"
@@ -91,10 +89,8 @@
             <tspan
               v-for="(label, idx) in node.labels"
               :key="idx"
-              dy="1.1em"
-              :x="
-                (node.x || 0) + (node.width || 0) / 2 + nodeLabel.font.size / 2
-              "
+              :dy="idx > 0 ? '1.1em' : '0'"
+              :x="(node.x || 0) + (node.width || 0)"
             >
               {{ label }}
             </tspan>
@@ -151,7 +147,7 @@ const rect = ref({ width: 100, height: 100, top: 0, left: 0 });
 const { transform, zoom, panMove, panStart, panEnd } = useCanvas(rect);
 const cssClass = computed(() => [
   "svg-container",
-  `${options.themeClass.value}${options.dark ? "--dark" : ""}`,
+  `${options.themeClass.value}${options.dark.value ? "--dark" : ""}`,
 ]);
 
 const updateRect = (clientRect: DOMRect) => {

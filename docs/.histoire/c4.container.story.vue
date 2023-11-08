@@ -1,41 +1,13 @@
 <template>
   <Story title="C4. Container" auto-props-disabled>
-    <span>[Container] Internet Banking System</span>
+    <span class="title-grey">[Container] Internet Banking System</span>
     <D3NetworkGraph :options="options" :nodes="nodes" :links="links" />
-    <!--   <template #controls>
-      <label class="htw-p-2 d3-label">Simulation</label>
-      <HstSlider
-        v-model="options.simulation!.force!.charge"
-        :min="-1000"
-        :max="0"
-        title="Charge (forceManyBody strength)"
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.collide"
-        :min="0"
-        :max="100"
-        title="Collide (forceCollide radius)"
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.x"
-        :min="0"
-        :max="1"
-        step="0.1"
-        title="X (forceX strenght) "
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.y"
-        :min="0"
-        :max="1"
-        step="0.1"
-        title="Y (forceY strenght)"
-      />
-    </template> -->
   </Story>
 </template>
 <script setup lang="ts">
 import type { D3Link, D3Node, D3Options } from "@/types";
 import { reactive } from "vue";
+import { isDark } from "histoire/client";
 
 const svgApp = {
   innerHtml: `<path d="M21 2H3C1.9 2 1 2.9 1 4V20C1 21.1 1.9 22 3 22H21C22.1 22 23 21.1 23 20V4C23 2.9 22.1 2 21 2M21 7H3V4H21V7Z" />`,
@@ -47,7 +19,7 @@ const svgPersonne = {
 };
 
 const svgContainer = {
-  innerHtml: `<path d="M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M4,6V18H20V6H4Z" />`,
+  innerHtml: `<path d="M4,6V19H20V6H4Z" />`,
   viewBox: "0 0 24 24",
 };
 
@@ -64,14 +36,13 @@ const nodes: D3Node[] = [
     labels: ["Web application"],
     class: ["blue"],
     innerSVG: svgContainer,
-    position: { y: 320, },
+    position: { y: 320 },
   },
   {
     id: 3,
     labels: ["Single Page Application"],
     class: ["blue"],
     innerSVG: svgContainer,
-    //position: { y: 320 },
   },
   {
     id: 4,
@@ -154,6 +125,7 @@ const options = reactive<D3Options>({
     draggables: true,
     directed: true,
     theme: "grey",
+    dark: isDark(),
   },
   simulation: {
     force: {

@@ -36,8 +36,10 @@ export function useNode(nodeSize: Readonly<Ref<number>>): {
     children
       .map(
         (node) =>
-          `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" style="${node.style}" class="${node.class}" >
-              <title>${node.name}</title>
+          `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" class="${
+            node.class
+          }" >
+              <title>${node.labels?.join(",")}</title>
           </circle>`
       )
       .join("");

@@ -51,9 +51,9 @@ export function useDraggable(
 
   const dragEnd = () => {
     if (dragging.value !== undefined) {
-      const node = simulation.value.nodes()[dragging.value];
-      node.fx = null;
-      node.fy = null;
+      //  const node = simulation.value.nodes()[dragging.value];
+      // node.fx = null;
+      // node.fy = null;
       dragStop();
     }
   };

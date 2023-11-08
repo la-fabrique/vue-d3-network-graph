@@ -1,41 +1,13 @@
 <template>
   <Story title="C4. System Context" auto-props-disabled>
-    <span>[Software System] Internet Banking System</span>
+    <span class="title-grey">[Software System] Internet Banking System</span>
     <D3NetworkGraph :options="options" :nodes="nodes" :links="links" />
-   <!--  <template #controls>
-      <label class="htw-p-2 d3-label">Simulation</label>
-      <HstSlider
-        v-model="options.simulation!.force!.charge"
-        :min="-1000"
-        :max="0"
-        title="Charge (forceManyBody strength)"
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.collide"
-        :min="0"
-        :max="100"
-        title="Collide (forceCollide radius)"
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.x"
-        :min="0"
-        :max="1"
-        step="0.1"
-        title="X (forceX strenght) "
-      />
-      <HstSlider
-        v-model="options.simulation!.force!.y"
-        :min="0"
-        :max="1"
-        step="0.1"
-        title="Y (forceY strenght)"
-      />
-    </template> -->
   </Story>
 </template>
 <script setup lang="ts">
 import type { D3Link, D3Node, D3Options } from "@/types";
 import { reactive } from "vue";
+import { isDark } from "histoire/client";
 
 const svgApp = {
   innerHtml: `<path d="M21 2H3C1.9 2 1 2.9 1 4V20C1 21.1 1.9 22 3 22H21C22.1 22 23 21.1 23 20V4C23 2.9 22.1 2 21 2M21 7H3V4H21V7Z" />`,
@@ -103,6 +75,7 @@ const options = reactive<D3Options>({
     draggables: true,
     directed: true,
     theme: "grey",
+    dark: isDark(),
   },
   simulation: {
     force: {
