@@ -1,7 +1,12 @@
 <template>
   <Story title="C4. System Context" auto-props-disabled>
     <span class="title-grey">[Software System] Internet Banking System</span>
-    <D3NetworkGraph :options="options" :nodes="nodes" :links="links" />
+    <D3NetworkGraph
+      :options="options"
+      :nodes="nodes"
+      :links="links"
+      class="c4-system"
+    />
   </Story>
 </template>
 <script setup lang="ts">
@@ -88,23 +93,25 @@ const options = reactive<D3Options>({
 });
 </script>
 <style lang="scss">
-.node.blue {
-  stroke: transparent;
-  fill: #0d47a1;
-  &:hover {
+.c4-system {
+  .node.blue {
     stroke: transparent;
-    fill: #1565c0;
+    fill: #0d47a1;
+    &:hover {
+      stroke: transparent;
+      fill: #1565c0;
+    }
   }
-}
-.node.grey {
-  stroke: transparent;
-  fill: #bdbdbd;
-  &:hover {
+  .node.grey {
     stroke: transparent;
-    fill: #e0e0e0;
+    fill: #bdbdbd;
+    &:hover {
+      stroke: transparent;
+      fill: #e0e0e0;
+    }
   }
-}
-.link {
-  stroke-dasharray: 10 10;
+  .link {
+    stroke-dasharray: 10 10;
+  }
 }
 </style>
