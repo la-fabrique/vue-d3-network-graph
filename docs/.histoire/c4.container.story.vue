@@ -122,7 +122,7 @@ const options = reactive<D3Options>({
     size: 45,
   },
   layout: {
-    draggables: true,
+    draggable: true,
     directed: true,
     theme: "grey",
     dark: isDark(),

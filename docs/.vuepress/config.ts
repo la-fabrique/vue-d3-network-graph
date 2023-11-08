@@ -12,12 +12,16 @@ export default defineUserConfig({
     contributors: false,
     navbar: [
       {
-        text: "Examples",
-        link: "https://la-fabrique.github.io/vue-d3-network-graph/histoire/",
+        text: "Home",
+        link: "/",
       },
       {
         text: "API",
         link: "/modules/",
+      },
+      {
+        text: "Examples",
+        link: "https://la-fabrique.github.io/vue-d3-network-graph/histoire/",
       },
       {
         text: "GitHub",

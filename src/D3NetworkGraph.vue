@@ -189,7 +189,7 @@ const { simulation, nodes, links } = useSimulation(
 // draggable nodes
 const { dragStart, dragEnd, dragMove } = useDraggable(
   simulation,
-  options.draggables
+  options.draggable
 );
 
 const { label: nodeLabel } = useNodeLabel(

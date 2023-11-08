@@ -34,7 +34,7 @@ export const useOptions = (d3Options: Readonly<Ref<D3Options | undefined>>) => {
     ),
     linkWidth: toRef(() => d3Options.value?.links?.width || DEFAULT_LINK_WIDTH),
     linkFontSize: toRef(() => d3Options.value?.links?.font?.size || 12),
-    draggables: toRef(() => d3Options.value?.layout?.draggables || false),
+    draggable: toRef(() => d3Options.value?.layout?.draggable || false),
     directed: toRef(() => d3Options.value?.layout?.directed || false),
     themeClass: toRef(() =>
       d3Options.value?.layout?.theme

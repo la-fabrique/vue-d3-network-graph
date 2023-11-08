@@ -185,7 +185,7 @@ export type D3LayoutOptions = {
    * Indicates if the nodes should be draggable
    * @defaultValue `false`
    * */
-  draggables?: boolean;
+  draggable?: boolean;
   /**
    * Indicate if the graph is directed. Edge arrow will be displayed
    * @defaultValue `false`
@@ -274,9 +274,9 @@ export type useSimulationOptions = {
    */
   nodeFontSize: Readonly<Ref<number>>;
   /**
-   * Indicate if draggables are enabled
+   * Indicate if draggable are enabled
    */
-  draggables: Readonly<Ref<boolean>>;
+  draggable: Readonly<Ref<boolean>>;
   /**
    * Indicate if the graph is directed. Edge arrow will be displayed
    */

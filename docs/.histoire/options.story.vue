@@ -35,7 +35,7 @@
           title="Link label font size"
         />
         <label class="htw-p-2 d3-label">Layout</label>
-        <HstCheckbox v-model="options.layout!.draggables" title="Draggables" />
+        <HstCheckbox v-model="options.layout!.draggable" title="Draggables" />
         <HstCheckbox v-model="options.layout!.directed" title="Directed" />
         <HstCheckbox v-model="options.layout!.static" title="Static" />
         <HstSelect
@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import type { D3Options } from "@/types";
 import { logEvent, isDark } from "histoire/client";
-import {  reactive } from "vue";
+import { reactive } from "vue";
 
 const nodes = [
   { id: 1, name: "my awesome node 1" },
@@ -106,10 +106,10 @@ const options = reactive<D3Options>({
     },
   },
   layout: {
-    draggables: true,
+    draggable: true,
     directed: true,
     static: false,
-    theme:'teal',
+    theme: "teal",
     dark: isDark(),
   },
   simulation: {

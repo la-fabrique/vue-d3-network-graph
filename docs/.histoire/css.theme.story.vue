@@ -25,7 +25,7 @@ const options = reactive<D3Options>({
     width: 2,
   },
   layout: {
-    draggables: true,
+    draggable: true,
     theme: "custom",
   },
 });

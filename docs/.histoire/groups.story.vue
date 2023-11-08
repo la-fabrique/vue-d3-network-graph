@@ -30,7 +30,7 @@ const links = ref<D3Link[]>([
 
 const options = reactive<D3Options>({
   layout: {
-    draggables: true,
+    draggable: true,
     directed: true,
   },
   simulation: {
