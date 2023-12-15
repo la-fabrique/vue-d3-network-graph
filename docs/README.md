@@ -31,6 +31,7 @@ npm install vue-d3-network-graph@beta
 ### Install the plugin
 
 ```javascript
+import "vue-d3-network-graph/dist/style.css";
 import plugin from "vue-d3-network-graph";
 import { createApp } from "vue";
 
