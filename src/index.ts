@@ -1,4 +1,5 @@
 import type { Plugin, App } from "vue";
+import "./themes/index.scss";
 
 import type {
   D3Link,
@@ -33,7 +34,6 @@ export { D3NetworkGraph };
 /** @ignore */
 export default {
   install(app: App) {
-    import("./themes/index.scss");
     app.component("D3NetworkGraph", D3NetworkGraph);
   },
 } as Plugin;

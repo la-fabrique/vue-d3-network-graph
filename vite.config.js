@@ -25,7 +25,7 @@ export default defineConfig({
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: [resolve(__dirname, "src/index.ts")],
       name: "vue-d3-network-graph",
       // the proper extensions will be added
       fileName: "vue-d3-network-graph",

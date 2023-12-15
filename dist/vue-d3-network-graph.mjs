@@ -1322,7 +1322,7 @@ const dn = 0.1, pn = 0.1, _n = -300, wn = 25, mn = 12, Mn = 1, Nn = 45, Sn = (t)
 });
 const Kn = {
   install(t) {
-    import("./index-07e64984.mjs"), t.component("D3NetworkGraph", Gn);
+    t.component("D3NetworkGraph", Gn);
   }
 };
 export {
