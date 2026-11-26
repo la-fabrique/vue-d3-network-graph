@@ -336,6 +336,10 @@ export type D3NodeSimulation = SimulationNodeDatum & {
   };
   /** Noderadius */
   r?: number;
+  /** Node title (taken from the node name) */
+  title?: string;
+  /** Node key */
+  key?: number | string;
 };
 
 /**
@@ -348,6 +352,8 @@ export type D3LinkSimulation = SimulationLinkDatum<D3NodeSimulation> & {
   style?: string;
   /** Link name */
   name?: string;
+  /** Link labels */
+  labels?: string[];
   /** Link thickness */
   "stroke-width"?: number;
   /** Link marker-end */

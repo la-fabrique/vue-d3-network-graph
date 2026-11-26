@@ -1,11 +1,46 @@
-import { AllowedComponentProps } from 'vue';
-import { ComponentCustomProps } from 'vue';
 import { ComponentOptionsMixin } from 'vue';
+import { ComponentProvideOptions } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
-import type { Plugin as Plugin_2 } from 'vue';
+import { Plugin as Plugin_2 } from 'vue';
 import { PropType } from 'vue';
-import { VNodeProps } from 'vue';
+import { PublicProps } from 'vue';
+
+declare const __VLS_export: DefineComponent<ExtractPropTypes<{
+    nodes: {
+        type: PropType<Array<D3Node>>;
+        required: true;
+    };
+    links: {
+        type: PropType<Array<D3Link>>;
+        required: true;
+    };
+    options: {
+        type: PropType<D3Options>;
+        default: undefined;
+    };
+}>, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {} & {
+    "node-click": ($event: TouchEvent | MouseEvent, node: D3Node) => any;
+    "link-click": ($event: TouchEvent | MouseEvent, link: D3Link) => any;
+}, string, PublicProps, Readonly< ExtractPropTypes<{
+    nodes: {
+        type: PropType<Array<D3Node>>;
+        required: true;
+    };
+    links: {
+        type: PropType<Array<D3Link>>;
+        required: true;
+    };
+    options: {
+        type: PropType<D3Options>;
+        default: undefined;
+    };
+}>> & Readonly<{
+    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3Node) => any) | undefined;
+    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3Link) => any) | undefined;
+}>, {
+    options: D3Options;
+}, {}, {}, {}, string, ComponentProvideOptions, true, {}, any>;
 
 /**
  * Layout options
@@ -92,41 +127,7 @@ export declare type D3LinkOptions = {
     };
 };
 
-export declare const D3NetworkGraph: DefineComponent<{
-    nodes: {
-        type: PropType<D3Node[]>;
-        required: true;
-    };
-    links: {
-        type: PropType<D3Link[]>;
-        required: true;
-    };
-    options: {
-        type: PropType<D3Options>;
-        default: undefined;
-    };
-}, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
-    "node-click": ($event: TouchEvent | MouseEvent, node: D3Node) => void;
-    "link-click": ($event: TouchEvent | MouseEvent, link: D3Link) => void;
-}, string, VNodeProps & AllowedComponentProps & ComponentCustomProps, Readonly<ExtractPropTypes<{
-    nodes: {
-        type: PropType<D3Node[]>;
-        required: true;
-    };
-    links: {
-        type: PropType<D3Link[]>;
-        required: true;
-    };
-    options: {
-        type: PropType<D3Options>;
-        default: undefined;
-    };
-}>> & {
-    "onNode-click"?: (($event: TouchEvent | MouseEvent, node: D3Node) => any) | undefined;
-    "onLink-click"?: (($event: TouchEvent | MouseEvent, link: D3Link) => any) | undefined;
-}, {
-    options: D3Options;
-}, {}>;
+export declare const D3NetworkGraph: typeof __VLS_export;
 
 /**
  * Event exposed by the D3NetworkGraph component

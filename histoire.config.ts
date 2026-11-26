@@ -3,7 +3,7 @@ import { HstVue } from "@histoire/plugin-vue";
 
 export default defineConfig({
   plugins: [HstVue()],
-  viteIgnorePlugins: ["vite-plugin-eslint", "vite:dts"],
+  viteIgnorePlugins: ["vite-plugin-eslint", "unplugin-dts"],
   setupFile: "./docs/.histoire/setup.ts",
   storyMatch: ["**/.histoire/*.story.vue"],
   storyIgnored: ["**/node_modules/**", "**/dist/**", "**/playground/**"],
