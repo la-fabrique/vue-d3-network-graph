@@ -1,6 +1,7 @@
 # API
 
-## Components 
+## Components
+
 ### D3NetworkGraph
 
 **props**
@@ -23,37 +24,37 @@
 
 ### D3NeworkGraphEmits
 
-Ƭ **D3NeworkGraphEmits**: (`event`: ``"node-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `node`: [`D3Node`](modules.md#d3node)) => `void`(`event`: ``"link-click"``, `$event`: `TouchEvent` \| `MouseEvent`, `link`: [`D3Link`](modules.md#d3link)) => `void`
-
-#### Type declaration
-
-▸ (`event`, `$event`, `node`): `void`
+> **D3NeworkGraphEmits** = \{(`event`, `$event`, `node`): `void`; (`event`, `$event`, `link`): `void`; \}
 
 Event exposed by the D3NetworkGraph component
 
+#### Call Signature
+
+> (`event`, `$event`, `node`): `void`
+
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"node-click"`` |
+| Parameter | Type |
+| ------ | ------ |
+| `event` | `"node-click"` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `node` | [`D3Node`](modules.md#d3node) |
+| `node` | [`D3Node`](#d3node) |
 
 ##### Returns
 
 `void`
 
-▸ (`event`, `$event`, `link`): `void`
+#### Call Signature
 
-Event exposed by the D3NetworkGraph component
+> (`event`, `$event`, `link`): `void`
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"link-click"`` |
+| Parameter | Type |
+| ------ | ------ |
+| `event` | `"link-click"` |
 | `$event` | `TouchEvent` \| `MouseEvent` |
-| `link` | [`D3Link`](modules.md#d3link) |
+| `link` | [`D3Link`](#d3link) |
 
 ##### Returns
 
@@ -63,137 +64,151 @@ Event exposed by the D3NetworkGraph component
 
 ### D3Link
 
-Ƭ **D3Link**: `Object`
+> **D3Link** = `object`
 
 Represents a link in the graph
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `source` | `string` \| `number` | Node source id |
-| `target` | `string` \| `number` | Node target id |
-| `id?` | `number` \| `string` | Unique link id. If not provided uses array index |
-| `name?` | `string` | Link name |
-| `labels?` | `string`[] | Link labels |
-| `class?` | `string`[] | Link css class names |
-| `twoWay?` | `boolean` | Is two-way link (bidirectional) |
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| <a id="property-source"></a> `source` | `string` \| `number` | Node source id |
+| <a id="property-target"></a> `target` | `string` \| `number` | Node target id |
+| <a id="property-id"></a> `id?` | `number` \| `string` | Unique link id. If not provided uses array index |
+| <a id="property-name"></a> `name?` | `string` | Link name |
+| <a id="property-labels"></a> `labels?` | `string`[] | Link labels |
+| <a id="property-class"></a> `class?` | `string`[] | Link css class names |
+| <a id="property-twoway"></a> `twoWay?` | `boolean` | Is two-way link (bidirectional) |
 
-___
+***
 
 ### D3Node
 
-Ƭ **D3Node**: `Object`
+> **D3Node** = `object`
 
 Represents a node in the graph
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `id` | `number` \| `string` | Unique node id. If not provided uses array index |
-| `name?` | `string` | Node name |
-| `labels?` | `string`[] | Node labels |
-| `class?` | `string`[] | Node css class names, |
-| `size?` | [`D3NodeSize`](modules.md#d3nodesize) | Node size |
-| `innerSVG?` | { `viewBox`: `string` ; `innerHtml`: `string`  } | Node svg image |
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| <a id="property-id-1"></a> `id` | `number` \| `string` | Unique node id. If not provided uses array index |
+| <a id="property-name-1"></a> `name?` | `string` | Node name |
+| <a id="property-labels-1"></a> `labels?` | `string`[] | Node labels |
+| <a id="property-class-1"></a> `class?` | `string`[] | Node css class names, |
+| <a id="property-size"></a> `size?` | [`D3NodeSize`](#d3nodesize) | Node size |
+| <a id="property-innersvg"></a> `innerSVG?` | `object` | Node svg image |
 | `innerSVG.viewBox` | `string` | - |
 | `innerSVG.innerHtml` | `string` | - |
-| `group?` | `number` | Group id |
-| `position?` | { `x?`: `number` ; `y?`: `number`  } | Initial fixed position |
+| <a id="property-group"></a> `group?` | `number` | Group id |
+| <a id="property-position"></a> `position?` | `object` | Initial fixed position |
 | `position.x?` | `number` | - |
 | `position.y?` | `number` | - |
 
-___
+***
 
 ### D3NodeSize
 
-Ƭ **D3NodeSize**: `number` \| { `width`: `number` ; `height`: `number`  }
+> **D3NodeSize** = `number` \| \{ `width`: `number`; `height`: `number`; \}
 
 Represents a node size
+
+#### Union Members
+
+`number`
+
+***
+
+##### Type Literal
+
+\{ `width`: `number`; `height`: `number`; \}
+
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| `width` | `number` | Node width |
+| `height` | `number` | Node height |
 
 ## Options types
 
 ### D3Options
 
-Ƭ **D3Options**: `Object`
+> **D3Options** = `object`
 
 Graph options
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `links?` | [`D3LinkOptions`](modules.md#d3linkoptions) | Default link options |
-| `nodes?` | [`D3NodeOptions`](modules.md#d3nodeoptions) | Default node options |
-| `simulation?` | [`D3SimulationOptions`](modules.md#d3simulationoptions) | Simulation options |
-| `layout?` | [`D3LayoutOptions`](modules.md#d3layoutoptions) | Layout options |
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| <a id="property-links"></a> `links?` | [`D3LinkOptions`](#d3linkoptions) | Default link options |
+| <a id="property-nodes"></a> `nodes?` | [`D3NodeOptions`](#d3nodeoptions) | Default node options |
+| <a id="property-simulation"></a> `simulation?` | [`D3SimulationOptions`](#d3simulationoptions) | Simulation options |
+| <a id="property-layout"></a> `layout?` | [`D3LayoutOptions`](#d3layoutoptions) | Layout options |
 
-___
+***
 
 ### D3NodeOptions
 
-Ƭ **D3NodeOptions**: `Object`
+> **D3NodeOptions** = `object`
 
 Default node options
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `size?` | `number` | Default node size **`Default Value`** `25` |
-| `font?` | { `size?`: `number`  } | - |
-| `font.size?` | `number` | Default node size **`Default Value`** `12` |
+| Property | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| <a id="property-size-1"></a> `size?` | `number` | `25` | Default node size |
+| <a id="property-font"></a> `font?` | `object` | `undefined` | - |
+| `font.size?` | `number` | `12` | Default node size |
 
-___
+***
 
 ### D3LinkOptions
 
-Ƭ **D3LinkOptions**: `Object`
+> **D3LinkOptions** = `object`
 
 Default link options
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `width` | `number` | Default link width **`Default Value`** `1` |
-| `font?` | { `size?`: `number`  } | - |
-| `font.size?` | `number` | Default link font size **`Default Value`** `12` |
+| Property | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| <a id="property-width"></a> `width` | `number` | `1` | Default link width |
+| <a id="property-font-1"></a> `font?` | `object` | `undefined` | - |
+| `font.size?` | `number` | `12` | Default link font size |
 
-___
+***
 
 ### D3SimulationOptions
 
-Ƭ **D3SimulationOptions**: `Object`
+> **D3SimulationOptions** = `object`
 
 Simulation options
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `force` | { `x?`: `number` ; `y?`: `number` ; `charge?`: `number` ; `collide?`: `number`  } | d3 force configurations |
-| `force.x?` | `number` | d3 forceX strenght between 0 and 1 **`Default Value`** `0.1` |
-| `force.y?` | `number` | d3 forceY strenght between 0 and 1 **`Default Value`** `0.1` |
-| `force.charge?` | `number` | d3 forceManyBody strenght smaller than 0 **`Default Value`** `-300` |
-| `force.collide?` | `number` | d3 forceCollide radius **`Default Value`** `45` |
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| <a id="property-force"></a> `force` | `object` | d3 force configurations |
+| `force.x?` | `number` | d3 forceX strenght between 0 and 1 |
+| `force.y?` | `number` | d3 forceY strenght between 0 and 1 |
+| `force.charge?` | `number` | d3 forceManyBody strenght smaller than 0 |
+| `force.collide?` | `number` | d3 forceCollide radius |
 
-___
+***
 
 ### D3LayoutOptions
 
-Ƭ **D3LayoutOptions**: `Object`
+> **D3LayoutOptions** = `object`
 
 Layout options
 
-#### Type declaration
+#### Properties
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `draggable?` | `boolean` | Indicates if the nodes should be draggable **`Default Value`** `false` |
-| `directed?` | `boolean` | Indicate if the graph is directed. Edge arrow will be displayed **`Default Value`** `false` |
-| `static?` | `boolean` | Indicates if the simulation should not be animated **`Remarks`** Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick' **`Default Value`** `false` |
-| `theme?` | `Theme` | Css Theme **`Default Value`** `teal` |
-| `dark?` | `boolean` | Indicate if is dark mode enabled |
-
+| Property | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| <a id="property-draggable"></a> `draggable?` | `boolean` | `false` | Indicates if the nodes should be draggable |
+| <a id="property-directed"></a> `directed?` | `boolean` | `false` | Indicate if the graph is directed. Edge arrow will be displayed |
+| <a id="property-static"></a> `static?` | `boolean` | `false` | Indicates if the simulation should not be animated **Remarks** Use this option if you want to use the simulation to calculate the positions of the nodes but you don't want to render them each 'tick' |
+| <a id="property-theme"></a> `theme?` | `Theme` | `teal` | Css Theme |
+| <a id="property-dark"></a> `dark?` | `boolean` | `undefined` | Indicate if is dark mode enabled |
